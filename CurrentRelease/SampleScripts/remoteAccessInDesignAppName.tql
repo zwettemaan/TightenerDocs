@@ -1,0 +1,73 @@
+//
+// remoteAccessInDesignAppName.tql
+//
+// Run with rt (not rrt), so it uses the local scriptrunner. This is a local script
+// which then retrieves the target information from the config.ini
+//
+/****
+
+rt remoteAccessInDesignAppName.tql
+      
+****/
+//
+// This script sends a small TQL script (just 'app.name') 
+// to the remote InDesign by way of the eval() function
+//
+// On the remote:
+//
+// The targeted remote InDesign app is to be configured in config.ini 
+//
+// Use the `editConfig` command to edit
+//
+// Make sure to install the plug-in with the `idPluginInstall` command
+//
+// You must launch this InDesign application beforehand by 
+// using the `idLaunch` command.
+//
+
+configIni = sysInfo("ini");
+
+// The remote host knows what shorthand coordinator 'indesign' means - 
+// it's whatever is configured in its own config.ini
+
+coordinatorName = "indesign";
+remoteHost = configIni.sampleScripts.TARGET_REMOTE_HOST;
+timeOut = eval(configIni.sampleScripts.REMOTE_TIMEOUT_MS);
+inDesignEngineName = configIni.sampleScripts.INDESIGN_TARGET_ENGINE;
+
+feedBack = function(message) { 
+    stdOut(message + "\n"); 
+}
+
+feedBack("remoteAccessInDesignAppName.tql");
+
+target = 
+    "tgh://" + 
+    remoteHost +
+    "/" + 
+    coordinatorName + 
+    "/" + 
+    inDesignEngineName;
+
+feedBack("Target determined by local config.ini is: " + target);
+
+for (idx = 0; idx < 10; ++idx) {
+    result = 
+        eval(
+            "app.name", 
+            target, 
+            timeOut);
+
+    feedBack(result);
+}
+
+if (result)
+{
+    retVal = "app.name returns '" + result + "'";    
+}
+else
+{
+    retVal = "Cannot reach " + target;
+}
+
+feedBack(retVal);

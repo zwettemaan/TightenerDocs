@@ -1,0 +1,572 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+// Test a bunch of functions, including references to built-in functions
+
+logNote("sanity.tql");
+
+testCount = 0;
+
+  /*>1>>*/ testCount++; /*<<<*/
+
+a = 1;
+if (a != 1) 
+{
+    retVal += " | " + testCount;
+}
+
+  /*>2>>*/ testCount++; /*<<<*/
+
+if (!(a == 1))
+{
+    retVal += " | " + testCount;
+}
+
+  /*>3>>*/ testCount++; /*<<<*/
+
+a = "abc";
+if (a != "abc")
+{
+    retVal += " | " + testCount;
+}
+
+  /*>4>>*/ testCount++; /*<<<*/
+
+a = "abc"
+if (a != "abc")
+{
+    retVal += " | " + testCount;
+}
+
+  /*>5>>*/ testCount++; /*<<<*/
+
+a="abc"
+if (a != "abc")
+{
+    retVal += " | " + testCount;
+}
+
+  /*>6>>*/ testCount++; /*<<<*/
+
+a = 'abc';
+if (a != "abc")
+{
+    retVal += " | " + testCount;
+}
+
+  /*>7>>*/ testCount++; /*<<<*/
+
+a = 'abc'
+if (a != "abc")
+{
+    retVal += " | " + testCount;
+}
+
+  /*>8>>*/ testCount++; /*<<<*/
+
+a='abc'
+if (a != "abc")
+{
+    retVal += " | " + testCount;
+}
+
+  /*>9>>*/ testCount++; /*<<<*/
+
+a='ab' +        "c";
+if (a != "abc")
+{
+    retVal += " | " + testCount;
+}
+
+  /*>10>>*/ testCount++; /*<<<*/
+
+if (a.toUpperCase() != "ABC")
+{
+    retVal += " | " + testCount;
+}
+
+  /*>11>>*/ testCount++; /*<<<*/
+
+if (a . toUpperCase() != "ABC")
+{
+    retVal += " | " + testCount;
+}
+
+  /*>12>>*/ testCount++; /*<<<*/
+
+if (a.toUpperCase().toLowerCase() != "abc")
+{
+    retVal += " | " + testCount;
+}
+
+  /*>13>>*/ testCount++; /*<<<*/
+
+if (a . toUpperCase( ) . toLowerCase( ) != "abc")
+{
+    retVal += " | " + testCount;
+}
+
+  /*>14>>*/ testCount++; /*<<<*/
+
+if (toUpperCase(a) != "ABC")
+{
+    retVal += " | " + testCount;
+}
+
+  /*>15>>*/ testCount++; /*<<<*/
+
+if (toLowerCase(toUpperCase(a)) != "abc")
+{
+    retVal += " | " + testCount;
+}
+
+  /*>16>>*/ testCount++; /*<<<*/
+
+if ( toLowerCase( toUpperCase ( a ) ) != "abc")
+{
+    retVal += " | " + testCount;
+}
+
+  /*>17>>*/ testCount++; /*<<<*/
+
+if ( a.toUpperCase()() != "ABC" ) // extra () are ignored
+{
+    retVal += " | " + testCount;
+}
+
+  /*>18>>*/ testCount++; /*<<<*/
+
+if ( sqr(2) != 4)
+{
+    retVal += " | " + testCount;
+}
+
+  /*>19>>*/ testCount++; /*<<<*/
+
+if ( sqr(2) != 4)
+{
+    retVal += " | " + testCount;
+}
+
+  /*>20>>*/ testCount++; /*<<<*/
+
+a = { a    : 1, b : "fffff"};
+b = { "b"    : "fffff", "a": 1 }
+
+if (a != { "b": "fffff", "a": 1 })
+{
+    retVal += " | " + testCount;
+}
+
+  /*>21>>*/ testCount++; /*<<<*/
+
+if (a != b)
+{
+    retVal += " | " + testCount;
+}
+
+  /*>22>>*/ testCount++; /*<<<*/
+
+a.a = 2;
+if (a == b)
+{
+    retVal += " | " + testCount;
+}
+
+  /*>23>>*/ testCount++; /*<<<*/
+
+a = {"a":1, b:2};
+if (a.a != 1) 
+{
+    retVal += " | " + testCount;
+}
+
+  /*>24>>*/ testCount++; /*<<<*/
+
+a = ~1;
+if (~a != 1)
+{
+    retVal += " | " + testCount;
+}
+
+  /*>25>>*/ testCount++; /*<<<*/
+
+a = ~1;
+if (a != -2)
+{
+    retVal += " | " + testCount;
+}
+
+  /*>26>>*/ testCount++; /*<<<*/
+
+a = ~a;
+if (a != 1)
+{
+    retVal += " | " + testCount;
+}
+
+  /*>27>>*/ testCount++; /*<<<*/
+
+a = 1,2
+if (a != 1)
+{
+    retVal += " | " + testCount;
+}
+
+  /*>28>>*/ testCount++; /*<<<*/
+
+a = (1,2)
+if (a != 2)
+{
+    retVal += " | " + testCount;
+}
+
+  /*>29>>*/ testCount++; /*<<<*/
+
+a = 1, b = 2
+if (a != 1 || b != 2)
+{
+    retVal += " | " + testCount;
+}
+
+  /*>30>>*/ testCount++; /*<<<*/
+
+b = 1; for ( a = 0; a < 10; b+=a, ++a);
+if (b != 46)
+{
+    retVal += " | " + testCount;
+}
+
+  /*>31>>*/ testCount++; /*<<<*/
+
+eval("a=123;b=\"cc\"");
+if (a != 123 || b != "cc")
+{
+    retVal += " | " + testCount;
+}
+
+  /*>32>>*/ testCount++; /*<<<*/
+
+s = "x = 199";
+a = {a: 1, b:2};
+a.eval(s);
+if (a.x != 199)
+{
+    retVal += " | " + testCount;
+}
+
+  /*>33>>*/ testCount++; /*<<<*/
+
+s = "function f1(){return this.a}; function f2(x){return typeof x}; x=[1,2,3]; y = {a:'b', c:'d'};";
+
+a = {a: 11782, b:2};
+
+// Evaluate s 'into' object a, using a as kind of scope
+
+a.eval(s);
+
+// parenthesize a.f2 to extract the function as a loose object, then call it.
+// parameter x is a number
+
+if ((a.f2)(2) != "number")
+{
+    retVal += " | " + testCount;
+}
+
+  /*>34>>*/ testCount++; /*<<<*/
+
+// call the function as a method on object a 
+// parameter x now becomes the target object
+
+if (a.f2(1) != "number") // equivalent to f2(1), also sets 'this = a;'
+{
+    retVal += " | " + testCount + "a";
+}
+
+if (a.f2() != "undefined") // equivalent to f2(), also sets 'this = a;'
+{
+    retVal += " | " + testCount + "b";
+}
+
+  /*>35>>*/ testCount++; /*<<<*/
+
+if (a.f1() != 11782)
+{
+    retVal += " | " + testCount;
+}
+if (!(a.f1() == 11782))
+{
+    retVal += " | " + testCount;
+}
+
+  /*>36>>*/ testCount++; /*<<<*/
+
+function f() { return arguments };
+a = f(1,2,3);
+if (a != [1,2,3])
+{
+    retVal += " | " + testCount;
+}
+if (!(a == [1,2,3]))
+{
+    retVal += " | " + testCount;
+}
+
+  /*>37>>*/ testCount++; /*<<<*/
+
+loadScript = "function abc(x) { return x*x + 1;}";
+eval(loadScript);
+
+a = abc(5);
+if (a != 26)
+{
+    retVal += " | " + testCount;
+}
+if (!(a == 26))
+{
+    retVal += " | " + testCount;
+}
+if (a == 26)
+{
+}
+else
+{
+    retVal += " | " + testCount;
+}
+
+  /*>38>>*/ testCount++; /*<<<*/
+
+loadScript = "function pqr(){}";
+eval(loadScript);
+
+if (typeof pqr != "function")
+{
+    retVal += " | " + testCount;
+}
+if (!(typeof pqr == "function"))
+{
+    retVal += " | " + testCount;
+}
+
+  /*>39>>*/ testCount++; /*<<<*/
+
+a = [1, 2, 3];
+b = a;
+b[1] = 9;
+if (a[1] != 9)
+{
+    retVal += " | " + testCount;
+}
+if (! (a[1] == 9))
+{
+    retVal += " | " + testCount;
+}
+
+  /*>40>>*/ testCount++; /*<<<*/
+
+a = { a: 1, b: 2, c: 3};
+b = a;
+b.b = 9;
+if (a.b != 9)
+{
+    retVal += " | " + testCount;
+}
+if (! (a.b == 9))
+{
+    retVal += " | " + testCount;
+}
+
+
+  /*>41>>*/ testCount++; /*<<<*/
+
+// Can compare objects. == works for equal contents
+c = { a: 1, b: 9, c: 3};
+if (a != c)
+{
+    retVal += " | " + testCount;
+}
+if (! (a == c))
+{
+    retVal += " | " + testCount;
+}
+
+  /*>42>>*/ testCount++; /*<<<*/
+
+// Can compare objects. === is false if objects are not the same object
+
+if (a === c)
+{
+    retVal += " | " + testCount;
+}
+if (! (a !== c))
+{
+    retVal += " | " + testCount;
+}
+
+  /*>43>>*/ testCount++; /*<<<*/
+
+// Can compare objects. === is false if objects are not the same object
+
+if (a !== b)
+{
+    retVal += " | " + testCount;
+}
+if (! (a === b))
+{
+    retVal += " | " + testCount;
+}
+
+  /*>44>>*/ testCount++; /*<<<*/
+
+// indexOf
+
+a = "abcdef";
+p1 = a.indexOf("x");
+p2 = a.indexOf("a");
+p3 = a.indexOf("b");
+p4 = a.indexOf("f");
+p5 = a.indexOf("cd");
+
+if (p1 != -1 || p2 != 0 || p3 != 1 || p4 != a.length - 1 || p5 != 2) 
+{
+    retVal += " | " + testCount;
+}
+
+  /*>45>>*/ testCount++; /*<<<*/
+
+// parseInt
+
+a = "1234";
+b = "1234.23";
+c = "beEf";
+d = "1101";
+e = "-123";
+f = "1E11";
+g = "-123.987e5";
+
+p1 = a.parseInt();     // object-oriented notation
+p2 = parseInt(a);      // function notation
+p3 = a.parseInt(16);   // object-oriented notation base 16 parse
+p4 = parseInt(a,16);   // function notation base 16 parse
+p5 = parseInt(b);      // ignore any non-digit suffix
+p6 = parseInt(c);      // non-digits should be NaN
+p7 = parseInt(c, 16);  // but valid in base 16
+p8 = parseInt(d);      // base 10
+p9 = d.parseInt(2);    // binary 
+p10 = a.parseInt(-10); // radix < 0 is handled as radix 10
+p11 = e.parseInt();    // negative
+p12 = f.parseInt();    // looks like float with exponent but is just 1
+p13 = f.parseInt(16);  // much different as hex
+p14 = g.parseInt();    // negative
+
+if (
+  p1 != 1234
+||
+  p2 != 1234
+||
+  p3 != 4660   // decimal notation
+||
+  p3 != 0x1234 // hex notation
+||
+  p4 != 4660
+||
+  p4 != 0x1234
+||
+  p5 != 1234
+||
+  ! isNaN(p6)
+||
+  p7 != 48879
+||
+  p7 != 0xBEEF
+||
+  p7 != 0xbeef
+||
+  p8 != 1101
+||
+  p9 != 0x0D
+||
+  p10 != 1234
+||
+  p11 != -123
+||
+  p12 != 1
+||
+  p13 != 7697
+||
+  p14 != -123
+) 
+{
+    retVal += " | " + testCount;
+}
+
+  /*>46>>*/ testCount++; /*<<<*/
+
+// parseFloat
+
+a = "1234";
+b = "1234.23";
+c = "beEf";
+d = "1101";
+e = "-123";
+f = "1E11";
+g = "-123.987e5";
+
+p1 = a.parseFloat();     // object-oriented notation
+p2 = parseFloat(a);      // function notation
+p3 = a.parseFloat(16);   // parseFloat has no radix
+p4 = parseFloat(a,16);   // parseFloat has no radix
+p5 = parseFloat(b);      // floating point
+p6 = parseFloat(c);      // non-digits should be NaN
+p7 = parseFloat(c, 16);  // parseFloat has no radix
+p8 = parseFloat(d);      
+p9 = d.parseFloat(2);    // parseFloat has no radix
+p10 = a.parseFloat(-10); // parseFloat has no radix
+p11 = e.parseFloat();    // negative
+p12 = f.parseFloat();    // float with exponent
+p13 = f.parseFloat(16);  // parseFloat has no radix
+p14 = g.parseFloat();      // negative and exponent
+
+if (
+  p1 != 1234
+||
+  p2 != 1234
+||
+  ! isNaN(p3)
+||
+  ! isNaN(p4)
+||
+  abs(p5 - 1234.23) > 0.0001
+||
+  ! isNaN(p6)
+||
+  ! isNaN(p7)
+||
+  p8 != 1101
+||
+  ! isNaN(p9)
+||
+  ! isNaN(p10)
+||
+  p11 != -123
+||
+  p12 != 100000000000
+||
+  ! isNaN(p13)
+||
+  p14 != -12398700
+) 
+{
+    retVal += " | " + testCount;
+}
+
+  /*>>>*/ testCount++; /*<<<*/
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

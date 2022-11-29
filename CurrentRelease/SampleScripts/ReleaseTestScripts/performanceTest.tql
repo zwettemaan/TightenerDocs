@@ -1,0 +1,40 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+
+retVal = "";
+
+// Calculate Fibonacci number. Heavily recursive - Fibonacci numbers > 18 or so
+// take a fair bit of time to calculate with this inefficient function
+
+function fib(n)
+{
+    if (n == 0)
+    {
+        return 1;
+    }
+    else if (n == 1)
+    {
+        return 1;
+    }
+    else
+    {
+        return fib(n - 1) + fib(n - 2);
+    }
+}
+
+n = 0;
+while (n < 100)
+{
+    x = fib(8);
+    n = n + 1;
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

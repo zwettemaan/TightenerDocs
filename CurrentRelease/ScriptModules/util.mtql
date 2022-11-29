@@ -1,0 +1,68 @@
+if (typeof(G.UTIL) == "error")
+{
+
+G.UTIL = {};
+G.UTIL.includePaths = [];
+
+G.UTIL.addIncludePath = function(folderPath) {
+    if (folderPath && dirExists(folderPath)) {
+        G.UTIL.includePaths.push(folderPath);
+    }
+};
+
+G.UTIL.include = function(fileName) {
+
+    var  retVal = undefined;
+
+    var idx;
+    for (idx = 0; idx < G.UTIL.includePaths.length; ++idx) {
+        var filePath = G.UTIL.includePaths[idx] + fileName;
+        if (fileExists(filePath)) {
+            retVal = evalScript(filePath);
+            break;
+        }
+    }
+
+    return retVal;
+};
+
+G.UTIL.trim = function(s) {
+
+    var trimChars = " \r\t\n";
+
+    var startPos = 0;
+    var endPos = s.length;
+    while (startPos < endPos && trimChars.indexOf(s.substr(startPos,1)) >= 0) {
+        startPos++;
+    }
+
+    if (startPos == endPos) {
+        s = "";
+    }
+    else {      
+        while (trimChars.indexOf(s.substr(endPos - 1,1)) >= 0) {
+            endPos--;
+        }
+    }
+
+    return s.substr(startPos, endPos - startPos);
+};
+
+G.UTIL.removeTrailingNL = function(s) {
+
+    var l = s.length - 1;
+    while (l >= 0 && (((var c = s.substr(l)) == "\n") || c == '\r')) {
+        s = s.substr(0, l);
+    }
+
+    return s;
+};
+
+(function(){
+    
+    G.UTIL.addIncludePath(parentPath(scriptFilePath()));
+
+})();
+
+}
+

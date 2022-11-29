@@ -1,0 +1,14 @@
+
+SUBLIME="/usr/bin/subl"
+VSCODE="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
+NANO="/usr/bin/nano"
+
+if [ -f "${SUBLIME}" ]; then
+    "${SUBLIME}" "$1"
+elif [ -f "${VSCODE}" ]; then
+    "${VSCODE}" "$1"
+elif [ -f "${NANO}" ]; then
+    "${NANO}" "$1"
+else
+    echo "Cannot find a suitable text editor. Please consult the documentation to see how to set that up"
+fi

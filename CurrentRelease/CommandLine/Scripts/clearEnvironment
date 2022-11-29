@@ -1,0 +1,18 @@
+export TIGHTENER_SCRIPTS=`dirname $0`
+cd $TIGHTENER_SCRIPTS
+export TIGHTENER_SCRIPTS=`pwd`/
+
+if [ `uname` = "Darwin" ]; then
+
+    "${TIGHTENER_SCRIPTS}/clearEnvironmentInProfile" ~/.zshenv
+    "${TIGHTENER_SCRIPTS}/clearEnvironmentInProfile" ~/.profile
+
+else
+
+    "${TIGHTENER_SCRIPTS}/clearEnvironmentInProfile" ~/.bashrc
+    "${TIGHTENER_SCRIPTS}/clearEnvironmentInProfile" ~/.profile
+
+fi
+
+
+

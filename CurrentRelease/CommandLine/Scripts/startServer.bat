@@ -1,0 +1,2 @@
+killApps
+Tightener -s

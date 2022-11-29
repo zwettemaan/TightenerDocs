@@ -1,0 +1,143 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+function f1(x1, x2) { return x1; };
+function f2(x1, x2) { return x2; };
+function ft(x1, x2) { return this; };
+
+a = {};
+
+// Use f and fi as methods on a
+// In that case, 'this' is a local variable, and the first parameter
+// is NOT 'this'
+a.f1 = f1;
+a.f2 = f2;
+a.ft = ft;
+
+// No methods on b
+// In that case, 'this' is a local variable, as well as the first parameter
+// is also 'this'
+b = {};
+
+// ----
+
+if (f1(2) != 2) {
+    retVal += "f1(2) must be 2 but is " + f1(2) + " ";
+}
+
+if (f1(a) !== a) {
+    retVal += "f1(a) must be a but is " + f1(a) + " ";
+}
+
+if (f1(b) !== b) {
+    retVal += "f1(b) must be b but is " + f1(b) + " ";
+}
+
+if (f2(2) != undefined) {
+    retVal += "f2(2) must be undefined but is " + f2(2) + " ";
+}
+
+if (f2(a) != undefined) {
+    retVal += "f2(a) must be undefined but is " + f2(2) + " ";
+}
+
+if (f2(b) != undefined) {
+    retVal += "f2(b) must be undefined but is " + f2(b) + " ";
+}
+
+if (ft(2) != 2) {
+    retVal += "ft(2) must be 2 but is " + ft(2) + " ";
+}
+
+if (ft(a) !== a) {
+    retVal += "ft(a) must be a but is " + ft(a) + " ";
+}
+
+if (ft(b) !== b) {
+    retVal += "ft(b) must be b but is " + ft(b) + " ";
+}
+
+// ---
+
+if (a.f1(2) != 2) {
+    retVal += "a.f1(2) must be 2 but is " + a.f1(2) + " ";
+}
+
+if (a.f1(a) !== a) {
+    retVal += "a.f1(a) must be a but is " + a.f1(a) + " ";
+}
+
+if (a.f1(b) !== b) {
+    retVal += "a.f1(b) must be b but is " + a.f1(b) + " ";
+}
+
+if (a.f2(2) != undefined) {
+    retVal += "a.f2(2) must be undefined but is " + a.f2(2) + " ";
+}
+
+if (a.f2(a) != undefined) {
+    retVal += "a.f2(a) must be undefined but is " + a.f2(a) + " ";
+}
+
+if (a.f2(b) != undefined) {
+    retVal += "a.f2(b) must be undefined but is " + a.f2(b) + " ";
+}
+
+if (a.ft(2) !== a) {
+    retVal += "a.ft(2) must be a but is " + a.ft(2) + " ";
+}
+
+if (a.ft(a) !== a) {
+    retVal += "a.ft(a) must be a but is " + a.ft(a) + " ";
+}
+
+if (a.ft(b) !== a) {
+    retVal += "a.ft(b) must be b but is " + a.ft(b) + " ";
+}
+
+// ---
+
+if (b.f1(2) !== b) {
+    retVal += "b.f1(2) must be b but is " + b.f1(2) + " ";
+}
+
+if (b.f1(a) !== b) {
+    retVal += "b.f1(a) must be b but is " + b.f1(a) + " ";
+}
+
+if (b.f1(b) !== b) {
+    retVal += "b.f1(b) must be b but is " + b.f1(b) + " ";
+}
+
+if (b.f2(2) != 2) {
+    retVal += "b.f2(2) must be 2 but is " + b.f2(2) + " ";
+}
+
+if (b.f2(a) !== a) {
+    retVal += "b.f2(a) must be a but is " + b.f2(a) + " ";
+}
+
+if (b.f2(b) !== b) {
+    retVal += "a.f2(b) must be b but is " + b.f2(b) + " ";
+}
+
+if (b.ft(2) !== b) {
+    retVal += "b.ft(2) must be b but is " + b.ft(2) + " ";
+}
+
+if (b.ft(a) !== b) {
+    retVal += "b.ft(a) must be b but is " + b.ft(a) + " ";
+}
+
+if (b.ft(b) !== b) {
+    retVal += "b.ft(b) must be b but is " + b.ft(b) + " ";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

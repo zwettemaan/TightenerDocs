@@ -1,0 +1,46 @@
+if (typeof(G.TESTSCRIPT) == "error")
+{
+G.TESTSCRIPT = {};
+
+G.TESTSCRIPT.console = function(consoleMessage) {
+    if (G.TESTSCRIPT.IS_CONSOLE_OUTPUT && consoleMessage) {
+        stdOut(consoleMessage + "\n");
+    }
+};
+
+G.TESTSCRIPT.initialize = function(initializeScriptFilePath) {
+
+    var initializeScriptName = initializeScriptFilePath.pathSegmentFromRight();
+
+    logNote("*** testScript: " + initializeScriptName);
+    G.TESTSCRIPT.console("***" + initializeScriptName);
+    
+    return "";  
+};
+
+G.TESTSCRIPT.finalize = function(finalizeResult) {
+
+    if (finalizeResult == "") {
+        finalizeResult = "success";
+    }
+
+    G.TESTSCRIPT.console(finalizeResult);
+
+    return finalizeResult;
+};
+
+(function(){
+
+    var coordinatorName = sysInfo().coordinatorName;
+    
+    G.TESTSCRIPT.IS_CONSOLE_OUTPUT =
+            coordinatorName == "net.tightener.coordinator.verifier"
+        ||
+            coordinatorName == "net.tightener.coordinator.scriptrunner"
+        ||
+            coordinatorName == "net.tightener.coordinator.consoletested";
+    
+})();
+
+
+}

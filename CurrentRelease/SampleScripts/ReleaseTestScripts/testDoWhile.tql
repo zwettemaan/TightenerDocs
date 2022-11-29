@@ -1,0 +1,43 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+x = 0;
+sumSquares = 0;
+do
+{
+    sumSquares += x*x;
+    ++x;
+}
+while (x < 4);
+
+if (sumSquares != 14)
+{
+    retVal += "failed: do-while ";
+}
+
+x = 0;
+sumSquares = 0;
+do
+{
+    if (x >= 4)
+    {
+        break;
+    }
+    sumSquares = x*x + sumSquares;
+    ++x;
+}
+while (x < 10);
+
+if (sumSquares != 14)
+{
+    retVal += "failed: do-while with break ";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

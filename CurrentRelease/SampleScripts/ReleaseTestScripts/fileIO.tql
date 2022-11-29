@@ -1,0 +1,138 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+scriptPath = scriptFilePath();
+
+// Compare readFile vs fileRead
+
+scriptViaReadFile = readFile(scriptPath);
+
+scriptFile = fileOpen(scriptPath, "r");
+scriptViaFileRead = fileRead(scriptFile);
+fileClose(scriptFile);
+
+if (scriptViaFileRead != scriptViaReadFile) 
+{
+    retVal += "readFile vs fileRead mismatch\n";
+}
+
+// Default mode should be "r"
+
+// No mode -> defaults to "r"
+scriptFile = fileOpen(scriptPath);
+
+// Can use alternative form by calling a method on scriptFile (which is a number)
+
+scriptViaFileRead = scriptFile.fileRead();
+fileClose(scriptFile);
+
+if (scriptViaFileRead != scriptViaReadFile) 
+{
+    retVal += "default 'r' mode, readFile vs fileRead mismatch\n";
+}
+
+// Write a file
+
+testFilePath = sysInfo().TMP_DIR + "dummytestFileForFileIO.tql";
+testFile = fileOpen(testFilePath, "w");
+testFile.fileWrite("This is a test\n");
+testFile.fileWrite("This is another test\n");
+testFile.fileClose();
+
+// Read the file back
+
+compare = readFile(testFilePath);
+
+if (compare != "This is a test\nThis is another test\n") 
+{
+    retVal += "content of written file does not match";
+}
+
+// Append to the file
+
+testFile = fileOpen(testFilePath, "a");
+testFile.fileWrite("This is a test2\n");
+testFile.fileWrite("This is another test2\n");
+testFile.fileClose();
+
+// Read the file back
+
+compare = readFile(testFilePath);
+
+if (compare != "This is a test\nThis is another test\nThis is a test2\nThis is another test2\n") 
+{
+    retVal += "content of appended file does not match";
+}
+
+// Read up to separator. Return data includes separator
+
+readByLineFile = fileOpen(testFilePath, "r");
+a = readByLineFile.fileRead("\n");
+if (a != "This is a test\n") {
+    retVal += "reading up to LineFeed failed\n";
+}
+
+// Read a number of bytes
+
+a = readByLineFile.fileRead(4);
+if (a != "This") {
+    retVal += "reading 4 bytes failed\n";
+}
+
+// Reading by byte count has no separators so \n should be read
+a = readByLineFile.fileRead(17);
+if (a != " is another test\n") {
+    retVal += "reading 17 bytes failed\n";
+}
+
+// Read up to a separator that is not present in the file
+
+// Separator is not in file - should read whole remaining file
+a = readByLineFile.fileRead("\x0D\x0A");
+if (a != "This is a test2\nThis is another test2\n") {
+    retVal += "reading 17 chars failed\n";
+}
+
+readByLineFile.fileClose();
+
+// Read up to a complex separator
+
+readByLineFile = fileOpen(testFilePath, "r");
+
+a = readByLineFile.fileRead("st2\nTh");
+if (a != "This is a test\nThis is another test\nThis is a test2\nTh") {
+    retVal += "reading up to random separator failed\n";
+}
+
+readByLineFile.fileClose();
+
+// Zero chars should work just like normal chars
+
+testFile = fileOpen(testFilePath, "a");
+testFile.fileWrite("Has\x00Zero Char\n");
+testFile.fileClose();
+
+dataWithZeroFile = fileOpen(testFilePath, "r");
+dataWithZero = fileRead(dataWithZeroFile);
+fileClose(dataWithZeroFile);
+
+if (dataWithZero != "This is a test\nThis is another test\nThis is a test2\nThis is another test2\nHas\x00Zero Char\n") {
+    retVal += "data with zero char failed\n";
+}
+
+if (dataWithZero.indexOf("\x00") != 77) {
+    retVal += "did not find zero char in expected position\n";
+}
+
+if (indexOf(dataWithZero, "s\x00Z") != 76) {
+    retVal += "did not find zero char string in expected position\n";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

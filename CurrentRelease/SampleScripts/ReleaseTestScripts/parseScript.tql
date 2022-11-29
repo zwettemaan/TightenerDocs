@@ -1,0 +1,55 @@
+
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+globalA = "hello";
+
+// Access global from inside stream
+// Use HEREDOC to provide streamed script 
+// "timeOut" waits until timeout (1 sec)
+
+var executeAsTQL = function(statement) { eval(statement) };
+
+parseScript(
+    "stream", 
+<<EOF
+
+    globalA = 'xxx';
+
+EOF, 
+    "timeOut", 
+    1000,
+    executeAsTQL
+);
+
+if (globalA != 'xxx') {
+    retVal += "cannot access global from streamed script parser ";
+}
+
+// Stream concatenates. Sending three '1' followed by a \n is the number 111
+
+globX = 0;
+
+parseScript("stream", "globX = 1",               executeAsTQL);
+parseScript("stream", "1",                       executeAsTQL);
+parseScript("stream", "1\n", "", "timeOut", 100, executeAsTQL);
+
+if (globX != 111) {
+    retVal += "stream does not concatenate ";
+}
+
+// Close stream
+
+parseScript("stream");
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;
+
+
+

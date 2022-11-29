@@ -1,0 +1,57 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+si = sysInfo();
+
+if (! (sysInfo()["APP_DIR"] == sysInfo("APP_DIR")))
+{
+    retVal += ' failed sysInfo()["APP_DIR"] == sysInfo("APP_DIR")';
+}
+
+APP_DIR = si["APP_DIR"];
+if (! (APP_DIR == sysInfo("APP_DIR")))
+{
+    retVal += ' failed APP_DIR == sysInfo("APP_DIR")';
+}
+
+APP_PATH = si.APP_PATH;
+if (! fileExists(APP_PATH))
+{
+    retVal += ' failed fileExists(APP_PATH)';
+}
+
+appDir = parentPath(APP_PATH);
+if (! (appDir == si.APP_DIR))
+{
+    retVal += ' failed appDir == si.APP_DIR';
+}
+
+appDirName0 = pathSegmentFromRight(appDir);
+appDirName1 = pathSegmentFromRight(appDir, 0);
+if (! (appDirName0 == appDirName1))
+{
+    retVal += ' failed appDirName0 == appDirName1';
+}
+
+appDirName2 = pathSegmentFromRight(appDir, 0, "/");
+appDirName3 = pathSegmentFromRight(appDir, 0, "\\");
+// One of the separators has to work
+if (! (appDirName0 == appDirName1 || appDirName0 == appDirName3))
+{
+    retVal += ' failed appDirName0 == appDirName1 || appDirName0 == appDirName3';
+}
+
+// Using the wrong separator gives back the full path
+if (! (appDirName2 != appDirName3))
+{
+    retVal += ' failed appDirName2 != appDirName3';
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

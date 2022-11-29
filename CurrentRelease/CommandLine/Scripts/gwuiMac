@@ -1,0 +1,7 @@
+killApps
+
+pushd "${TIGHTENER_RELEASE_ROOT}Apps/macOS 64 bit/" > /dev/null
+
+open ./XojoTightener.app
+
+popd > /dev/null

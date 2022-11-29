@@ -1,0 +1,21 @@
+#
+# Evaluate a TQL expression. 
+#
+# e.g.
+#
+# evalTQL "sqrt(2)"
+#
+# Double quotes need to be double encoded - e.g.
+#
+#   evalTQL "\\\"a\\\"" 
+#
+
+if [ "$1" = "" ]; then
+    echo "Usage:"
+    echo "  `basename \"$0\"` expression"
+    exit
+fi
+
+QUIT_DELAY_MS=0
+
+echo "$1" | Tightener -N scriptrunner -t n -w ${QUIT_DELAY_MS} -f -

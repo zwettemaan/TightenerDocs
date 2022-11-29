@@ -1,0 +1,14 @@
+function dQ(s) {
+    return '"' + s.replace(/\\/g,"\\\\").replace(/"/g,'\\"').replace(/\n/g,"\\n").replace(/\r/g,"\\r") + '"';
+}
+
+function alert(message) {
+
+    var extendScript = "alert(" + dQ(message) + ");"
+
+    var tqlScript = "evalExtendScript(" + dQ(extendScript) + ")";
+
+    app.evalTQL(tqlScript);
+}
+
+alert("hello");

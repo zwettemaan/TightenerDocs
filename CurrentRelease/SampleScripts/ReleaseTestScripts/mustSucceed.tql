@@ -1,0 +1,2 @@
+logNote("mustSucceed.tql");
+return "success";

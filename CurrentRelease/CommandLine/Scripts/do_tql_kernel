@@ -1,0 +1,30 @@
+#!/bin/bash
+
+cat > /tmp/do_tql_kernel.tql <<EOF
+
+remoteTQLTarget = getEnv("RRT_REMOTE_URL");
+timeoutMilliseconds = 10000;
+
+while (true) {
+
+    oneLine = stdIn();
+
+    sendData(
+        oneLine,
+        remoteTQLTarget, 
+        "net.tightener.callbackid.commandline.tql", 
+        function(result) {
+            stdOut(result + "\n");
+        },
+        timeoutMilliseconds
+    );
+
+}
+
+EOF
+
+export RRT_REMOTE_URL="$1"
+
+Tightener -N scriptrunner -i -f "/tmp/do_tql_kernel.tql"
+
+

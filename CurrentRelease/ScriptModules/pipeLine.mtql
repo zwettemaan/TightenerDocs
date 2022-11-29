@@ -1,0 +1,216 @@
+if (typeof(G.PIPELINE) == "error")
+{
+
+G.UTIL.include("log.mtql");
+
+G.PIPELINE = {};
+
+G.PIPELINE.isStatusData = function(data) {
+
+    return data == G.PIPELINE.DATA_EOF || data == G.PIPELINE.DATA_WAITING;
+
+};
+
+G.PIPELINE.stdInProc = function(pipeLine, data) {
+
+    data = stdIn();
+
+    G.LOG.note("stdInProc returns data:" + data);
+
+    return data;
+};
+
+G.PIPELINE.evalProc = function(pipeLine, data) {
+
+    G.LOG.note("evalProc data:" + data);
+
+    if (! G.PIPELINE.isStatusData(data)) {
+        data = eval(data);
+    }
+
+    G.LOG.note("evalProc returns data:" + data);
+
+    return data;
+};
+
+
+G.PIPELINE.stdOutProc = function(pipeLine, data) {
+
+    G.LOG.note("stdOutProc data:" + data);
+
+    if (! G.PIPELINE.isStatusData(data)) {
+        stdOut(data + "\n");
+    }
+
+    data = G.PIPELINE.DATA_EOF;
+
+    G.LOG.note("evalProc returns data:" + data);
+
+    return data;
+};    
+
+G.PIPELINE.cycle = function() {
+
+    var pipeLineState = G.PIPELINE.STATE_ERROR;
+
+    do {
+
+        var pipeLine = this;
+
+        if (! pipeLine) {
+            G.LOG.error("pump: no pipeLine");
+            break;
+        }
+
+        pipeLineState = pipeLine.state;
+        if (pipeLineState == G.PIPELINE.STATE_COMPLETED) {
+            G.LOG.note("pump: pipeLine.completed");
+            break;
+        }
+        
+        if (pipeLine.procList.length == 0) {
+            G.LOG.note("pump: empty pipeLine.procList");
+            pipeLine.state = G.PIPELINE.STATE_COMPLETED;
+            pipeLineState = pipeLine.state;
+            break;
+        }
+
+        if (pipeLine.procListIdx >= pipeLine.procList.length) {
+            G.LOG.trace("pump: wrapping pipeLine.procListIdx");
+            pipeLine.procListIdx = 0;
+            pipeLine.data = undefined;
+        }
+
+        G.LOG.trace("pump: pipeLine.procListIdx = " + pipeLine.procListIdx);
+
+        var proc = pipeLine.procList[pipeLine.procListIdx];
+        if (! proc) {
+            G.LOG.error("pump: no proc");
+            break;
+        }
+
+        G.LOG.trace("pump: check proc " + proc);
+        G.LOG.trace("pump: input data " + pipeLine.data);
+
+        pipeLine.data = proc(pipeLine, pipeLine.data);
+        G.LOG.trace("pump: output data " + pipeLine.data);
+
+        if (pipeLine.data == G.PIPELINE.DATA_WAITING) {
+
+            G.LOG.note("pipeLine.state is now waiting");
+            pipeLine.state = G.PIPELINE.STATE_WAITING;
+            pipeLineState = pipeLine.state;
+
+        }
+        else if (pipeLine.data == G.PIPELINE.DATA_EOF) {
+
+            if (! pipeLine.procCompletedList[pipeLine.procListIdx]) {
+                pipeLine.procCompletedList[pipeLine.procListIdx] = 1;
+                pipeLine.completedCount++;
+                if (pipeLine.completedCount >= pipeLine.procList.length) {
+                    G.LOG.trace("pump: all completed");
+                    pipeLine.state = G.PIPELINE.STATE_COMPLETED;
+                    pipeLineState = pipeLine.state;
+                }
+            }
+
+        }
+
+        pipeLine.procListIdx++;
+    }
+    while (false);
+
+    return pipeLineState;
+};
+
+G.PIPELINE.pump = function() {
+
+    G.LOG.note("G.PIPELINE.pump");
+
+    var pumpState = G.PIPELINE.STATE_ERROR;
+
+    do {
+
+        var pipeLine = this;
+
+        if (! pipeLine) {
+            G.LOG.error("no pipeLine");
+            break;
+        }
+
+        while (
+            pipeLine.state == G.PIPELINE.STATE_NEW
+        || 
+            pipeLine.state == G.PIPELINE.STATE_RUNNING 
+        || 
+            (
+                pipeLine.state == G.PIPELINE.STATE_WAITING 
+            &&
+                pipeLine.procListIdx < pipeLine.procList.length
+            )            
+        ) {
+            pipeLine.cycle();
+        }
+
+        pumpState = pipeLine.state;
+    }
+    while (false);
+
+    return pumpState;
+};
+
+G.PIPELINE.trigger = function() {
+
+    var pumpState = G.PIPELINE.STATE_ERROR;
+
+    do {
+
+        var pipeLine = this;
+
+        if (! pipeLine) {
+            G.LOG.error("no pipeLine");
+            break;
+        }
+
+        if (pipeLine.state == G.PIPELINE.STATE_WAITING) {
+            pipeLine.state = G.PIPELINE.STATE_RUNNING;
+        }
+
+        pumpState = pipeLine.pump();
+    }
+    while (false);
+
+    return pumpState;
+};
+
+G.PIPELINE.create = function(procList) {
+
+    var newPipeLine = {
+        data: undefined,
+        state: G.PIPELINE.STATE_NEW,
+        procList: procList,
+        procCompletedList: [],
+        completedCount: 0,
+        procListIdx: 0,
+        pump: G.PIPELINE.pump,
+        cycle: G.PIPELINE.cycle,
+        trigger: G.PIPELINE.trigger
+    };
+
+    return newPipeLine;
+};
+
+(function() {
+
+    G.PIPELINE.STATE_ERROR          = "ERROR";
+    G.PIPELINE.STATE_NEW            = "NEW";
+    G.PIPELINE.STATE_COMPLETED      = "COMPLETED";
+    G.PIPELINE.STATE_WAITING        = "WAITING";
+    G.PIPELINE.STATE_RUNNING        = "RUNNING";
+
+    G.PIPELINE.DATA_EOF             = { "EOF":     true };
+    G.PIPELINE.DATA_WAITING         = { "WAITING": true };
+
+})();
+
+}

@@ -1,0 +1,46 @@
+scriptPath = getEnv("RRU_SCRIPT_PATH");
+if (fileExists(scriptPath)) {
+
+    uxpScript = readFile(scriptPath);
+
+    remoteTarget = getEnv("RRU_REMOTE_URL");
+
+    // Note: we're wrapping an UxpScript inside a TQL script
+    // using nested HEREDOC notation
+    // The tqlScript has three segments: a first segment where we
+    // start a nested HEREDOC (UXPSEOF), a second segment with the
+    // plain, unquoted ExtendScript code, and a third segment with the
+    // end of the nested UXPSEOF HEREDOC.
+
+
+    // >>>1>>> Segment 1 of tqlScript: start the nested HEREDOC
+    tqlScript = <<TQLEOF
+uxpScript = <<UXPSEOF
+TQLEOF
+    // <<<1<<<  End of Segment 1
+
+
+    // >>>2>>> Segment 2 of tqlScript: the whole uxpScript code
+    tqlScript += uxpScript + "\n";
+    // <<<2<<<  End of Segment 2
+
+
+    // >>>3>>> Segment 3 of tqlScript: finish the nested HEREDOC, and evaluate the ExtendScript
+    tqlScript += <<TQLEOF
+UXPSEOF
+
+evalUxpScript(uxpScript, function(result) {
+    stdOut("Completed on remote: " + result + "\n");
+});
+
+TQLEOF
+    // <<<3<<<  End of Segment 3
+
+    eval(
+        tqlScript,
+        remoteTarget,
+        function(result) {
+            stdOut("Callback received: " + result + "\n");
+        }
+    );
+}

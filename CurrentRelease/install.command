@@ -1,0 +1,10 @@
+export TIGHTENER_RELEASE_ROOT=`dirname $0`
+cd $TIGHTENER_RELEASE_ROOT
+export TIGHTENER_RELEASE_ROOT=`pwd`/
+
+export TIGHTENER_SCRIPTS="${TIGHTENER_RELEASE_ROOT}/CommandLine/Scripts"
+
+cd "${TIGHTENER_SCRIPTS}"
+
+./setupEnvironment
+

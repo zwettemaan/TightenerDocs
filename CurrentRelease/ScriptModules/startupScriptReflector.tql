@@ -1,0 +1,58 @@
+//
+// startupScriptReflector.tql
+//
+G = {}; evalScript(parentPath(scriptFilePath()) + "util.mtql");
+
+G.UTIL.include("startupScript.tql");
+
+G.STREAM_ID_TQL_SPLIT       = "net.tightener.streamid.commandline.tql.split";
+
+G.LOG.setLogLevel(0);
+
+function plusOne(a) {
+    return a + 1;
+}
+
+gCounter = 1;
+
+setDataRequestCallBack(
+    G.CALL_BACK_ID_TQL_SPLIT, 
+    function(senderURL, callBackID, streamData) {
+        var result = 
+            parseScript(
+                G.STREAM_ID_TQL_SPLIT, 
+                [ streamData, "stdOut('inbetween')" ],
+                "prompt", 
+                G.REPL_TIMEOUT_MILLISECONDS);
+        var prompt = result.substr(result.length - 2);
+        var result = eval(result.substr(0, result.length - 2));
+        if (! result) {
+            result = "";
+        }
+        else {
+            result += "\n";
+        }
+        sendData(result + prompt);
+    }
+);
+
+setDataRequestCallBack(
+    G.CALL_BACK_ID_DEFAULT, 
+    function(
+        senderURL, 
+        callBackID, 
+        data
+    ) {
+        gCounter = plusOne(gCounter);
+        sendData(
+            "Reflected: " + 
+                data + 
+            " senderURL = '" + 
+                senderURL + 
+            "' callbackID = '" + 
+                callBackID + 
+            "' count = " + 
+                gCounter
+        );
+    }
+);

@@ -1,0 +1,12 @@
+. "${TIGHTENER_SCRIPTS}/idSetEnv"
+
+idPluginRemove
+
+if [ ! -d "${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}" ]; then
+    sudo mkdir "${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}"
+    sudo chmod 777 "${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}"
+fi
+
+cp -R "${INDESIGN_RELEASE_PLUGIN_FOLDER}Tightener.InDesignPlugin" "${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}Tightener.InDesignPlugin"
+
+echo "Plug-in installed in ${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}"

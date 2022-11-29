@@ -1,0 +1,18 @@
+#
+# You can call your own preferred editor ${TIGHTENER_SYSCONFIG_ROOT}editFile
+# If that file cannot be found, we fall back to calling
+#   Release\CommandLine\Scripts\editFileMacDefault
+#
+# You can copy Release\CommandLine\Scripts\editFileMacDefault over to 
+#   ${TIGHTENER_SYSCONFIG_ROOT}editFile
+# and then adjust it
+#
+
+EDIT_OVERRIDE="${TIGHTENER_SYSCONFIG_ROOT}editFile"
+
+if [ ! -f "${EDIT_OVERRIDE}" ]; then
+    editFileMacDefault "$1"
+else
+    "${EDIT_OVERRIDE}" "$1"
+fi
+

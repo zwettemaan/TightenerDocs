@@ -1,0 +1,42 @@
+//
+// localQuitReflector.tql
+//
+// Run with rt which uses the local scriptrunner:
+//
+//   rt localQuitReflector.tql
+//
+// This script runs in the local scriptrunner and 
+// sends a small TQL script (just 'quit()') to the local 
+// reflector by way of the eval() function
+//
+// This might actually start the reflector first, then 
+// quit it. If the timeout is not long enough, you might
+// get a failure even though the quit still succeeds.
+//
+
+configIni = sysInfo("ini");
+
+timeOut = eval(configIni.sampleScripts.LOCAL_TIMEOUT_MS);
+
+feedBack = function(message) { 
+    stdOut(message + "\n"); 
+}
+
+feedBack("localQuitReflector.tql");
+
+target = "tgh:///reflector/default";
+
+done = false;
+
+eval(
+    "quit();", 
+    target, 
+    function(callBackResult) {
+        feedBack("done");
+        done = true;
+    }, 
+    timeOut);
+
+if (! done) {
+    feedBack("failed");
+}

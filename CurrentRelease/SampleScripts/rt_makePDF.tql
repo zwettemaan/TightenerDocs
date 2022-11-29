@@ -1,0 +1,80 @@
+//
+// rt_makePDF.tql
+// NEEDS UPDATING
+
+feedBack = function(s) { stdOut(s + "\n"); }
+
+feedBack("rt_makePDF.tql");
+
+remoteSettings = eval(readFile("remoteSettings.json"));
+
+coordinatorName = 
+    "net.tightener.coordinator." + 
+    remoteSettings.indesignShortCoordinatorName;
+
+target = 
+    "tgh://" + 
+    remoteSettings.remoteHost + 
+    "/" + 
+    coordinatorName + 
+    "/" + 
+    remoteSettings.inDesignEngineName;
+
+feedBack("start");
+
+retVal = "";
+
+inDesignScript = << EOF
+
+    app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
+
+    desktop = sysInfo("DESKTOP_DIR");
+    
+    docNum = 1;
+    outputPDFFile = desktop + "t" + docNum + ".pdf";
+    while (fileExists(outputPDFFile)) 
+    {
+        ++docNum;
+        outputPDFFile = desktop + "t" + docNum + ".pdf";
+    }
+
+    doc = app.documents.add();
+    spread = doc.spreads[0];
+    textFrame = spread.textFrames.add();
+    textFrame.contents = "This is some more text";
+    textFrame.geometricBounds = [5, 5, 80, 80];    
+
+    doc.exportFile(ExportFormat.PDF_TYPE, outputPDFFile);
+    
+    doc.close(SaveOptions.NO);
+
+    "done"
+
+EOF
+
+for (testIdx = 0; testIdx < 20; ++testIdx)
+{
+    result = undefined;
+    eval(
+        inDesignScript, 
+        target, 
+        function(x) 
+        { 
+            output("callback");
+            result = x;
+        }, 
+        remoteSettings.timeout);
+    if (result)
+    {
+        retVal = result;    
+    }
+    else
+    {
+        retVal = "failed";
+    }
+}
+
+
+feedBack(retVal);
+
+quit();

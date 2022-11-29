@@ -1,0 +1,81 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+G.UTIL.include("pipeLine.mtql");
+
+inputDataList = [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "4",
+    "5"
+];
+
+G.LOG.setLogLevel(0);
+
+function readDataProc(pipeLine, data) {
+
+    data = G.PIPELINE.DATA_EOF;
+
+    if (pipeLine.dataIdx < pipeLine.dataList.length) {
+        data = pipeLine.dataList[pipeLine.dataIdx];
+        pipeLine.dataIdx++;
+    }
+
+    G.LOG.note("readDataProc: " + data);
+
+    return data;
+};
+
+function processDataProc(pipeLine, data) {
+
+    if (! G.PIPELINE.isStatusData(data)) {
+        data = ">" + data + "<";
+    }
+
+    G.LOG.note("processDataProc: " + data);
+
+    return data;
+};
+
+function outputDataProc(pipeLine, data) {
+
+    if (! G.PIPELINE.isStatusData(data)) {
+        pipeLine.outStr += data;
+    }
+
+    G.LOG.note("processDataProc: " + pipeLine.outStr);
+
+    return G.PIPELINE.DATA_EOF;
+};
+
+pipeLine = G.PIPELINE.create([
+    readDataProc, 
+    processDataProc, 
+    outputDataProc
+]);
+
+pipeLine.dataList = inputDataList;
+pipeLine.dataIdx = 0;
+pipeLine.outStr = "";
+
+while(pipeLine.pump() != G.PIPELINE.STATE_COMPLETED) {
+    G.LOG.note("pump");
+}
+
+G.LOG.note("pipeLine.outStr: " + pipeLine.outStr);
+
+if (pipeLine.outStr != ">1<>2<>3<>4<>5<>4<>5<") {
+    retVal = "coroutine failed";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

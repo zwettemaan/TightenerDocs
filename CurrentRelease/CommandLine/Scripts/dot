@@ -1,0 +1,35 @@
+#!/bin/bash
+#
+# Remotely run TQL commands
+#
+# Direct command:
+#
+#   dot <target> -c "some TQL code"
+#
+# Read from stdin:
+#
+#   dot <target> 
+#
+# e.g.
+#
+#   dot indesign "app.quit();"
+#
+
+if [ "$1" = "" ]; then
+    echo "Direct command:"
+    echo "  `basename \"$0\"` target \"command\""
+    echo "Read from stdin:"
+    echo "  `basename \"$0\"` target"
+    exit
+fi
+
+export RRT_REMOTE_URL="$1"
+
+if [ "$2" = "" ]; then
+    Tightener -N scriptrunner -f "${TIGHTENER_SCRIPTS}rrt_REPL.tql"
+else
+    export RRT_ONE_LINE="$2"
+    echo "$2" | Tightener -N scriptrunner -f "${TIGHTENER_SCRIPTS}rrt_REPL.tql"
+fi
+
+

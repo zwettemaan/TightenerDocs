@@ -1,0 +1,12 @@
+//
+// getInDesignAppName.tql
+//
+// Run with rrt (Run Remote TQLScript). The easiest is to use `editConfig` to define what URL is mapped to `indesign`.
+//
+/****
+
+rrt indesign getInDesignAppName.tql
+
+****/
+
+stdOut(app.name + "\n");

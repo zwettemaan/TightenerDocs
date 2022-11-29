@@ -1,0 +1,14 @@
+
+SUBLIME="/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl"
+BBEDIT="/Applications/BBEdit.app/Contents/Helpers/bbedit_tool"
+VSCODE="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
+
+if [ -f "${SUBLIME}" ]; then
+    "${SUBLIME}" "$1"
+elif [ -f "${BBEDIT}" ]; then
+    "${BBEDIT}" "$1"
+elif [ -f "${VSCODE}" ]; then
+    "${VSCODE}" "$1"
+else
+    echo "Cannot find a suitable text editor. Please consult the documentation to see how to set that up"
+fi

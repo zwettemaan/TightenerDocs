@@ -1,0 +1,59 @@
+// NEEDS UPDATING
+
+feedBack = function(s) { stdOut(s + "\n"); }
+
+feedBack("rt_verifyEnums.tql");
+
+remoteSettings = eval(readFile("remoteSettings.json"));
+
+coordinatorName = 
+    "net.tightener.coordinator." + 
+    remoteSettings.indesignShortCoordinatorName;
+
+target = 
+    "tgh://" + 
+    remoteSettings.remoteHost + 
+    "/" + 
+    coordinatorName + 
+    "/" + 
+    remoteSettings.inDesignEngineName;
+
+inDesignScript = << EOF
+
+    feedBack = function(s) { stdOut(s + "\n"); }
+
+    function alert(s) {
+        feedBack(s);
+        evalExtendScript("alert('" + s + "');");
+    }
+
+    alert('ExportFormat.PDF_TYPE = ' + ExportFormat.PDF_TYPE);
+    alert('ExportFormat.pdfType = ' + ExportFormat.pdfType);
+
+    "done"
+EOF
+
+result = undefined;
+eval(
+    inDesignScript,
+    target, 
+    function(x) 
+    {
+        result = x; 
+    }, 
+    remoteSettings.timeout
+);
+
+if (! result)
+{
+    retVal += "remote eval failed ";
+}
+else
+{
+    retVal = result;
+}
+
+feedBack(retVal);
+
+quit();
+

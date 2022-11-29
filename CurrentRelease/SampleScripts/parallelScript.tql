@@ -1,0 +1,37 @@
+//
+// parallelScript.tql
+//
+// Run with rt which uses the local scriptrunner:
+//
+//   rt parallelScript.tql
+//
+// This script runs in the local scriptrunner and 
+// runs three versions of the same script in parallel
+// Two of the scripts are sent to target "this" which 
+// is shorthand for 'this same coordinator'
+// The third script is run in the main thread of this coordinator
+//
+
+y = 1;
+script = <<EOF
+x = 1;
+while (x < 10000) {
+    if (y) {
+        stdOut("y:" + y + "\n");
+    }
+    stdOut(n + ":" + x + "\n");
+    x++;
+}
+EOF
+
+// These two scripts run in parallel
+// They have their own private scope
+// They cannot access y
+
+eval("n='s1';" + script, "this", false);
+eval("n='s2';" + script, "this", false);
+
+// This script runs in the same scope as parallelScript.tql
+// It can access y
+
+eval("n='s3';" + script);

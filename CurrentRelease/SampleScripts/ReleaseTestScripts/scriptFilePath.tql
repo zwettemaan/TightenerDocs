@@ -1,0 +1,24 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+path = scriptFilePath();
+if (! fileExists(path))
+{
+    retVal += ' failed fileExists(path)';
+}
+
+
+scriptName = pathSegmentFromRight(path);
+if (! (scriptName == "scriptFilePath.tql"))
+{
+    retVal += ' failed scriptName == "scriptFilePath.tql"';
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

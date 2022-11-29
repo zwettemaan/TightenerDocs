@@ -1,0 +1,18 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+a = eval("a =");
+
+if (a !== undefined)
+{
+    retVal += "fail1 ";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

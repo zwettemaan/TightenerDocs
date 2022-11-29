@@ -1,0 +1,68 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+p = [1, 2, 3];
+p.push(4);
+
+if (p.length != 4)
+{
+    retVal += "this-based failed push length "
+}
+
+if (length(p) != 4)
+{
+    retVal += "failed push length "
+}
+
+if (p[3] != 4)
+{
+    retVal += "failed push content "
+}
+
+if (p != [1,2,3,4])
+{
+    retVal += "failed push array "
+}
+
+a = p.pop();
+
+if (p.length != 3)
+{
+    retVal += "this-based failed pop length "
+}
+
+if (length(p) != 3)
+{
+    retVal += "failed pop length "
+}
+
+if (a != 4)
+{
+    retVal += "failed pop "
+}
+
+if (p[2] != 3)
+{
+    retVal += "failed pop content "
+}
+
+if (p != [1,2,3])
+{
+    retVal += "failed pop array "
+}
+
+p.pop();
+
+if (p != [1,2])
+{
+    retVal += "failed pop array "
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

@@ -1,0 +1,49 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+isWindows = sysInfo().isWindows;
+path = getEnv("PATH");
+
+if (isWindows) {
+
+    // Windows path separator is ;
+    hasColons = path.indexOf(";") >= 0;
+    if (! hasColons) {
+        retVal += "failed: no ; in PATH ";
+    }
+    
+    // Windows drive letters are followed by ':'
+    hasColons = path.indexOf(":") >= 0;
+    if (! hasColons) {
+        retVal += "failed: no : in PATH ";
+    }
+    
+    hasBackslashes = path.indexOf("\\") >= 0;
+    if (! hasBackslashes) {
+        retVal += "failed: no \\ in PATH ";
+    }
+    
+}
+else {
+
+    // Mac/Linux path separator is :
+    hasColons = path.indexOf(":") >= 0;
+    if (! hasColons) {
+        retVal += "failed: no : in PATH ";
+    }
+    
+    // Mac/Linux uses forward slash
+    hasSlashes = path.indexOf("/") >= 0;
+    if (! hasSlashes) {
+        retVal += "failed: no / in PATH ";
+    }
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

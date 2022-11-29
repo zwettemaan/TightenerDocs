@@ -1,0 +1,99 @@
+//
+// idMakePDF.tql
+//
+// Run this script in an InDesign coordinator using `rrt`. 
+//
+// InDesign must have the plug-in version of Tightener installed
+//
+// To use a local coordinator, use REMOTE=127.0.0.1 or REMOTE=
+// (nothing)
+//
+// Something like (Mac):
+//
+/****
+
+INDESIGN_COORDINATOR=net.tightener.coordinator.indesign.18.0
+REMOTE=freddy-dev-win2022.rorohiko.com
+ENGINE=main
+REMOTE_URL="tgh://${REMOTE}/${INDESIGN_COORDINATOR}/${ENGINE}"
+rrt "${REMOTE_URL}" idMakePDF.tql
+
+****/
+//
+// Or using shorthands or url mappings defined in the config.ini:
+//
+/****
+
+rrt tgh:///indesign/main idMakePDF.tql
+
+rrt indesign idMakePDF.tql
+
+
+****/
+//
+// or 
+//
+/****
+
+SET INDESIGN_COORDINATOR=net.tightener.coordinator.indesign.18.0
+SET REMOTE=freddy-dev-win2022.rorohiko.com
+SET ENGINE=main
+SET REMOTE_URL=tgh://%REMOTE%/%INDESIGN_COORDINATOR%/%ENGINE%
+rrt "%REMOTE_URL%" idMakePDF.tql
+
+****/
+//
+// When running locally (127.0.0.1), the main coordinator should automatically launch.
+// 
+// When running remotely, the gateway app on the remote workstation has to be 
+// running prior (e.g. on the remote, run `killApps`, and then run the `gwui` or 
+// `gwConsole` command)
+// 
+// Both locally and remotely, you must manually launch the designated InDesign 
+// application beforehand. 
+//
+// Also make sure to install the plug-in 
+//
+// If you're targeting the default InDesign as configured
+// in config.ini on the remote, you can use use `idLaunch` on that remote 
+// to start InDesign or InDesign Server
+//
+//
+
+feedBack = function(message) { 
+    stdOut(message + "\n"); 
+}
+
+function makeDoc() {
+
+    desktop = sysInfo("DESKTOP_DIR");
+
+    docNum = 1;
+    outputPDFFile = desktop + "t" + docNum + ".pdf";
+    while (fileExists(outputPDFFile)) 
+    {
+        ++docNum;
+        outputPDFFile = desktop + "t" + docNum + ".pdf";
+    }
+
+    doc = app.documents.add();
+    spread = doc.spreads[0];
+    textFrame = spread.textFrames.add();
+    textFrame.contents = "This is some more text";
+    textFrame.geometricBounds = [5, 5, 80, 80];    
+
+    doc.exportFile(ExportFormat.PDF_TYPE, outputPDFFile);
+    app.waitForAllTasks();
+    
+    doc.close(SaveOptions.NO);
+
+    return "done";
+}
+
+app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
+
+feedBack("idMakePDF.tql");
+
+result = makeDoc();
+
+feedBack("result = " + result);

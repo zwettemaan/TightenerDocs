@@ -1,0 +1,15 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+if (parseFloat("0xAZ") != 0) {
+    retVal += "parseFloat(\"0xAZ\") should be 0 ";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

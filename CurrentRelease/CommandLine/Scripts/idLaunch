@@ -1,0 +1,7 @@
+. "${TIGHTENER_SCRIPTS}/idSetEnv"
+
+if [  "${INDESIGN_TIGHTENER_IS_SERVER}" = "1" ]; then
+    "${INDESIGN_APP_ROOT}${INDESIGN_APP_FILE}" -console
+else
+    open "${INDESIGN_APP_ROOT}${INDESIGN_APP_FILE}"
+fi

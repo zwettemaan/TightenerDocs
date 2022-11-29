@@ -1,0 +1,160 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+if ((456).abs() != 456)
+{
+    retVal += "failed abs positive a"
+}
+if ((-456).abs() != 456)
+{
+    retVal += "failed abs negative a"
+}
+
+a = 123;
+if (abs(a) != a)
+{
+    retVal += "failed abs positive a"
+}
+if (abs(-a) != a)
+{
+    retVal += "failed abs negative a"
+}
+
+a = 0;
+if (abs(a) != a)
+{
+    retVal += "failed abs zero a"
+}
+if (abs(-a) != a)
+{
+    retVal += "failed abs - zero a"
+}
+
+a = -123;
+if (abs(a) != -a)
+{
+    retVal += "failed negative abs negative a"
+}
+if (abs(a) != -a)
+{
+    retVal += "failed positive abs negative a"
+}
+
+a=123.456e50;
+if (abs(a) != a)
+{
+    retVal += "failed abs positive large a"
+}
+if (abs(-a) != a)
+{
+    retVal += "failed abs negative large a"
+}
+
+a=-123.456e50;
+if (abs(a) != -a)
+{
+    retVal += "failed negative abs negative large a"
+}
+if (abs(a) != -a)
+{
+    retVal += "failed positive abs negative large a"
+}
+
+a=123.456e-50;
+if (abs(a) != a)
+{
+    retVal += "failed abs positive large a"
+}
+if (abs(-a) != a)
+{
+    retVal += "failed abs negative large a"
+}
+
+a=-123.456e-50;
+if (abs(a) != -a)
+{
+    retVal += "failed negative abs negative large a"
+}
+if (abs(a) != -a)
+{
+    retVal += "failed positive abs negative large a"
+}
+
+a = 123;
+if (a.abs() != a)
+{
+    retVal += "this-based failed abs positive a"
+}
+if ((-a).abs() != a)
+{
+    retVal += "this-based failed abs negative a"
+}
+
+a = 0;
+if (a.abs() != a)
+{
+    retVal += "this-based failed abs zero a"
+}
+if ((-a).abs() != a)
+{
+    retVal += "this-based failed abs - zero a"
+}
+
+a = -123;
+if (a.abs() != -a)
+{
+    retVal += "this-based failed negative abs negative a"
+}
+if (a.abs() != -a)
+{
+    retVal += "this-based failed positive abs negative a"
+}
+
+a=123.456e50;
+if (a.abs() != a)
+{
+    retVal += "this-based failed abs positive large a"
+}
+if ((-a).abs() != a)
+{
+    retVal += "this-based failed abs negative large a"
+}
+
+a=-123.456e50;
+if (a.abs() != -a)
+{
+    retVal += "this-based failed negative abs negative large a"
+}
+if (a.abs() != -a)
+{
+    retVal += "this-based failed positive abs negative large a"
+}
+
+a=123.456e-50;
+if (a.abs() != a)
+{
+    retVal += "this-based failed abs positive large a"
+}
+if ((-a).abs() != a)
+{
+    retVal += "this-based failed abs negative large a"
+}
+
+a=-123.456e-50;
+if (a.abs() != -a)
+{
+    retVal += "this-based failed negative abs negative large a"
+}
+if (a.abs() != -a)
+{
+    retVal += "this-based failed positive abs negative large a"
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

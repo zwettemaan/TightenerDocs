@@ -1,0 +1,21 @@
+// 
+// REPLExtendScriptTest.tql
+//
+// Make sure the ScriptModules/startupScript.tql startup script is enabled in config.ini for the targeted coordinator
+//
+
+target = "indesign";
+remoteExpression = "app.name";
+timeoutMilliseconds = 10000;
+
+// G.CALL_BACK_ID_EXTENDSCRIPT is defined in ScriptModules/startupScript.tql
+
+sendData(
+    remoteExpression,
+    target, 
+    G.CALL_BACK_ID_EXTENDSCRIPT, 
+    function(result) {
+        stdOut(result + "\n");
+    },
+    10000
+);

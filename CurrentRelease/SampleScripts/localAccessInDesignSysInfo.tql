@@ -1,0 +1,83 @@
+﻿//
+// localAccessInDesignSysInfo.tql
+//
+// Run with rt which uses the local scriptrunner:
+//
+/****
+
+rt localAccessInDesignSysInfo.tql
+
+****/
+//
+// The targeted InDesign is to be configured in the config.ini
+// Use the `editConfig` command to edit
+// 
+// Make sure to install the plug-in with the `idPluginInstall` command
+//
+// Before running this script, start this version of InDesign or launch it 
+// using the `idLaunch` command (using this command works for both server and desktop 
+// versions and helps avoid confusion about what version of InDesign will be 
+// targeted)
+//
+// This script runs in the local scriptrunner and sends a small TQL script
+// (just 'app.name') to the local InDesign by way of the eval() function
+//
+
+// 
+// Read targeted InDesign from config.ini
+//
+
+configIni = sysInfo("ini");
+
+inDesignSDKVersion = configIni.placeholders.INDESIGN_SDK_VERSION;
+inDesignCoordinatorSuffix = configIni.placeholders.INDESIGN_COORDINATOR_SUFFIX;
+inDesignEngineName = configIni.sampleScripts.INDESIGN_TARGET_ENGINE;
+coordinatorName = "net.tightener.coordinator.indesign." + inDesignSDKVersion + inDesignCoordinatorSuffix;
+isServer = coordinatorName.indexOf(".server.") >= 0;
+timeOut = eval(configIni.sampleScripts.LOCAL_TIMEOUT_MS);
+
+if (isServer) 
+{
+    feedBack = function(message) { 
+        stdOut(message + "\n"); 
+        evalExtendScript("alert(\"" + message + "\")");
+    }    
+}
+else 
+{
+    feedBack = function(message) { 
+        stdOut(message + "\n"); 
+    }
+}
+
+feedBack("localAccessInDesignSysInfo.tql");
+
+target = 
+    "tgh:///" + 
+    coordinatorName + 
+    "/" + 
+    inDesignEngineName;
+
+feedBack("Targeted InDesign is " + target)
+
+result = undefined;
+
+// Use a blocking eval when timeOut value is provided.
+// This blocks until data received or timed out.
+// This can be written without using a callback
+
+result = eval(
+    "sysInfo().toString()", 
+    target, 
+    timeOut);
+
+if (result)
+{
+    retVal = "sysInfo() returns '" + result + "'";    
+}
+else
+{
+    retVal = "Cannot reach " + target;
+}
+
+feedBack(retVal);

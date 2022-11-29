@@ -1,0 +1,34 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+data = readFile("data.txt");
+
+if (data != "data.txt in this file")
+{
+    retVal += "failed: data.txt incorrect input ";
+}
+
+writeFile("data1.txt", "some data");
+
+data = readFile("data1.txt");
+if (data != "some data")
+{
+    retVal += "failed: data1.txt incorrect input ";
+}
+
+writeFile("data1.txt", "some other data");
+
+data = readFile("data1.txt");
+if (data != "some other data")
+{
+    retVal += "failed: data1.txt incorrect updated input ";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

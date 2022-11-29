@@ -1,0 +1,20 @@
+remoteExtendScriptTarget = getEnv("RRE_REMOTE_URL");
+extendScriptLine = getEnv("RRE_ONE_LINE") + "\n";
+
+var PROMPT = "$ ";
+var PROMPT_CONTINUATION = "> ";
+
+sendData(
+    extendScriptLine,
+    remoteExtendScriptTarget, 
+    G.CALL_BACK_ID_EXTENDSCRIPT, 
+    function(result) {
+        prompt = result.substr(result.length - PROMPT.length);
+        if (prompt == PROMPT || prompt == PROMPT_CONTINUATION) {
+            result = result.substr(0, result.length - prompt.length);
+        }
+        stdOut(result);
+        quit();
+    }
+);
+

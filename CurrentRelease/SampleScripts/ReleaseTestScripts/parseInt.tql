@@ -1,0 +1,67 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+if (! isNaN(parseInt("aaaa"))) {
+    retVal += "parseInt(\"aaaa\") should be NaN ";
+}
+
+if (parseInt("111") != 111) {
+    retVal += "parseInt(\"111\") should be 111 ";
+}
+
+if (parseInt("0xAA") != 170) {
+    retVal += "parseInt(\"0xAA\") should be 170 ";
+}
+
+if (parseInt("0xaa") != 170) {
+    retVal += "parseInt(\"0xaa\") should be 170 ";
+}
+
+if (parseInt("0xaA") != 170) {
+    retVal += "parseInt(\"0xaA\") should be 170 ";
+}
+
+if (! isNaN(parseInt("0xxA"))) {
+    retVal += "parseInt(\"0xxA\") should be NaN ";
+}
+
+if (parseInt("0yA") != 0) {
+    retVal += "parseInt(\"0yA\") should be 0 ";
+}
+
+if (parseInt("0xA") != 10) {
+    retVal += "parseInt(\"0xA\") should be 10 ";
+}
+
+if (! isNaN(parseInt("0xZ"))) {
+    retVal += "parseInt(\"0xZ\") should be NaN ";
+}
+
+if (parseInt("0222") != 222) {
+    retVal += "parseInt(\"0222\") should be 222 ";
+}
+
+if (parseInt("123aaa") != 123) {
+    retVal += "parseInt(\"123aaa\") should be 123 ";
+}
+
+if (parseInt("123xaa") != 123) {
+    retVal += "parseInt(\"123xaa\") should be 123 ";
+}
+
+if (parseInt("0xA", 16) != 10) {
+    retVal += "parseInt(\"0xA\", 16) should be 10 ";
+}
+
+if (parseInt("0xA", 15) != 0) {
+    retVal += "parseInt(\"0xA\", 15) should be 0 ";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

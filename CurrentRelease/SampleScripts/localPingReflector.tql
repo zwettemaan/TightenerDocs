@@ -1,0 +1,60 @@
+//
+// localPingReflector.tql
+//
+// Run with rt which uses the local scriptrunner:
+//
+/****
+
+rt localPingReflector.tql
+
+****/
+//
+// This script runs in the local scriptrunner and 10 times in a row 
+// sends a small TQL script (just '12*12') to the local reflector by 
+// way of the eval() function
+//
+
+configIni = sysInfo("ini");
+
+timeOut = eval(configIni.sampleScripts.LOCAL_TIMEOUT_MS);
+
+feedBack = function(message) { 
+    stdOut(message + "\n"); 
+}
+
+feedBack("localPingReflector.tql");
+
+target = "tgh://127.0.0.1/net.tightener.coordinator.reflector/default";
+/* Alternatives:
+target = "tgh:///net.tightener.coordinator.reflector/default"; // Uses default target address
+target = "tgh:///reflector/default";                           // Uses [coordinatorMap] in config.ini
+target = "tgh:///reflector";                                   // Uses defaultEngine= in config.ini
+target = "reflector";                                          // Uses [URLMap] in config.ini
+*/
+
+feedBack("start");
+
+lineCtr = 1;
+for (idx = 0; idx < 10; idx++)
+{
+    feedBack("loop " + (idx + 1));
+    eval(
+        "12*12", 
+        target, 
+        function(callBackResult) 
+        { 
+            feedBack(
+                lineCtr++ + ": 12*12 = " + callBackResult); 
+        }, 
+        timeOut);
+}
+
+// Alternate notation for blocking eval()
+
+for (idx = 10; idx < 20; idx++)
+{
+    feedBack("loop " + (idx + 1));
+    feedBack(lineCtr++ + ": 13*13*13 = " + eval("13*13*13", target, timeOut));
+}
+
+feedBack("done");

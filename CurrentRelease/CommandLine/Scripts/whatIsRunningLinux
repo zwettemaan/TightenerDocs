@@ -1,0 +1,2 @@
+ps ax | grep -e " Tightener" -e " XojoTightener" -e " TightenerGW" | grep -e "grep -e " -v
+

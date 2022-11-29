@@ -1,0 +1,5 @@
+if [ `uname` = "Darwin" ]; then
+    editFileMac "$1"
+else
+    editFileLinux "$1"
+fi

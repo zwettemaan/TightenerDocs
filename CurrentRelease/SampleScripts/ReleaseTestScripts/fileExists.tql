@@ -1,0 +1,53 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+scriptPath = sysInfo().scriptFilePath;
+
+if (scriptPath != scriptFilePath())
+{
+    retVal += "failed: mismatch between scriptFilePath() and sysInfo() ";
+}
+
+if (pathSegmentFromRight(scriptPath) != "fileExists.tql") 
+{
+    retVal += "failed: script file name incorrect ";
+}
+
+if (scriptPath.pathSegmentFromRight() != "fileExists.tql") 
+{
+    retVal += "this-based failed: script file name incorrect ";
+}
+
+if (pathSegmentFromRight(scriptPath,1) != "ReleaseTestScripts") 
+{
+    retVal += "failed: script folder name incorrect ";
+}
+
+if (scriptPath.pathSegmentFromRight(1) != "ReleaseTestScripts") 
+{
+    retVal += "this-based failed: script folder name incorrect ";
+}
+
+if (! fileExists(scriptPath))
+{
+    retVal += "failed: script file does not exist ";
+}
+
+if (! scriptPath.fileExists())
+{
+    retVal += "this-based failed: script file does not exist ";
+}
+
+if (fileExists(scriptPath + "somethingRandom"))
+{
+    retVal += "failed: file should not exist ";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

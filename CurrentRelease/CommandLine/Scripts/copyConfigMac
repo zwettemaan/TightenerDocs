@@ -1,0 +1,34 @@
+if [ "${TIGHTENER_RELEASE_ROOT}" = "" ]; then
+    echo "\$TIGHTENER_RELEASE_ROOT has not been set up. Please follow instructions in README.md"
+    exit
+fi
+
+if [ ! -d "${TIGHTENER_RELEASE_ROOT}" ]; then
+    echo "Directory \$TIGHTENER_RELEASE_ROOT does not exist. Please follow instructions in README.md"
+    exit
+fi
+
+if [ ! -d "${HOME}/Library/Application Support/net.tightener" ]; then
+    mkdir "${HOME}/Library/Application Support/net.tightener"
+fi
+
+if [ ! -d "${HOME}/Library/Application Support/net.tightener/SysConfig" ]; then
+    mkdir "${HOME}/Library/Application Support/net.tightener/SysConfig"
+fi
+
+rm -f "${HOME}/Library/Application Support/net.tightener/SysConfig/config.ini"
+
+cat > "${HOME}/Library/Application Support/net.tightener/SysConfig/config.ini" <<EOF
+#
+# Placeholders added by 'copyConfig'
+#
+
+[placeholders]
+
+TIGHTENER_RELEASE_ROOT = "${TIGHTENER_RELEASE_ROOT}"
+
+EOF
+
+cat "${TIGHTENER_RELEASE_ROOT}Config/config.ini" >> "${HOME}/Library/Application Support/net.tightener/SysConfig/config.ini"
+
+echo config.ini was created

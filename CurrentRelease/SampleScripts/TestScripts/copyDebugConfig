@@ -1,0 +1,5 @@
+if [ `uname` = "Darwin" ]; then
+    copyDebugConfigMac
+else
+    copyDebugConfigLinux
+fi

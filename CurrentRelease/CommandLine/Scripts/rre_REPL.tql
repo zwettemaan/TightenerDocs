@@ -1,0 +1,40 @@
+remoteExtendScriptTarget = getEnv("RRE_REMOTE_URL");
+timeoutMilliseconds = 10000;
+
+var PROMPT = "$ ";
+var PROMPT_CONTINUATION = "> ";
+
+var prompt = PROMPT;
+var inputData = stdIn(prompt);
+
+do {
+
+    sendData(
+        inputData,
+        remoteExtendScriptTarget, 
+        G.CALL_BACK_ID_EXTENDSCRIPT, // This constant is defined in the startupScript.tql
+        function(result) {
+            prompt = result.substr(result.length - PROMPT.length);
+            if (prompt == PROMPT || prompt == PROMPT_CONTINUATION) {
+                result = result.substr(0, result.length - prompt.length);
+            }
+            else {
+                prompt = "";
+            }
+            stdOut(result);
+        },
+        timeoutMilliseconds
+    );
+
+    if (prompt == "") {
+        inputData = "\n";
+    }
+    else {
+        inputData = stdIn(prompt);
+        var trimmedInputData = G.UTIL.trim(inputData);
+    }
+
+}
+while (trimmedInputData != "quit" && trimmedInputData != "quit()");
+
+quit();

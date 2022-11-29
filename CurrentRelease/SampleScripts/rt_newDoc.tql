@@ -1,0 +1,59 @@
+//
+// rt_newDoc.tql
+// NEEDS UPDATING
+
+feedBack = function(s) { stdOut(s + "\n"); }
+
+feedBack("rt_newDoc.tql");
+
+remoteSettings = eval(readFile("remoteSettings.json"));
+
+coordinatorName = 
+    "net.tightener.coordinator." + 
+    remoteSettings.indesignShortCoordinatorName;
+
+target = 
+    "tgh://" + 
+    remoteSettings.remoteHost + 
+    "/" + 
+    coordinatorName + 
+    "/" + 
+    remoteSettings.inDesignEngineName;
+
+feedBack("start");
+
+retVal = "";
+
+inDesignScript = <<EOF1
+
+doc = app.documents.add();
+spread = doc.spreads[0];
+textFrame = spread.textFrames.add();
+textFrame.contents = "This is some text";
+textFrame.geometricBounds = [5, 5, 80, 80];
+textFrame.contents
+
+EOF1
+
+result = undefined;
+eval(
+    inDesignScript, 
+    target, 
+    function(x) 
+    { 
+        result = x;
+    }, 
+    remoteSettings.timeout);
+
+if (result)
+{
+    retVal = result;    
+}
+else
+{
+    retVal = "failed";
+}
+
+feedBack(retVal);
+
+quit();

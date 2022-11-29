@@ -1,0 +1,159 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+a = 
+{
+    m1: "aaaa",
+    m2: "bbbb",
+    m3: "cccc"
+};
+
+function sort(nodes)
+{
+    for (idx1 = nodes.length-2; idx1 >= 0; idx1--)
+    {
+        for (idx2 = nodes.length-1; idx2 > idx1; idx2--) {
+            if (nodes[idx2] < nodes[idx1]) {
+                temp = nodes[idx2];
+                nodes[idx2] = nodes[idx1];
+                nodes[idx1] = temp;
+            }
+        }
+    }
+}
+
+function filterAllButOne(phase, nodes)
+{   
+    if (phase == "process")
+    {  
+        processedNodes = [];
+        sort(nodes);
+        for (idx = 0; idx < nodes.length - 1; idx++)
+        {
+            processedNodes.push(nodes[idx]);
+        }
+        return processedNodes;
+    }
+}
+
+function filterAllButOneV2(phase, nodes)
+{
+    if (phase == "process")
+    {
+        sort(nodes);
+        nodes.pop();
+        return nodes;
+    }
+}
+
+x = a.reference("/filterAllButOne()/$m.*");
+if (x != [ "aaaa", "bbbb"])
+{
+    retVal += "x match1 failed ";
+}
+
+x = a.reference("/filterAllButOne()/$m.*");
+if (x != [ "aaaa", "bbbb"])
+{
+    retVal += "x match2 failed ";
+}
+
+y = a.reference("/filterAllButOneV2()/$m.*");
+if (y != [ "aaaa", "bbbb"])
+{
+    retVal += "y match3 V2 failed ";
+}
+
+y = a.reference("/filterAllButOneV2()/$m.*");
+if (y != [ "aaaa", "bbbb"])
+{
+    retVal += "y match4 V2 failed ";
+}
+
+db =
+[
+  {
+    first: "Moody",
+    last: "Smith",
+    toys: [ "toy1", "toy2" ]
+  },
+  {
+    first: "John",
+    last: "Smith",
+    toys: [ "toy3", "toy4" ]
+  },
+  {
+    first: "William",
+    last: "Smith",
+    toys: [ "toy5", "toy6" ]
+  },
+  {
+    first: "Moody",
+    last: "Johnson",
+    toys: [ "toy7", "toy8" ]
+  }
+];
+
+function updateDB(phase, nodes, key)
+{
+    if (phase == "ignore")
+    {
+        // Do not drill into a node that does not have last = "Smith"
+        return nodes[key].last != "Smith";
+    }
+    if (phase == "process")
+    {
+        // Update the nodes that were found
+        for (idx = 0; idx < nodes.length; ++idx)
+        {
+            toy = nodes[idx];
+            toyNumber = toy.substr(toy.length - 1);
+            // nodes[idx] is a reference to the actual node in the db
+            // so we can update the db
+            nodes[idx] = toy + "_" + toyNumber;
+        }
+        return nodes;
+    }
+}
+
+y = db.reference("/$.*/updateDB()/toys/$.*");
+
+if (y != [ [ "toy1_1", "toy2_2" ], [ "toy3_3", "toy4_4" ], [ "toy5_5", "toy6_6" ] ])
+{
+    retVal += "y match5 failed ";
+}
+
+if (db[0].toys != [ "toy1_1", "toy2_2" ])
+{
+    retVal += "y update6 failed ";
+}
+
+function flattenDB(phase, nodes, key)
+{
+    if (phase == "process")
+    {
+        // Update the nodes that were found
+        for (idx = 0; idx < nodes.length; ++idx)
+        {
+            toy = nodes[idx];
+            flatToys.push(toy);
+        }
+        return nodes;
+    }
+}
+
+flatToys = [];
+y = db.reference("/$.*/flattenDB()/toys/$.*");
+if (flatToys != ["toy1_1", "toy2_2", "toy3_3", "toy4_4", "toy5_5", "toy6_6", "toy7", "toy8"])
+{
+    retVal += "y flattening7 failed ";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

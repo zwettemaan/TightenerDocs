@@ -1,0 +1,96 @@
+//
+// startupScript.tql
+//
+G = {}; evalScript(parentPath(scriptFilePath()) + "util.mtql");
+
+G.UTIL.include("log.mtql");
+
+G.LOG.setLogLevel(0);
+
+G.CALL_BACK_ID_DEFAULT      = "net.tightener.callbackid.commandline.default";
+G.CALL_BACK_ID_EXTENDSCRIPT = "net.tightener.callbackid.commandline.extendscript";
+G.CALL_BACK_ID_TQL          = "net.tightener.callbackid.commandline.tql";
+G.CALL_BACK_ID_TQL_SPLIT    = "net.tightener.callbackid.commandline.tql.split";
+G.STREAM_ID_TQL             = "net.tightener.streamid.commandline.tql";
+G.STREAM_ID_EXTENDSCRIPT    = "net.tightener.streamid.commandline.extendscript";
+G.REPL_TIMEOUT_MILLISECONDS = 10000;
+
+G.EXTENDSCRIPT_INDESIGN_ENGINE_PERSISTENT = "net.tightener.persistent";
+
+G.IS_INDESIGN = 
+    sysInfo().coordinatorName.indexOf(".coordinator.indesign.") > 0;
+G.IS_ESDLL = 
+    sysInfo().defaultEngine == "ESDLL";
+
+setDataRequestCallBack(
+    G.CALL_BACK_ID_TQL, 
+    function(senderURL, callBackID, streamData) {
+        var result = 
+            parseScript(
+                G.STREAM_ID_TQL,
+                streamData,
+                "prompt",
+                G.REPL_TIMEOUT_MILLISECONDS);
+        var prompt = result.substr(result.length - 2);
+        result = result.substr(0, result.length - 2);
+        if (result) {
+            result = eval(result) + "\n";
+        }
+        sendData(result + prompt);
+    }
+);
+
+if (G.IS_INDESIGN && ! G.IS_ESDLL) {
+
+    // The InDesign plug-in Tightener allows using persistent engines
+    setDataRequestCallBack(
+        G.CALL_BACK_ID_EXTENDSCRIPT, 
+        function(senderURL, callBackID, streamData) {
+            var result = 
+                parseScript(
+                    G.STREAM_ID_EXTENDSCRIPT,
+                    streamData,
+                    "prompt",
+                    G.REPL_TIMEOUT_MILLISECONDS);
+            var prompt = result.substr(result.length - 2);
+            result = result.substr(0, result.length - 2);
+            if (! result) {
+                result = "\n";
+            }
+            else {
+                result = 
+                    app.evalExtendScript(
+                        result, 
+                        G.EXTENDSCRIPT_INDESIGN_ENGINE_PERSISTENT) + "\n";
+            }
+            sendData(result + prompt);
+        }
+    );
+}
+else {
+    setDataRequestCallBack(
+        G.CALL_BACK_ID_EXTENDSCRIPT, 
+        function(senderURL, callBackID, streamData) {
+            var result = 
+                parseScript(
+                    G.STREAM_ID_EXTENDSCRIPT,
+                    [ streamData, "TIGHTENER.yield()" ],
+                    "prompt",
+                    G.REPL_TIMEOUT_MILLISECONDS);
+            var prompt = result.substr(result.length - 2);
+            var result = result.substr(0, result.length - 2);
+            if (! result) {
+                result = "\n";
+                sendData(result + prompt);
+            }
+            else {
+                app.evalExtendScript(
+                    result, 
+                    function(processedResult) {
+                        sendData(processedResult + "\n" + prompt);
+                    }
+                );
+            }
+        }
+    );
+}

@@ -1,0 +1,54 @@
+//
+// remoteQuitReflector.tql
+//
+// Run with rt which uses the local scriptrunner:
+//
+//   rt remoteQuitReflector.tql
+//
+// This script runs in the local scriptrunner and 
+// sends a small TQL script (just 'quit()') to the remote 
+// reflector by way of the eval() function
+//
+// This might actually start the reflector first, then 
+// quit it. If the timeout is not long enough, you might
+// get a failure even though the quit still succeeds.
+//
+
+remoteSettings = eval(readFile("remoteSettings.json"));
+
+feedBack = function(s) { 
+    stdOut(s + "\n"); 
+}
+
+feedBack("remoteQuitReflector.tql");
+
+coordinatorName = "net.tightener.coordinator.reflector"; 
+engineName = "default";
+
+target = 
+    "tgh://" + 
+    remoteSettings.remoteHost +
+    "/" + 
+    coordinatorName + 
+    "/" +
+    engineName; 
+
+feedBack("Remote target: " + target);
+
+// This might actually start the reflector first, then 
+// quits it. If the timeout is not long enough, you might
+// get a failure even though the quit still succeeds.
+
+done = false;
+eval(
+    "quit();", 
+    target, 
+    function(x) {
+        feedBack("done");
+        done = true;
+    }, 
+    remoteSettings.timeout);
+
+if (! done) {
+    feedBack("Cannot reach " + target);
+}

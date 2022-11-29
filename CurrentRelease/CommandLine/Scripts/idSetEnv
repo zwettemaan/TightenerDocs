@@ -1,0 +1,30 @@
+#
+# Read the InDesign information from the active config.ini file
+#
+# To edit the config.ini, use `editConfig`
+#
+# To (re)initialize the active config.ini with a copy of the template file Release/Config/config.ini, 
+# use `copyConfig`
+#
+
+# Use evalTQL once to calculate three environment variables by concatenating then splitting on ,
+
+evalTQL "sysInfo().ini.placeholders.INDESIGN_VERSION + ',' + sysInfo().ini.placeholders.INDESIGN_SDK_VERSION + ',' + (sysInfo().ini.coordinatorMap.indesign.indexOf('server') >= 0 ? 1 : 0)" | IFS=, read -r INDESIGN_TIGHTENER_VERSION INDESIGN_TIGHTENER_SDK_VERSION INDESIGN_TIGHTENER_IS_SERVER
+export INDESIGN_TIGHTENER_VERSION
+export INDESIGN_TIGHTENER_SDK_VERSION
+export INDESIGN_TIGHTENER_IS_SERVER
+
+export TIGHTENER_PLUGINS_RELEASE_ROOT="${TIGHTENER_RELEASE_ROOT}Plug-Ins/"
+
+if [  "${INDESIGN_TIGHTENER_IS_SERVER}" = "1" ]; then
+    export INDESIGN_TIGHTENER_HOSTAPP="InDesign Server ${INDESIGN_TIGHTENER_VERSION}"
+    export INDESIGN_APP_FILE="InDesignServer"
+else
+    export INDESIGN_TIGHTENER_HOSTAPP="InDesign ${INDESIGN_TIGHTENER_VERSION}"
+    export INDESIGN_APP_FILE="Adobe InDesign ${INDESIGN_TIGHTENER_VERSION}.app/Contents/MacOS/Adobe InDesign ${INDESIGN_TIGHTENER_VERSION}"
+fi
+export INDESIGN_APP_ROOT="/Applications/Adobe ${INDESIGN_TIGHTENER_HOSTAPP}/"
+export INDESIGN_RELEASE_PLUGIN_FOLDER="${TIGHTENER_PLUGINS_RELEASE_ROOT}InDesign${INDESIGN_TIGHTENER_VERSION}.${INDESIGN_TIGHTENER_SDK_VERSION}/Mac/"
+export INDESIGN_APP_PLUGIN_FOLDER="${INDESIGN_APP_ROOT}Plug-Ins/"
+export INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER="${INDESIGN_APP_PLUGIN_FOLDER}Rorohiko/"
+

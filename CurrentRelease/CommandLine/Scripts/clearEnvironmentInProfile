@@ -1,0 +1,13 @@
+PROFILE=$1
+
+if [ -f ${PROFILE} ]; then
+
+    ed ${PROFILE} <<EOF > /dev/null
+/^### TIGHTENER_BEGIN
++,/^### TIGHTENER_END/d
+/^### TIGHTENER_BEGIN/d
+w
+q
+EOF
+
+fi

@@ -1,0 +1,80 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+// This script is a counterpart to CommandLine/Scripts/reflectorTestStartupScript.tql 
+// set as a startup script in config.ini for the reflector coordinator
+
+timeoutMilliseconds = 10000;
+retVal = "";
+prefix = "Reflected: ";
+reflectedData = "abc";
+reflectionCounter = undefined;
+
+targetNode = "reflector"; // Needs to be set up in config.ini
+
+expected = prefix + reflectedData + " ";
+
+G.TESTSCRIPT.console("first call, expected data prefix: " + expected);
+
+result = undefined;
+sendData(
+    reflectedData, 
+    targetNode, 
+    function(evalResult) {
+        G.TESTSCRIPT.console("first call evalResult: " + evalResult);
+        result = evalResult;
+    }, 
+    timeoutMilliseconds
+);
+
+G.TESTSCRIPT.console("first call completed, result: " + result);
+
+counterPrefix = "count = ";
+
+counterOffset = result.indexOf(counterPrefix);
+
+reflectionCounter = parseInt(result.substr(counterOffset + counterPrefix.length));
+G.TESTSCRIPT.console("counter " + reflectionCounter)
+
+result = result.substr(0, expected.length);
+
+if (result != expected) {
+    retVal += "failed first reflection";
+}
+
+G.TESTSCRIPT.console("second call");
+
+result = undefined;
+sendData(
+    reflectedData, 
+    targetNode, 
+    function(evalResult) {
+        G.TESTSCRIPT.console("second call evalResult: " + evalResult);
+        result = evalResult;
+    }, 
+    timeoutMilliseconds
+);
+
+G.TESTSCRIPT.console("second call completed, result: " + result);
+
+counterOffset = result.indexOf(counterPrefix);
+
+reflectionCounter2 = parseInt(result.substr(counterOffset + counterPrefix.length));
+
+if (reflectionCounter2 != reflectionCounter + 1) {
+    retVal += "failed second reflection";
+}
+
+eval(
+    "quit()", 
+    targetNode,
+    timeoutMilliseconds);
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

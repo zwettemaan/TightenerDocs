@@ -1,0 +1,144 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+function almostEqual(x,y) 
+{
+    return (abs(x-y) < 0.001);
+}
+
+retVal = "";
+
+x=9,y=10;
+if (x != 9)
+{
+    retVal += "failed x == 9\n";
+}
+if (y != 10)
+{
+    retVal += "failed y == 10\n";
+}
+if (typeof x != "number")
+{
+    retVal += "failed typeof x == \"number\"\n";
+}
+if (typeof y != "number")
+{
+    retVal += "failed typeof y == \"number\"\n";
+}
+
+s = "a = { a: \"test1\", b: 'withquote \"in\" the string' }";
+if (typeof s != "string")
+{
+    retVal += "failed typeof t == \"object\"\n";
+}
+t = eval(s);
+if (typeof t != "object")
+{
+    retVal += "failed typeof t == \"object\"\n";
+}
+if (t.toString() != "{ \"a\": \"test1\", \"b\": \"withquote \\\"in\\\" the string\" }")
+{
+    retVal += "failed t.toString()\n";
+}
+
+if (t.stringify() != "{\"a\":\"test1\", \"b\":\"withquote \\\"in\\\" the string\"}")
+{
+    retVal += "failed t.stringify()\n";
+}
+if (s != 'a = { a: "test1", b: \'withquote "in" the string\' }')
+{
+    retVal += "failed s alternate quote version";
+}
+if (a.a != 'test1')
+{
+    retVal += "failed a.a string test1\n";
+}
+if (a.a != "test1")
+{
+    retVal += "failed a.b string test2\n";
+}
+if (a.b != 'withquote "in" the string')
+{
+    retVal += "failed a.b string test1\n";
+}
+if (a.b != "withquote \"in\" the string")
+{
+    retVal += "failed a.b string test2\n";
+}
+
+o1 = { a: "abc", b: "pqr", "012#@": "stu" };
+o2 = { "012#@": "stu", 'a': "abc", "b": "pqr" };
+if (o1 != o2) 
+{
+    retVal += "failed object comparison\n";
+}
+
+s = ">";
+for (x = 0, y = 0; x < 10; x = x + 1, y = y - 1) { s += " " + x + " " + y};
+s += "<";
+if (s != "> 0 0 1 -1 2 -2 3 -3 4 -4 5 -5 6 -6 7 -7 8 -8 9 -9<")
+{
+    retVal += "failed for with comma operators\n";
+}
+
+a = 2/3;
+if (! almostEqual(a, 0.666667))
+{
+    retVal += "failed 2/3 comparison\n";
+}
+
+a = 2/* bla *//3; 
+if (! almostEqual(a, 0.666667))
+{
+    retVal += "failed 2/* bla *//3 comparison\n";
+}
+
+// The single slash is not a division - it is part of a // line comment
+a = 2//* bla */3;  
+if (a != 2)
+{
+    retVal += "failed 2//* bla */3 comparison\n";
+}
+
+a = 2/0;
+if (! isNaN(a))
+{
+    retVal += "failed:should be NaN\n";
+}
+if (a == NaN) 
+{
+    retVal += "failed: NaN never compares equal with itself\n";
+}
+
+x = 1;
+for (;;)
+{
+    x++; 
+    y = sqr(x);
+    yc = 1;
+    sy = 0;
+    for (;;)
+    {
+        sy = sy + sqr(y);
+        if (yc > 10) 
+            break; 
+        yc++;
+        y++;
+    }
+    if (x > 10) 
+        break;
+}
+
+if (sy != 174746)
+{
+    retVal += "failed: for with breaks " + sy;
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

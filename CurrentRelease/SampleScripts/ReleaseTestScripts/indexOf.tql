@@ -1,0 +1,34 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+a = "abc";
+b = "abcdefg\x01pqrst\x02abc";
+
+if (a.indexOf("bc") != 1) {
+    retVal += "failed: a.indexOf('bc')";
+}
+
+if (a.indexOf("ac") >= 0) {
+    retVal += "failed: a.indexOf('ac') ";
+}
+
+if (b.indexOf("bc") != 1) {
+    retVal += "failed: a.indexOf('bc')";
+}
+
+if (b.indexOf("bc", 2) != 15) {
+    retVal += "failed: a.indexOf('bc', 2)";
+}
+
+if (b.indexOf("\x02") != 13) {
+    retVal += "failed: b.indexOf(\"\\x02\")";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

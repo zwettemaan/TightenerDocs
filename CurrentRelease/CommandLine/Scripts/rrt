@@ -1,0 +1,35 @@
+#
+# Remotely run a locally stored TQL script.
+#
+# e.g.
+#
+# rrt reflector hello.tql 10000
+# rrt tgh://127.0.0.1/net.tightener.coordinator.reflector/default hello.tql 10000
+# rrt tgh://sandy.rorohiko.com/net.tightener.coordinator.indesign.17.0/main hello.tql
+#
+
+if [ "$1" = "" -o "$2" = "" ]; then
+    echo "Usage:"
+    echo "  `basename \"$0\"` target scriptPath [ quitDelayMilliseconds ]"
+    exit
+fi
+
+if [ ! -f "$2" ]; then
+    echo "Script file $2 does not exist"
+    exit
+fi
+
+TIMEOUT_MS=10000
+
+#
+# If responses are expected, we need to wait a bit to receive them
+# If we quit too soon, the response will vanish into the bit bucket
+#
+
+if [ "$3" = "" ]; then
+    QUIT_DELAY_MS=10000
+else
+    QUIT_DELAY_MS="$3"
+fi
+
+Tightener -N scriptrunner -r "$1" -o ${TIMEOUT_MS} -w ${QUIT_DELAY_MS} -t n -f "$2"

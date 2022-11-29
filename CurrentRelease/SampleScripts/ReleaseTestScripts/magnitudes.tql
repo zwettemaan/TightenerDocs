@@ -1,0 +1,810 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+a1 = -1234.56E50;
+a2 = -1234.56e2;
+a3 = -1234.56;
+a4 = -1234;
+a5 = -123;
+a6 = -123E-2;
+a7 = -0.000000123;
+a8 = -123.45E-56;
+a9 = -95E-56;
+a10 = 0;
+a11 = 95e-56;
+a12 = 123.45e-56;
+a13 = 0.000000123;
+a14 = 123e-2;
+a15 = 123;
+a16 = 1234;
+a17 = 1234.56;
+a18 = 1235.56e2;
+a19 = 1234.56e50;
+
+if (a1 >= a19)
+{
+    retVal += "error a1 >= a19"
+}
+if (a2 >= a19)
+{
+    retVal += "error a2 >= a19"
+}
+if (a3 >= a19)
+{
+    retVal += "error a3 >= a19"
+}
+if (a4 >= a19)
+{
+    retVal += "error a4 >= a19"
+}
+if (a5 >= a19)
+{
+    retVal += "error a5 >= a19"
+}
+if (a6 >= a19)
+{
+    retVal += "error a6 >= a19"
+}
+if (a7 >= a19)
+{
+    retVal += "error a7 >= a19"
+}
+if (a8 >= a19)
+{
+    retVal += "error a8 >= a19"
+}
+if (a9 >= a19)
+{
+    retVal += "error a9 >= a19"
+}
+if (a10 >= a19)
+{
+    retVal += "error a10 >= a19"
+}
+if (a11 >= a19)
+{
+    retVal += "error a11 >= a19"
+}
+if (a12 >= a19)
+{
+    retVal += "error a12 >= a19"
+}
+if (a13 >= a19)
+{
+    retVal += "error a13 >= a19"
+}
+if (a14 >= a19)
+{
+    retVal += "error a14 >= a19"
+}
+if (a15 >= a19)
+{
+    retVal += "error a15 >= a19"
+}
+if (a16 >= a19)
+{
+    retVal += "error a16 >= a19"
+}
+if (a17 >= a19)
+{
+    retVal += "error a17 >= a19"
+}
+if (a18 >= a19)
+{
+    retVal += "error a18 >= a19"
+}
+if (a19 > a19)
+{
+    retVal += "error a19 > a19"
+}
+
+if (a1 >= a18)
+{
+    retVal += "error a1 >= a18"
+}
+if (a2 >= a18)
+{
+    retVal += "error a2 >= a18"
+}
+if (a3 >= a18)
+{
+    retVal += "error a3 >= a18"
+}
+if (a4 >= a18)
+{
+    retVal += "error a4 >= a18"
+}
+if (a5 >= a18)
+{
+    retVal += "error a5 >= a18"
+}
+if (a6 >= a18)
+{
+    retVal += "error a6 >= a18"
+}
+if (a7 >= a18)
+{
+    retVal += "error a7 >= a18"
+}
+if (a8 >= a18)
+{
+    retVal += "error a8 >= a18"
+}
+if (a9 >= a18)
+{
+    retVal += "error a9 >= a18"
+}
+if (a10 >= a18)
+{
+    retVal += "error a10 >= a18"
+}
+if (a11 >= a18)
+{
+    retVal += "error a11 >= a18"
+}
+if (a12 >= a18)
+{
+    retVal += "error a12 >= a18"
+}
+if (a13 >= a18)
+{
+    retVal += "error a13 >= a18"
+}
+if (a14 >= a18)
+{
+    retVal += "error a14 >= a18"
+}
+if (a15 >= a18)
+{
+    retVal += "error a15 >= a18"
+}
+if (a16 >= a18)
+{
+    retVal += "error a16 >= a18"
+}
+if (a17 >= a18)
+{
+    retVal += "error a17 >= a18"
+}
+if (a18 > a18)
+{
+    retVal += "error a18 > a18"
+}
+
+if (a1 >= a17)
+{
+    retVal += "error a1 >= a17"
+}
+if (a2 >= a17)
+{
+    retVal += "error a2 >= a17"
+}
+if (a3 >= a17)
+{
+    retVal += "error a3 >= a17"
+}
+if (a4 >= a17)
+{
+    retVal += "error a4 >= a17"
+}
+if (a5 >= a17)
+{
+    retVal += "error a5 >= a17"
+}
+if (a6 >= a17)
+{
+    retVal += "error a6 >= a17"
+}
+if (a7 >= a17)
+{
+    retVal += "error a7 >= a17"
+}
+if (a8 >= a17)
+{
+    retVal += "error a8 >= a17"
+}
+if (a9 >= a17)
+{
+    retVal += "error a9 >= a17"
+}
+if (a10 >= a17)
+{
+    retVal += "error a10 >= a17"
+}
+if (a11 >= a17)
+{
+    retVal += "error a11 >= a17"
+}
+if (a12 >= a17)
+{
+    retVal += "error a12 >= a17"
+}
+if (a13 >= a17)
+{
+    retVal += "error a13 >= a17"
+}
+if (a14 >= a17)
+{
+    retVal += "error a14 >= a17"
+}
+if (a15 >= a17)
+{
+    retVal += "error a15 >= a17"
+}
+if (a16 >= a17)
+{
+    retVal += "error a16 >= a17"
+}
+if (a17 > a17)
+{
+    retVal += "error a17 > a17"
+}
+
+if (a1 >= a16)
+{
+    retVal += "error a1 >= a16"
+}
+if (a2 >= a16)
+{
+    retVal += "error a2 >= a16"
+}
+if (a3 >= a16)
+{
+    retVal += "error a3 >= a16"
+}
+if (a4 >= a16)
+{
+    retVal += "error a4 >= a16"
+}
+if (a5 >= a16)
+{
+    retVal += "error a5 >= a16"
+}
+if (a6 >= a16)
+{
+    retVal += "error a6 >= a16"
+}
+if (a7 >= a16)
+{
+    retVal += "error a7 >= a16"
+}
+if (a8 >= a16)
+{
+    retVal += "error a8 >= a16"
+}
+if (a9 >= a16)
+{
+    retVal += "error a9 >= a16"
+}
+if (a10 >= a16)
+{
+    retVal += "error a10 >= a16"
+}
+if (a11 >= a16)
+{
+    retVal += "error a11 >= a16"
+}
+if (a12 >= a16)
+{
+    retVal += "error a12 >= a16"
+}
+if (a13 >= a16)
+{
+    retVal += "error a13 >= a16"
+}
+if (a14 >= a16)
+{
+    retVal += "error a14 >= a16"
+}
+if (a15 >= a16)
+{
+    retVal += "error a15 >= a16"
+}
+if (a16 > a16)
+{
+    retVal += "error a16 > a16"
+}
+
+if (a1 >= a15)
+{
+    retVal += "error a1 >= a15"
+}
+if (a2 >= a15)
+{
+    retVal += "error a2 >= a15"
+}
+if (a3 >= a15)
+{
+    retVal += "error a3 >= a15"
+}
+if (a4 >= a15)
+{
+    retVal += "error a4 >= a15"
+}
+if (a5 >= a15)
+{
+    retVal += "error a5 >= a15"
+}
+if (a6 >= a15)
+{
+    retVal += "error a6 >= a15"
+}
+if (a7 >= a15)
+{
+    retVal += "error a7 >= a15"
+}
+if (a8 >= a15)
+{
+    retVal += "error a8 >= a15"
+}
+if (a9 >= a15)
+{
+    retVal += "error a9 >= a15"
+}
+if (a10 >= a15)
+{
+    retVal += "error a10 >= a15"
+}
+if (a11 >= a15)
+{
+    retVal += "error a11 >= a15"
+}
+if (a12 >= a15)
+{
+    retVal += "error a12 >= a15"
+}
+if (a13 >= a15)
+{
+    retVal += "error a13 >= a15"
+}
+if (a14 >= a15)
+{
+    retVal += "error a14 >= a15"
+}
+if (a15 > a15)
+{
+    retVal += "error a15 > a15"
+}
+
+if (a1 >= a14)
+{
+    retVal += "error a1 >= a14"
+}
+if (a2 >= a14)
+{
+    retVal += "error a2 >= a14"
+}
+if (a3 >= a14)
+{
+    retVal += "error a3 >= a14"
+}
+if (a4 >= a14)
+{
+    retVal += "error a4 >= a14"
+}
+if (a5 >= a14)
+{
+    retVal += "error a5 >= a14"
+}
+if (a6 >= a14)
+{
+    retVal += "error a6 >= a14"
+}
+if (a7 >= a14)
+{
+    retVal += "error a7 >= a14"
+}
+if (a8 >= a14)
+{
+    retVal += "error a8 >= a14"
+}
+if (a9 >= a14)
+{
+    retVal += "error a9 >= a14"
+}
+if (a10 >= a14)
+{
+    retVal += "error a10 >= a14"
+}
+if (a11 >= a14)
+{
+    retVal += "error a11 >= a14"
+}
+if (a12 >= a14)
+{
+    retVal += "error a12 >= a14"
+}
+if (a13 >= a14)
+{
+    retVal += "error a13 >= a14"
+}
+if (a14 > a14)
+{
+    retVal += "error a14 > a14"
+}
+
+if (a1 >= a13)
+{
+    retVal += "error a1 >= a13"
+}
+if (a2 >= a13)
+{
+    retVal += "error a2 >= a13"
+}
+if (a3 >= a13)
+{
+    retVal += "error a3 >= a13"
+}
+if (a4 >= a13)
+{
+    retVal += "error a4 >= a13"
+}
+if (a5 >= a13)
+{
+    retVal += "error a5 >= a13"
+}
+if (a6 >= a13)
+{
+    retVal += "error a6 >= a13"
+}
+if (a7 >= a13)
+{
+    retVal += "error a7 >= a13"
+}
+if (a8 >= a13)
+{
+    retVal += "error a8 >= a13"
+}
+if (a9 >= a13)
+{
+    retVal += "error a9 >= a13"
+}
+if (a10 >= a13)
+{
+    retVal += "error a10 >= a13"
+}
+if (a11 >= a13)
+{
+    retVal += "error a11 >= a13"
+}
+if (a12 >= a13)
+{
+    retVal += "error a12 >= a13"
+}
+if (a13 > a13)
+{
+    retVal += "error a13 > a13"
+}
+
+if (a1 >= a12)
+{
+    retVal += "error a1 >= a12"
+}
+if (a2 >= a12)
+{
+    retVal += "error a2 >= a12"
+}
+if (a3 >= a12)
+{
+    retVal += "error a3 >= a12"
+}
+if (a4 >= a12)
+{
+    retVal += "error a4 >= a12"
+}
+if (a5 >= a12)
+{
+    retVal += "error a5 >= a12"
+}
+if (a6 >= a12)
+{
+    retVal += "error a6 >= a12"
+}
+if (a7 >= a12)
+{
+    retVal += "error a7 >= a12"
+}
+if (a8 >= a12)
+{
+    retVal += "error a8 >= a12"
+}
+if (a9 >= a12)
+{
+    retVal += "error a9 >= a12"
+}
+if (a10 >= a12)
+{
+    retVal += "error a10 >= a12"
+}
+if (a11 >= a12)
+{
+    retVal += "error a11 >= a12"
+}
+if (a12 > a12)
+{
+    retVal += "error a12 > a12"
+}
+
+if (a1 >= a11)
+{
+    retVal += "error a1 >= a11"
+}
+if (a2 >= a11)
+{
+    retVal += "error a2 >= a11"
+}
+if (a3 >= a11)
+{
+    retVal += "error a3 >= a11"
+}
+if (a4 >= a11)
+{
+    retVal += "error a4 >= a11"
+}
+if (a5 >= a11)
+{
+    retVal += "error a5 >= a11"
+}
+if (a6 >= a11)
+{
+    retVal += "error a6 >= a11"
+}
+if (a7 >= a11)
+{
+    retVal += "error a7 >= a11"
+}
+if (a8 >= a11)
+{
+    retVal += "error a8 >= a11"
+}
+if (a9 >= a11)
+{
+    retVal += "error a9 >= a11"
+}
+if (a10 >= a11)
+{
+    retVal += "error a10 >= a11"
+}
+if (a11 > a11)
+{
+    retVal += "error a11 > a11"
+}
+
+if (a1 >= a10)
+{
+    retVal += "error a1 >= a10"
+}
+if (a2 >= a10)
+{
+    retVal += "error a2 >= a10"
+}
+if (a3 >= a10)
+{
+    retVal += "error a3 >= a10"
+}
+if (a4 >= a10)
+{
+    retVal += "error a4 >= a10"
+}
+if (a5 >= a10)
+{
+    retVal += "error a5 >= a10"
+}
+if (a6 >= a10)
+{
+    retVal += "error a6 >= a10"
+}
+if (a7 >= a10)
+{
+    retVal += "error a7 >= a10"
+}
+if (a8 >= a10)
+{
+    retVal += "error a8 >= a10"
+}
+if (a9 >= a10)
+{
+    retVal += "error a9 >= a10"
+}
+if (a10 > a10)
+{
+    retVal += "error a10 > a10"
+}
+
+if (a1 >= a9)
+{
+    retVal += "error a1 >= a9"
+}
+if (a2 >= a9)
+{
+    retVal += "error a2 >= a9"
+}
+if (a3 >= a9)
+{
+    retVal += "error a3 >= a9"
+}
+if (a4 >= a9)
+{
+    retVal += "error a4 >= a9"
+}
+if (a5 >= a9)
+{
+    retVal += "error a5 >= a9"
+}
+if (a6 >= a9)
+{
+    retVal += "error a6 >= a9"
+}
+if (a7 >= a9)
+{
+    retVal += "error a7 >= a9"
+}
+if (a8 >= a9)
+{
+    retVal += "error a8 >= a9"
+}
+if (a9 > a9)
+{
+    retVal += "error a9 > a9"
+}
+
+if (a1 >= a8)
+{
+    retVal += "error a1 >= a8"
+}
+if (a2 >= a8)
+{
+    retVal += "error a2 >= a8"
+}
+if (a3 >= a8)
+{
+    retVal += "error a3 >= a8"
+}
+if (a4 >= a8)
+{
+    retVal += "error a4 >= a8"
+}
+if (a5 >= a8)
+{
+    retVal += "error a5 >= a8"
+}
+if (a6 >= a8)
+{
+    retVal += "error a6 >= a8"
+}
+if (a7 >= a8)
+{
+    retVal += "error a7 >= a8"
+}
+if (a8 > a8)
+{
+    retVal += "error a8 > a8"
+}
+
+if (a1 >= a7)
+{
+    retVal += "error a1 >= a7"
+}
+if (a2 >= a7)
+{
+    retVal += "error a2 >= a7"
+}
+if (a3 >= a7)
+{
+    retVal += "error a3 >= a7"
+}
+if (a4 >= a7)
+{
+    retVal += "error a4 >= a7"
+}
+if (a5 >= a7)
+{
+    retVal += "error a5 >= a7"
+}
+if (a6 >= a7)
+{
+    retVal += "error a6 >= a7"
+}
+if (a7 > a7)
+{
+    retVal += "error a7 > a7"
+}
+
+if (a1 >= a6)
+{
+    retVal += "error a1 >= a6"
+}
+if (a2 >= a6)
+{
+    retVal += "error a2 >= a6"
+}
+if (a3 >= a6)
+{
+    retVal += "error a3 >= a6"
+}
+if (a4 >= a6)
+{
+    retVal += "error a4 >= a6"
+}
+if (a5 >= a6)
+{
+    retVal += "error a5 >= a6"
+}
+if (a6 > a6)
+{
+    retVal += "error a6 > a6"
+}
+
+if (a1 >= a5)
+{
+    retVal += "error a1 >= a5"
+}
+if (a2 >= a5)
+{
+    retVal += "error a2 >= a5"
+}
+if (a3 >= a5)
+{
+    retVal += "error a3 >= a5"
+}
+if (a4 >= a5)
+{
+    retVal += "error a4 >= a5"
+}
+if (a5 > a5)
+{
+    retVal += "error a5 > a5"
+}
+
+if (a1 >= a4)
+{
+    retVal += "error a1 >= a4"
+}
+if (a2 >= a4)
+{
+    retVal += "error a2 >= a4"
+}
+if (a3 >= a4)
+{
+    retVal += "error a3 >= a4"
+}
+if (a4 > a4)
+{
+    retVal += "error a4 > a4"
+}
+
+if (a1 >= a3)
+{
+    retVal += "error a1 >= a3"
+}
+if (a2 >= a3)
+{
+    retVal += "error a2 >= a3"
+}
+if (a3 > a3)
+{
+    retVal += "error a3 > a3"
+}
+
+if (a1 >= a2)
+{
+    retVal += "error a1 >= a2"
+}
+if (a2 > a2)
+{
+    retVal += "error a2 > a2"
+}
+
+if (a1 > a1)
+{
+    retVal += "error a1 > a1"
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

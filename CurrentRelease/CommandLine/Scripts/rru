@@ -1,0 +1,49 @@
+#
+# Remotely run a locally stored UxpScript.
+#
+# rru <target> <script> [ <quit_delay_ms> ]
+#
+# e.g.
+#
+# rru indesign hello.idsj 10000
+# rru tgh://freddy/indesign/main hello.idsj
+# rru tgh://sandy.rorohiko.com/net.tightener.coordinator.indesign.18.0/main hello.idsj
+# rru tgh://sandy.rorohiko.com/net.tightener.coordinator.indesign.18.0.configuration_noport/main hello.idsj
+#
+
+if [ "$1" = "" -o "$2" = "" ]; then
+    echo "Usage:"
+    echo "  `basename \"$0\"` target uxpScriptPath [ quitDelayMilliseconds ]"
+    exit
+fi
+
+if [ ! -f "$2" ]; then
+    echo "Script file $2 does not exist"
+    exit
+fi
+
+export TIMEOUT_MS=10000
+
+#
+# If responses are expected, we need to wait a bit to receive them
+# If we quit too soon, the response will vanish into the bit bucket
+#
+if [ "$3" = "" ]; then
+    export QUIT_DELAY_MS=100
+else
+    export QUIT_DELAY_MS="$3"
+fi
+
+SCRIPT_PARENT_FOLDER=`dirname "$2"`
+SCRIPT_FILENAME=`basename "$2"`
+
+pushd "${SCRIPT_PARENT_FOLDER}" > /dev/null
+
+SCRIPT_PARENT_FOLDER=`pwd`/
+
+popd > /dev/null
+
+export RRU_SCRIPT_PATH="${SCRIPT_PARENT_FOLDER}${SCRIPT_FILENAME}"
+export RRU_REMOTE_URL="$1"
+
+Tightener -N scriptrunner -o ${TIMEOUT_MS} -w ${QUIT_DELAY_MS} -t n -f "${TIGHTENER_SCRIPTS}rru.tql"

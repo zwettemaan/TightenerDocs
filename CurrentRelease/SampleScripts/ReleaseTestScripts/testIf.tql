@@ -1,0 +1,67 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+a = 1;
+b = a + 1;
+
+if (! (b == 2))
+{
+    retVal += "failed: b == 2 ";
+}
+
+function p(q) 
+{
+    return sqr(q);
+}
+c = p(b);
+
+logTrace("c = " + c);
+
+if (! (c == 4))
+{
+    retVal += "failed: c == 4 ";
+}
+
+function m(n)
+{
+    return p(n) + "XX";
+}
+c = m(9);
+
+logTrace("c = " + c);
+
+if (! (c == "81XX"))
+{
+    retVal += "failed: c == \"81XX\" ";
+}
+
+if (c == "81XX")
+{
+}
+else
+{
+    retVal += "else failed: c == \"81XX\" ";
+}
+
+s = 1
+if (c != "81XX")
+{
+}
+else
+{
+    s = 0;
+}
+
+if (s != 0)
+{
+    retVal += "else failed: c != \"81XX\" ";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

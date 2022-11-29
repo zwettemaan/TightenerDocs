@@ -1,0 +1,5 @@
+if [ `uname` = "Darwin" ]; then
+    copyConfigMac
+else
+    copyConfigLinux
+fi

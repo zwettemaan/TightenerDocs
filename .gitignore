@@ -1,0 +1,7 @@
+/CurrentRelease/*.zip
+/CurrentRelease/Apps
+/CurrentRelease/CommandLine/Mac/
+/CurrentRelease/CommandLine/Linux/
+/CurrentRelease/CommandLine/Windows/
+/CurrentRelease/Plug-Ins/
+/CurrentRelease/SampleScripts/ReleaseTestScripts/data1.txt

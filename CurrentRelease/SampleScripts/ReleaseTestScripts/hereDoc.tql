@@ -1,0 +1,47 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+d = <<EOF1
+a = <<EOF2
+data
+EOF2
+a += a;
+a
+EOF1
+
+if (d != "a = <<EOF2\ndata\nEOF2\na += a;\na") {
+    retVal += "failed: nested heredoc1";
+}
+
+d1 = eval(d);
+
+if (d1 != "datadata") {
+    retVal += "failed: nested heredoc2";
+}
+
+l = <<EOF1
+abc
+EOF1.length
+
+if (l != 3) {
+    retVal += "failed: length of heredoc";
+}
+
+d = <<EOF1
+abc
+EOF1 + <<EOF1
+def
+EOF1
+
+if (d != "abcdef") {
+    retVal += "failed: concat of heredoc";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

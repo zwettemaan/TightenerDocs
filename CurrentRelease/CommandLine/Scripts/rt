@@ -1,0 +1,31 @@
+#
+# Run a locally stored TQL script.
+#
+# e.g.
+#
+# rt hello.tql
+#
+
+if [ "$1" = "" ]; then
+    echo "Usage:"
+    echo "  `basename \"$0\"` scriptPath [ quitDelayMilliseconds ] "
+    exit
+fi
+
+if [ ! -f "$1" ]; then
+    echo "Script file $1 does not exist"
+    exit
+fi
+
+#
+# If responses are expected, we need to wait a bit to receive them
+# If we quit too soon, the response will vanish into the bit bucket
+#
+
+if [ "$2" = "" ]; then
+    QUIT_DELAY_MS=500
+else
+    QUIT_DELAY_MS="$2"
+fi
+
+Tightener -N scriptrunner -t n -w ${QUIT_DELAY_MS} -f "$1"

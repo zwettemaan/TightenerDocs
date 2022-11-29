@@ -1,0 +1,3 @@
+echo "'runTQL' shorthand is 'rt'"
+
+rt $@

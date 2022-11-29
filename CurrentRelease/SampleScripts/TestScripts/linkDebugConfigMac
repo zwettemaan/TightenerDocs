@@ -1,0 +1,23 @@
+if [ "${TIGHTENER_GIT_ROOT}" = "" ]; then
+    echo "\$TIGHTENER_GIT_ROOT has not been set up. Please follow instructions in README.md"
+    exit
+fi
+
+if [ ! -d "${TIGHTENER_GIT_ROOT}" ]; then
+    echo "Directory \$TIGHTENER_GIT_ROOT does not exist. Please follow instructions in README.md"
+    exit
+fi
+
+if [ ! -d "${HOME}/Library/Application Support/net.tightener" ]; then
+    mkdir "${HOME}/Library/Application Support/net.tightener"
+fi
+
+if [ ! -d "${HOME}/Library/Application Support/net.tightener/SysConfig" ]; then
+    mkdir "${HOME}/Library/Application Support/net.tightener/SysConfig"
+fi
+
+rm -f "${HOME}/Library/Application Support/net.tightener/SysConfig/config.ini"
+
+ln -s "${TIGHTENER_RELEASE_ROOT}SampleScripts/TestScripts/config.ini" "${HOME}/Library/Application Support/net.tightener/SysConfig/config.ini"
+
+echo config.ini is linked

@@ -1,0 +1,35 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+scriptPath = sysInfo().scriptFilePath;
+
+scriptDir = parentPath(scriptPath);
+
+scriptFile = scriptDir + "justSuccess.tql";
+
+if (! fileExists(scriptFile)) {
+    retVal = "file missing";
+}
+
+if (! scriptFile.fileExists()) {
+    retVal = "this-based file missing";
+}
+
+value = evalScript(scriptFile);
+if (value != "success") {
+    retVal = "failed";
+}
+
+value = scriptFile.evalScript();
+if (value != "success") {
+    retVal = "this-based failed";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

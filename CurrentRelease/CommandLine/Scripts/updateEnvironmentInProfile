@@ -1,0 +1,16 @@
+PROFILE=$1
+TIGHTENER_RELEASE_ROOT=$2
+
+./clearEnvironmentInProfile "${PROFILE}"
+
+    cat >> "${PROFILE}" <<EOF
+### TIGHTENER_BEGIN 
+export TIGHTENER_RELEASE_ROOT="${TIGHTENER_RELEASE_ROOT}"
+pushd "\${TIGHTENER_RELEASE_ROOT}/CommandLine/Scripts/" > /dev/null
+. ./setPath
+popd > /dev/null
+export TIGHTENER_CONFIG_NODE_NAME=localhost
+### TIGHTENER_END   
+EOF
+
+

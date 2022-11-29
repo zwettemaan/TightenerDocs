@@ -1,0 +1,87 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+if (! isNaN(1/0)) {
+    retVal += "1/0 should be isNaN ";
+}
+
+if (! isNaN(sqrt(-1))) {
+    retVal += "sqrt(-1) should be isNaN ";
+}
+
+if (! isNaN(NaN)) {
+    retVal += "NaN should be isNaN ";
+}
+
+if (isNaN(1)) {
+    retVal += "1 should not be isNaN ";
+}
+
+if (! isNaN("aaaa")) {
+    retVal += "\"aaaa\" should be isNaN ";
+}
+
+if (isNaN("111")) {
+    retVal += "\"111\" should not be isNaN ";
+}
+
+if (! isNaN("aaaaxxx")) {
+    retVal += "\"aaaaxxx\" should be isNaN ";
+}
+
+if (isNaN("0xAA")) {
+    retVal += "\"0xAA\" should not be isNaN ";
+}
+
+if (! isNaN(undefined)) {
+    retVal += "undefined should be isNaN ";
+}
+
+if (! isNaN("0xxA")) { // invalid 0x...
+    retVal += "\"0xxA\" should be isNaN ";
+}
+
+if (isNaN("0yA")) { // parseInt to 0
+    retVal += "\"0yA\" should not be isNaN ";
+}
+
+if (isNaN("0xA")) { // parseInt to 10
+    retVal += "\"0xA\" should not be isNaN ";
+}
+
+if (! isNaN("0xZ")) { // invalid 0x...
+    retVal += "\"0xA\" should be isNaN ";
+}
+
+if (NaN > NaN) {
+    retVal += "NaN should be not > to itself ";
+}
+
+if (NaN < NaN) {
+    retVal += "NaN should be not < to itself ";
+}
+
+if (NaN >= NaN) {
+    retVal += "NaN should be not >= to itself ";
+}
+
+if (NaN <= NaN) {
+    retVal += "NaN should be not <= to itself ";
+}
+
+if (!(NaN != NaN)) {
+    retVal += "NaN should be not equal to itself ";
+}
+
+if (NaN === NaN) {
+    retVal += "NaN should be not equal to itself ";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

@@ -1,0 +1,39 @@
+pushd "${TIGHTENER_RELEASE_ROOT}/.." > /dev/null
+
+if [ `basename \`pwd\`` = 'Tightener' ]; then
+    if [ -e '.gitignore' -a -e 'CMakeLists.txt' -a -e 'README.md' ]; then
+        export TIGHTENER_GIT_ROOT=`pwd`/
+        export TIGHTENER_BUILD_SCRIPTS="${TIGHTENER_GIT_ROOT}BuildScripts/"
+        if [[ :$PATH: != *:"$TIGHTENER_BUILD_SCRIPTS":* ]] ; then
+            export PATH=${TIGHTENER_BUILD_SCRIPTS}:${PATH}
+        fi
+        export TIGHTENER_TEST_SCRIPTS="${TIGHTENER_RELEASE_ROOT}SampleScripts/TestScripts/"
+        if [[ :$PATH: != *:"$TIGHTENER_TEST_SCRIPTS":* ]] ; then
+            export PATH=${TIGHTENER_TEST_SCRIPTS}:${PATH}
+        fi
+        . "${TIGHTENER_GIT_ROOT}BuildScripts/setEnv"
+    fi
+fi
+
+popd > /dev/null
+
+export TIGHTENER_SCRIPTS="${TIGHTENER_RELEASE_ROOT}CommandLine/Scripts/"
+export TIGHTENER_BINARIES="${TIGHTENER_RELEASE_ROOT}CommandLine/Mac/"
+export TIGHTENER_LOCAL_DATA_ROOT="${HOME}/Library/Application Support/net.tightener/"
+export TIGHTENER_SYSCONFIG_ROOT="${TIGHTENER_LOCAL_DATA_ROOT}SysConfig/"
+
+if [[ :$PATH: != *:"$TIGHTENER_SCRIPTS":* ]] ; then
+    export PATH=${TIGHTENER_SCRIPTS}:${PATH}
+fi
+
+if [[ :$PATH: != *:"$TIGHTENER_BINARIES":* ]] ; then
+    export PATH=${TIGHTENER_BINARIES}:${PATH}
+fi
+
+. "${TIGHTENER_SCRIPTS}/idSetEnv"
+
+alias cd_id="cd \"${INDESIGN_APP_ROOT}\""
+alias cd_settings="cd \"${TIGHTENER_LOCAL_DATA_ROOT}\""
+alias cd_tightener="cd \"${TIGHTENER_RELEASE_ROOT}\""
+alias cd_samples="cd \"${TIGHTENER_RELEASE_ROOT}/SampleScripts\""
+alias cd_scripts="cd \"${TIGHTENER_RELEASE_ROOT}/CommandLine/Scripts\""

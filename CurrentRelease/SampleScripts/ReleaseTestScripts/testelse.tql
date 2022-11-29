@@ -1,0 +1,45 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+function absT(x)
+{
+    if (x > 0)
+    {
+        return x;
+    }
+    else
+    {
+        return -x;
+    }
+}
+
+// Test scripted absT which uses else
+if (absT(-2) != 2)
+{
+    retVal += "absT(-2) failed - is else handled properly? ";
+}
+
+if (absT(2) != 2)
+{
+    retVal += "absT(2) failed - is else handled properly? ";
+}
+
+// Test built-in abs
+if (abs(-2) != 2)
+{
+    retVal += "abs(-2) failed ";
+}
+
+if (abs(2) != 2)
+{
+    retVal += "abs(2) failed ";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

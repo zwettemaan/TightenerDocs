@@ -1,0 +1,47 @@
+export TIGHTENER_SCRIPTS=`dirname $0`
+cd "${TIGHTENER_SCRIPTS}"
+export TIGHTENER_SCRIPTS=`pwd`/
+
+pushd "${TIGHTENER_SCRIPTS}../.." > /dev/null
+
+export TIGHTENER_RELEASE_ROOT=`pwd`/
+
+popd > /dev/null
+
+if [ `uname` = "Darwin" ]; then
+
+    export TIGHTENER_BINARIES="${TIGHTENER_RELEASE_ROOT}CommandLine/Mac"
+    . "${TIGHTENER_RELEASE_ROOT}CommandLine/Scripts/setPathMac"
+
+    if [ ! -f "${TIGHTENER_SYSCONFIG_ROOT}editFile" ]; then
+        cp "${TIGHTENER_SCRIPTS}editFileMacDefault" "${TIGHTENER_SYSCONFIG_ROOT}editFile"
+    fi
+
+    ADJUSTED_FILE_LIST="~/.zshenv and ~/.profile"
+    "${TIGHTENER_SCRIPTS}/updateEnvironmentInProfile" ~/.zshenv "${TIGHTENER_RELEASE_ROOT}"
+    "${TIGHTENER_SCRIPTS}/updateEnvironmentInProfile" ~/.profile "${TIGHTENER_RELEASE_ROOT}"
+
+else
+
+    export TIGHTENER_BINARIES="${TIGHTENER_RELEASE_ROOT}CommandLine/Linux"
+    . "${TIGHTENER_RELEASE_ROOT}CommandLine/Scripts/setPathLinux"
+
+    if [ ! -f "${TIGHTENER_SYSCONFIG_ROOT}editFile" ]; then
+        cp "${TIGHTENER_SCRIPTS}editFileLinuxDefault" "${TIGHTENER_SYSCONFIG_ROOT}editFile"
+    fi
+
+    ADJUSTED_FILE_LIST="~/.bashrc and ~/.profile"
+    "${TIGHTENER_SCRIPTS}/updateEnvironmentInProfile" ~/.bashrc "${TIGHTENER_RELEASE_ROOT}"
+    "${TIGHTENER_SCRIPTS}/updateEnvironmentInProfile" ~/.profile "${TIGHTENER_RELEASE_ROOT}"
+
+fi
+
+echo ""
+echo "Tightener has been added to your ${ADJUSTED_FILE_LIST} profile files"
+echo "No plug-ins have been installed. You can install these later as needed"
+echo "(e.g. by way of idPluginInstall)"
+echo ""
+echo "Any previously open Terminal windows will NOT have access to Tightener yet."
+echo "You need to open a new Terminal window to activate the Tightener environment."
+echo ""
+

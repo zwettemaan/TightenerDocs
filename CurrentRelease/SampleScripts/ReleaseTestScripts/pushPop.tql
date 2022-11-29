@@ -1,0 +1,30 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+array = [ "a", 1, { x: 1 } ];
+
+t1 = array.pop();
+
+if (t1.x != 1) {
+    retVal += "first pop failed ";
+}
+
+array.push(12);
+array.push({ y: 7 });
+
+if (array[2] != 12) {
+    retVal += "expected 12 ";
+}
+
+if ("object" != typeof array[3] || array[3].y != 7) {
+    retVal += "expected { y: 7 } ";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

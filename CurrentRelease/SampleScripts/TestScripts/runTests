@@ -1,0 +1,7 @@
+export TIGHTENER_TEST_SCRIPTS=`dirname $0`
+cd "${TIGHTENER_TEST_SCRIPTS}"
+export TIGHTENER_TEST_SCRIPTS=`pwd`/
+
+Tightener -c "${TIGHTENER_TEST_SCRIPTS}/reflectorConfig.ini" -N scriptrunner -t n -w 10000 -f reflector.tql &
+Tightener -c "${TIGHTENER_TEST_SCRIPTS}/reflectorConfig.ini" -N scriptrunner2 -t n -w 10000 -f reflector2.tql &
+Tightener -c "${TIGHTENER_TEST_SCRIPTS}/reflectorConfig.ini" -N scriptrunner3 -t n -w 10000 -f reflector3.tql &

@@ -1,0 +1,124 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+a = "abc";
+b = "abc\ndef\\\"'";
+c = "\u0041\u0001";
+d = "\x41\x01";
+
+if (enquote(a) != "\"abc\"") {
+    retVal += "failed: enquote a with \" ";
+}
+
+if (a.enquote() != "\"abc\"") {
+    retVal += "this-based failed: enquote a with \" ";
+}
+
+if (enquote(a, "'") != "'abc'") {
+    retVal += "failed: enquote a with '";
+}
+
+if (a.enquote("'") != "'abc'") {
+    retVal += "this-based failed: enquote a with '";
+}
+
+if (eval(enquote(a)) != a) {
+    retVal += "failed: dequote enquote a ";
+}
+
+if (a.enquote().eval() != a) {
+    retVal += "this-this-based failed: dequote enquote a ";
+}
+
+if (enquote(b) != "\"abc\\ndef\\\\\\\"'\"") {
+    retVal += "failed: enquote b with \" ";
+}
+
+if (b.enquote() != "\"abc\\ndef\\\\\\\"'\"") {
+    retVal += "this-based failed: enquote b with \" ";
+}
+
+if (enquote(b, "'") != "'abc\\ndef\\\\\"\\''") {
+    retVal += "failed: enquote b with '";
+}
+
+if (b.enquote("'") != "'abc\\ndef\\\\\"\\''") {
+    retVal += "this-based failed: enquote b with '";
+}
+
+if (eval(enquote(b)) != b) {
+    retVal += "failed: dequote enquote b ";
+}
+
+if (eval(b.enquote()) != b) {
+    retVal += "this-based failed: dequote enquote b ";
+}
+
+if (b.enquote().eval() != b) {
+    retVal += "this-this-based failed: dequote enquote b ";
+}
+
+if (eval(enquote(b, "'")) != b) {
+    retVal += "failed: dequote enquote b ";
+}
+
+if (eval(b.enquote("'")) != b) {
+    retVal += "this-based failed: dequote enquote b ";
+}
+
+if (b.enquote("'").eval() != b) {
+    retVal += "this-this-based failed: dequote enquote b ";
+}
+
+if (enquote(c) != "\"A\\x01\"") {
+    retVal += "failed: enquote c with \" ";
+}
+
+if (c.enquote() != "\"A\\x01\"") {
+    retVal += "this-based failed: enquote c with \" ";
+}
+
+if (eval(enquote(c)) != c) {
+    retVal += "failed: dequote enquote c with \" ";
+}
+
+if (eval(c.enquote()) != c) {
+    retVal += "this-based failed: dequote enquote c with \" ";
+}
+
+if (c.enquote().eval() != c) {
+    retVal += "this-this-based failed: dequote enquote c with \" ";
+}
+
+if (enquote(d) != "\"A\\x01\"") {
+    retVal += "failed: enquote d with \" ";
+}
+
+if (d.enquote() != "\"A\\x01\"") {
+    retVal += "this-based failed: enquote d with \" ";
+}
+
+if (eval(enquote(d)) != d) {
+    retVal += "failed: dequote enquote d with \" ";
+}
+
+if (eval(d.enquote()) != d) {
+    retVal += "this-based failed: dequote enquote d with \" ";
+}
+
+if (enquote(d).eval() != d) {
+    retVal += "this-2-based failed: dequote enquote d with \" ";
+}
+
+if (d.enquote().eval() != d) {
+    retVal += "this-this-based failed: dequote enquote d with \" ";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

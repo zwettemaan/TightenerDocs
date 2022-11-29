@@ -1,0 +1,46 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+if ((0?2:3+4) != 7)
+{
+    retVal += "failed: 0?2:3+4 == 7 ";
+}
+
+if ((1?2:3+4) != 2)
+{
+    retVal += "failed: 1?2:3+4 == 2 ";
+}
+
+if ((0?2+3:4) != 4)
+{
+    retVal += "failed: 0?2+3:4 == 4 ";
+}
+
+if ((1?2+3:4) != 5)
+{
+    retVal += "failed: 1?2:3+4 == 5 ";
+}
+
+function limitPower(x)
+{
+    return x > 10 ? x : x*x;
+}
+
+if (limitPower(11) != 11)
+{
+    retVal += "failed: limitPower(11) == 11 ";
+}
+
+if (limitPower(9) != 81)
+{
+    retVal += "failed: limitPower(9) == 81 ";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

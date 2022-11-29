@@ -1,0 +1,37 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+y = "x";
+
+x = 12;
+function b()
+{
+  var x = 98;
+};
+b();
+
+if (x != 12) {
+    retVal += "error 98 ";
+}
+
+
+x = 7;
+function a(x)
+{
+  var x = 99;
+  y = x;
+};
+a(1);
+
+if (y != 99) {
+    retVal += "error 99 ";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

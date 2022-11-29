@@ -1,0 +1,12 @@
+killall Tightener > /dev/null 2>&1 
+killall XojoTightener > /dev/null 2>&1 
+killall TightenerGW > /dev/null 2>&1 
+
+if [ `uname` = "Darwin" ]; then
+    rm -f "${HOME}/Library/Application Support/net.tightener/NamedPipes/"*
+    rm -f "${HOME}/Library/Application Support/net.tightener/SessionData/"*
+else
+    rm -f "${HOME}/.net.tightener/net.tightener/NamedPipes/"*
+    rm -f "${HOME}/.net.tightener/net.tightener/SessionData/"*
+fi
+

@@ -1,0 +1,52 @@
+//
+// rt_remotePingInDesign.tql
+// NEEDS UPDATING
+
+remoteSettings = eval(readFile("remoteSettings.json"));
+
+isServer = remoteSettings.indesignShortCoordinatorName.indexOf(".server.") >= 0;
+
+if (isServer) 
+{
+    feedBack = function(s) { 
+        stdOut(s + "\n"); 
+        evalExtendScript("alert(\"" + s + "\")");
+    }    
+}
+else 
+{
+    feedBack = function(s) { 
+        stdOut(s + "\n"); 
+    }
+}
+
+feedBack("rt_remotePingInDesign.tql");
+
+coordinatorName = 
+    "net.tightener.coordinator." + 
+    remoteSettings.indesignShortCoordinatorName;
+
+target = 
+    "tgh://" + 
+    remoteSettings.remoteHost +
+    "/" + 
+    coordinatorName + 
+    "/" + 
+    remoteSettings.inDesignEngineName;
+
+for (idx = 0; idx < 10; idx++)
+{
+    eval(
+        "13*13", 
+        target, 
+        function(x) 
+        {
+             feedBack(x); 
+        },
+        remoteSettings.timeout);
+
+    feedBack("loop: " + idx);
+}
+
+feedBack("done");
+

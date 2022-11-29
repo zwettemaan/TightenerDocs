@@ -1,0 +1,36 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+a = 2;
+s = 1;
+
+function abs(a) { 
+
+    if (a < 0) 
+    {
+        return -a;
+    }
+
+    return a;
+}
+
+loopCount = 0;
+while (abs(a - s*s) > 0.00001 && loopCount < 10)
+{
+    s = (s + a / s) / 2.0;
+    loopCount = loopCount + 1;
+}
+
+if (abs(a - s*s) > 0.00001)
+{
+    retVal += "failed iterationTest, s = " + s + " ";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

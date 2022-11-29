@@ -1,0 +1,105 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+console("start");
+a1 = 1;
+
+function f1(x) {
+    var a1 = 9;
+    return x + a1;   
+}
+
+b1 = f1(2);
+
+if (a1 != 1) {
+    retVal += "global a1 should not have changed "
+}
+
+if (b1 != 11) {
+    retVal += "local a1 does not work "
+}
+
+a = 100;
+// no b
+c = 102;
+d = 103;
+e = "hello";
+f = 104;
+g = 105;
+h = 106;
+// no i
+x = 107;
+y = 108;
+k = 109;
+
+function f2(x) {
+
+    var z = x; // will call with x=200
+    var a = 9, b, c = 10;
+    var d = 11; e; f=12; i=99; // 'var' ends at ; and e, f and i are globals
+    var g = f1(6), h = f1(2);
+    k = 12; // local but var is at end
+
+    x = 16; // param x acts as a local var
+
+    // a = 9, local
+    // b = undefined, local
+    // c = 10, local
+    // d = 11, local
+    // e = "hello", global
+    // f = 12, global
+    // g = 15, local
+    // h = 11, local
+    // x = 16, local
+    // y = 108, global
+    // z = 200, input x, local
+
+    // |9|undefined|10|11|hello|12|15|11|16|108|200|12|
+
+    var k;
+
+    return "|" + a + "|" + b + "|" + c + "|" + d + "|" + e + "|" + f + "|" + g + "|" + h + "|" + x + "|" + y + "|" + z + "|" + k + "|"; 
+}
+
+t = f2(200);
+
+if (t != "|9|undefined|10|11|hello|12|15|11|16|108|200|12|") {
+    retVal += "complex test failed ";
+}
+
+if ("error" != typeof b) {
+    retVal += "b should not exist ";
+}
+
+if (a != 100 || c != 102 || d != 103 || e != "hello" || g != 105 || h != 106 || x != 107 || k != 109) {
+    retVal += "globals were changed ";
+}
+
+if (i != 99 || f != 12 || y != 17) {
+    retVal += "globals were not changed ";
+}
+
+i = -10;
+function f3() {
+    var sum = 0;
+    for (var i=0; i<10; ++i) {
+        sum += i*i;
+    }
+
+    return sum;
+}
+
+var s= f3();
+
+if (i != -10 || s != 285) {
+    retVal += "var in for issue ";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

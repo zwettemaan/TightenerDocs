@@ -1,0 +1,49 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+a = 1
+if (a != 1)
+{
+    retVal += "failed a==1 ";
+}
+
+if (a == 1)
+{
+}
+else
+{
+    retVal += "failed a==1 else "
+}
+
+{ a = 2 }
+if (a != 2)
+{
+    retVal += "failed a==2 ";
+}
+
+{{ a = 3 }}
+if (a != 3)
+{
+    retVal += "failed a==3 ";
+}
+
+if (a == 3) { a = 4 }
+if (a != 4)
+{
+    retVal += "failed a==4 ";
+}
+
+if (a == 4) { a = 5; a = 6 }
+if (a != 6)
+{
+    retVal += "failed a==6 ";
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

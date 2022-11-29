@@ -1,0 +1,72 @@
+//
+// hello.tql
+//
+// Run with rt (Run TQLScript)
+//
+/****
+
+rt hello.tql
+      
+****/
+//
+// Or run this same script in a remote coordinator using rrt (Run Remote TQLScript): 
+//
+// Something like (Mac or Linux):
+//
+/****
+
+# Main on Freddy
+COORDINATOR=net.tightener.coordinator.main
+REMOTE=freddy-dev-win2022.rorohiko.com
+ENGINE=default
+REMOTE_URL="tgh://${REMOTE}/${COORDINATOR}/${ENGINE}"
+rrt "${REMOTE_URL}" hello.tql
+
+# Reflector on Andy
+COORDINATOR=reflector
+REMOTE=andy-ubuntu
+ENGINE=default
+REMOTE_URL="tgh://${REMOTE}/${COORDINATOR}/${ENGINE}"
+rrt "${REMOTE_URL}" hello.tql
+
+# Local reflector via URL
+COORDINATOR=reflector
+REMOTE=127.0.0.1
+ENGINE=default
+REMOTE_URL="tgh://${REMOTE}/${COORDINATOR}/${ENGINE}"
+rrt "${REMOTE_URL}" hello.tql
+
+****/
+//
+// or (Windows):
+//
+/****
+
+SET COORDINATOR=reflector
+SET REMOTE=andy-ubuntu
+SET ENGINE=default
+SET REMOTE_URL=tgh://%REMOTE%/%COORDINATOR%/%ENGINE%
+rrt "%REMOTE_URL%" hello.tql
+
+SET COORDINATOR=reflector
+SET REMOTE=holly.rorohiko.com
+SET ENGINE=default
+SET REMOTE_URL=tgh://%REMOTE%/%COORDINATOR%/%ENGINE%
+rrt "%REMOTE_URL%" hello.tql
+
+****/
+//
+// The COORDINATOR ('reflector') in this example is a shorthand 
+// which is resolved using the config.ini on andy-ubuntu.
+//
+// The gateway app on the remote workstation has to be running prior 
+// (e.g. on the remote, run `killApps`, and then run the `gwui` or 
+// `gwConsole` command)
+//
+// 
+
+feedBack = function(message) {
+   stdOut(message + "\n"); 
+};
+
+feedBack("Hello from hello.tql");

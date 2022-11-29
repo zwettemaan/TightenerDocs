@@ -1,0 +1,70 @@
+//
+// rt_localNewDoc.tql
+// NEEDS UPDATING
+
+localSettings = eval(readFile("localSettings.json"));
+
+isServer = localSettings.indesignShortCoordinatorName.indexOf(".server.") >= 0;
+
+if (isServer) 
+{
+    feedBack = function(s) { 
+        stdOut(s + "\n"); 
+        evalExtendScript("alert(\"" + s + "\")");
+    }    
+}
+else 
+{
+    feedBack = function(s) { 
+        stdOut(s + "\n"); 
+    }
+}
+
+feedBack("rt_localNewDoc.tql");
+
+coordinatorName = 
+    "net.tightener.coordinator." + 
+    localSettings.indesignShortCoordinatorName;
+
+target = 
+    "tgh:///" + 
+    coordinatorName + 
+    "/" + 
+    localSettings.inDesignEngineName;
+
+feedBack("start");
+
+retVal = "";
+
+result = undefined;
+
+inDesignScript = <<EOF
+
+doc = app.documents.add();
+spread = doc.spreads[0];
+textFrame = spread.textFrames.add();
+textFrame.contents = "This is some text";
+textFrame.geometricBounds = [5, 5, 80, 80];
+textFrame.contents
+
+EOF
+
+eval(
+    inDesignScript, 
+    target, 
+    function(textFrameContents) 
+    { 
+        result = textFrameContents;
+    }, 
+    localSettings.timeout);
+
+if (result)
+{
+    retVal = result;    
+}
+else
+{
+    retVal = "failed";
+}
+
+feedBack(retVal);

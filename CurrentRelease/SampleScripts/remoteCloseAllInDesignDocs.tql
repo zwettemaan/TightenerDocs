@@ -1,0 +1,91 @@
+//
+// remoteCloseAllInDesignDocs.tql
+// 
+// Run with 
+// 
+//   rt remoteCloseAllInDesignDocs.tql
+// 
+// This script sends a TQL script  to close all open docs
+// to the remote InDesign by way of the eval() function
+//
+// The targeted remote InDesign app is to be configured in config.ini
+// on the remote computer
+//
+// You must launch this InDesign application beforehand by 
+// using the `idLaunch` command on the remote computer.
+//
+// Also make sure to install the plug-in with the `idPluginInstall` command
+//
+
+scriptCloseAllInDesignDocs = <<EOF1
+
+// --------------------------------
+// Script to run in remote InDesign
+
+feedBack = function(message) { 
+    stdOut(message + "\n"); 
+}
+
+app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
+
+docCount = app.documents.length;
+idx = docCount + 1;
+idx--;
+while (idx > 0) {
+    existingDoc = app.documents[0];
+    existingDoc.close(SaveOptions.NO);
+    --idx;
+}
+feedBack("Number of docs closed:" + docCount);
+docCount
+
+// End of script
+// --------------------------------
+
+EOF1
+
+configIni = sysInfo("ini");
+
+// The remote host knows what shorthand coordinator 'indesign' means - 
+// it's whatever is configured in its own config.ini
+
+coordinatorName = "indesign";
+remoteHost = configIni.sampleScripts.TARGET_REMOTE_HOST;
+timeOut = eval(configIni.sampleScripts.REMOTE_TIMEOUT_MS);
+inDesignEngineName = configIni.sampleScripts.INDESIGN_TARGET_ENGINE;
+
+feedBack = function(message) { 
+    stdOut(message + "\n"); 
+}
+
+feedBack("remoteCloseAllInDesignDocs.tql");
+
+target = 
+    "tgh://" + 
+    remoteHost +
+    "/" + 
+    coordinatorName + 
+    "/" + 
+    inDesignEngineName;
+
+feedBack("Target determined by local config.ini is: " + target);
+
+retVal = "";
+
+result = undefined;
+
+result = eval(
+    scriptCloseAllInDesignDocs, 
+    target, 
+    timeOut);
+
+if (result !== undefined)
+{
+    retVal = "Callback result: " + result;
+}
+else
+{
+    retVal = "Cannot reach " + target;
+}
+
+feedBack(retVal);

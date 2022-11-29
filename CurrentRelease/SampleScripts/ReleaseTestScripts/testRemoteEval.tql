@@ -1,0 +1,73 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+timeoutMilliseconds = 10000;
+
+result = undefined;
+
+G.TESTSCRIPT.console("internal test");
+
+// eval(script, target) -> blocking, run till completion
+// eval(script, target, false) -> non-blocking, run till completion
+// eval(script, target, 10000) -> blocking, run till timeout or completion
+// eval(script, target, 10000, false) -> non-blocking, run till timeout or completion
+// eval(script, target, function(){}) -> non-blocking, run till completion
+// eval(script, target, function(){}, true) -> blocking, run till completion
+// eval(script, target, function(){}, 10000) -> blocking, run till timeout or completion
+// eval(script, target, function(){}, 10000, false) -> non-blocking, run till timeout or completion
+//
+// default: blocking
+// if has override(true/false): use override
+// else if has timeout: blocking
+// else if has function: non-blocking
+// 
+
+eval(
+    "12*12", 
+    "tgh:////default", 
+    function(evalResult) { 
+        G.TESTSCRIPT.console("internal test evalResult = " + evalResult);
+        result = evalResult; 
+    }, 
+    timeoutMilliseconds
+);
+
+G.TESTSCRIPT.console("internal test completed, result = " + result);
+
+if (result != 144) {
+    retVal += "internal eval failed ";
+}
+
+result = undefined;
+
+G.TESTSCRIPT.console("remote test");
+
+result = eval(
+    "13*13", 
+    "tgh:///net.tightener.coordinator.reflector/default", 
+    timeoutMilliseconds);
+
+G.TESTSCRIPT.console("remote test completed, result = " + result);
+
+if (result != 169) {
+    retVal += "remote eval failed ";
+}
+
+G.TESTSCRIPT.console("quitting reflector");
+
+eval(
+    "quit()", 
+    "tgh:///net.tightener.coordinator.reflector/default", 
+    timeoutMilliseconds
+);
+
+G.TESTSCRIPT.console("quitting done");
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;

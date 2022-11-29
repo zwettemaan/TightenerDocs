@@ -1,0 +1,31 @@
+#
+# Remotely run TQL commands
+#
+# rrt_REPL <target>
+#
+# e.g.
+#
+# rrt_REPL indesign 
+# rrt_REPL illustrator 
+# rrt_REPL tgh://freddy/indesign/main 
+# rrt_REPL tgh://sandy.rorohiko.com/net.tightener.coordinator.indesign.17.0/main 
+# rrt_REPL tgh://sandy.rorohiko.com/net.tightener.coordinator.indesign.17.0.configuration_noport/main 
+#
+# Commands are buffered locally first.
+#
+# Entering a blank line will send the commands to the remote and output the result.
+#
+
+if [ "$1" = "" ]; then
+    echo "Usage:"
+    echo "  `basename \"$0\"` target"
+    exit
+fi
+
+export RRT_REMOTE_URL="$1"
+
+echo "Starting rrt_REPL.tql. Enter 'quit()' to terminate the REPL loop."
+
+Tightener -N console -t n -f "${TIGHTENER_SCRIPTS}rrt_REPL.tql"
+
+echo "Done."

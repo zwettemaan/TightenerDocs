@@ -1,0 +1,73 @@
+if (typeof(G.LOG) == "error")
+{
+
+G.LOG = {};
+
+
+G.LOG.error = function(msg) {
+    
+    if (G.LOG.LEVEL >= G.LOG.ERROR) {
+        G.LOG.message("ERROR: " + msg);
+    }
+
+};
+
+G.LOG.message = function(msg) {
+
+    stdOut(msg + "\n");
+
+    if ("string" == typeof G.LOG.logFile) {
+        var f = fileOpen(G.LOG.logFile, "a");
+        f.fileWrite(msg + "\n");
+        f.fileClose();
+    }
+
+};
+
+G.LOG.note = function(msg) {
+
+    if (G.LOG.LEVEL >= G.LOG.NOTE) {
+        G.LOG.message("NOTE : " + msg);
+    }
+
+};
+
+G.LOG.setLogLevel = function(logLevel) {
+    G.LOG.LEVEL = logLevel;    
+};
+
+G.LOG.trace = function(msg) {
+
+    if (G.LOG.LEVEL >= G.LOG.TRACE) {
+        G.LOG.message("TRACE: " + msg);
+    }
+
+};
+
+G.LOG.warning = function(msg) {
+
+    if (G.LOG.LEVEL >= G.LOG.WARNING) {
+        G.LOG.message("WARN : " + msg);
+    }
+
+};
+
+(function(){
+
+    var si = sysInfo();
+
+    G.LOG.logFile = si.logFile;
+    G.LOG.logLevel = si.logLevel;
+
+    G.LOG.NONE    = 0;
+    G.LOG.ERROR   = 1;
+    G.LOG.WARNING = 2;
+    G.LOG.NOTE    = 3;
+    G.LOG.TRACE   = 4;
+
+    G.LOG.LEVEL   = 0;
+    
+})();
+
+}
+
