@@ -1,10 +1,10 @@
-if [ "${TIGHTENER_GIT_ROOT}" = "" ]; then
-    echo "\$TIGHTENER_GIT_ROOT has not been set up. Please follow instructions in README.md"
+if [ "${TIGHTENER_RELEASE_ROOT}" = "" ]; then
+    echo "\$TIGHTENER_RELEASE_ROOT has not been set up. Please follow instructions in README.md"
     exit
 fi
 
-if [ ! -d "${TIGHTENER_GIT_ROOT}" ]; then
-    echo "Directory \$TIGHTENER_GIT_ROOT does not exist. Please follow instructions in README.md"
+if [ ! -d "${TIGHTENER_RELEASE_ROOT}" ]; then
+    echo "Directory \$TIGHTENER_RELEASE_ROOT does not exist. Please follow instructions in README.md"
     exit
 fi
 

@@ -1,6 +1,11 @@
 pushd "${TIGHTENER_RELEASE_ROOT}/.." > /dev/null
 
-if [ `basename \`pwd\`` = 'Tightener' ]; then
+if [ `basename \`pwd\`` = 'TightenerDocs' ]; then
+
+    export TIGHTENER_DOCS_ROOT=`pwd`/
+
+    pushd "${TIGHTENER_DOCS_ROOT}/../Tightener" > /dev/null
+
     if [ -e '.gitignore' -a -e 'CMakeLists.txt' -a -e 'README.md' ]; then
         export TIGHTENER_GIT_ROOT=`pwd`/
         export TIGHTENER_BUILD_SCRIPTS="${TIGHTENER_GIT_ROOT}BuildScripts/"
@@ -13,6 +18,9 @@ if [ `basename \`pwd\`` = 'Tightener' ]; then
         fi
         . "${TIGHTENER_GIT_ROOT}BuildScripts/setEnv"
     fi
+
+    popd > /dev/null
+
 fi
 
 popd > /dev/null
