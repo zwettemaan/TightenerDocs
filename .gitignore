@@ -1,7 +1,7 @@
+!/CurrentRelease/CommandLine/Windows/*.exe
 /CurrentRelease/*.zip
 /CurrentRelease/Apps
-/CurrentRelease/CommandLine/Mac/
-/CurrentRelease/CommandLine/Linux/
-/CurrentRelease/CommandLine/Windows/
-/CurrentRelease/Plug-Ins/
+/CurrentRelease/CommandLine/Mac/TightenerGW/
+/CurrentRelease/CommandLine/Linux/TightenerGW/
+/CurrentRelease/CommandLine/Windows/TightenerGW/
 /CurrentRelease/SampleScripts/ReleaseTestScripts/data1.txt
