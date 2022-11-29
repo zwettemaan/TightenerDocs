@@ -4,23 +4,27 @@ if [ `basename \`pwd\`` = 'TightenerDocs' ]; then
 
     export TIGHTENER_DOCS_ROOT=`pwd`/
 
-    pushd "${TIGHTENER_DOCS_ROOT}/../Tightener" > /dev/null
+    if [ -d "${TIGHTENER_DOCS_ROOT}/../Tightener" ]; then
+    
+        pushd "${TIGHTENER_DOCS_ROOT}/../Tightener" > /dev/null
 
-    if [ -e '.gitignore' -a -e 'CMakeLists.txt' -a -e 'README.md' ]; then
-        export TIGHTENER_GIT_ROOT=`pwd`/
-        export TIGHTENER_BUILD_SCRIPTS="${TIGHTENER_GIT_ROOT}BuildScripts/"
-        if [[ :$PATH: != *:"$TIGHTENER_BUILD_SCRIPTS":* ]] ; then
-            export PATH=${TIGHTENER_BUILD_SCRIPTS}:${PATH}
+        if [ -e '.gitignore' -a -e 'CMakeLists.txt' -a -e 'README.md' ]; then
+            export TIGHTENER_GIT_ROOT=`pwd`/
+            export TIGHTENER_BUILD_SCRIPTS="${TIGHTENER_GIT_ROOT}BuildScripts/"
+            if [[ :$PATH: != *:"$TIGHTENER_BUILD_SCRIPTS":* ]] ; then
+                export PATH=${TIGHTENER_BUILD_SCRIPTS}:${PATH}
+            fi
+            export TIGHTENER_TEST_SCRIPTS="${TIGHTENER_RELEASE_ROOT}SampleScripts/TestScripts/"
+            if [[ :$PATH: != *:"$TIGHTENER_TEST_SCRIPTS":* ]] ; then
+                export PATH=${TIGHTENER_TEST_SCRIPTS}:${PATH}
+            fi
+            . "${TIGHTENER_GIT_ROOT}BuildScripts/setEnv"
         fi
-        export TIGHTENER_TEST_SCRIPTS="${TIGHTENER_RELEASE_ROOT}SampleScripts/TestScripts/"
-        if [[ :$PATH: != *:"$TIGHTENER_TEST_SCRIPTS":* ]] ; then
-            export PATH=${TIGHTENER_TEST_SCRIPTS}:${PATH}
-        fi
-        . "${TIGHTENER_GIT_ROOT}BuildScripts/setEnv"
+
+        popd > /dev/null
+
     fi
-
-    popd > /dev/null
-
+    
 fi
 
 popd > /dev/null
