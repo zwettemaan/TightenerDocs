@@ -1,5 +1,5 @@
 !/CurrentRelease/CommandLine/Windows/*.exe
-/CurrentRelease/*.zip
+*.zip
 /CurrentRelease/Apps
 /CurrentRelease/CommandLine/Mac/TightenerGW/
 /CurrentRelease/CommandLine/Linux/TightenerGW/
