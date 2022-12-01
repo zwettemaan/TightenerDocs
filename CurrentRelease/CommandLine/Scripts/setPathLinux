@@ -31,6 +31,18 @@ fi
 
 popd > /dev/null
 
+if [ ! -d "${HOME}/.net.tightener" ]; then
+    mkdir "${HOME}/.net.tightener"
+fi
+
+if [ ! -d "${HOME}/.net.tightener/net.tightener" ]; then
+    mkdir "${HOME}/.net.tightener/net.tightener"
+fi
+
+if [ ! -d "${HOME}/.net.tightener/net.tightener/SysConfig" ]; then
+    mkdir "${HOME}/.net.tightener/net.tightener/SysConfig"
+fi
+
 export TIGHTENER_SCRIPTS="${TIGHTENER_RELEASE_ROOT}CommandLine/Scripts/"
 export TIGHTENER_BINARIES="${TIGHTENER_RELEASE_ROOT}CommandLine/Linux/"
 export TIGHTENER_LOCAL_DATA_ROOT="${HOME}/.net.tightener/net.tightener/"
