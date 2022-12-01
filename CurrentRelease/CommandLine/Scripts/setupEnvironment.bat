@@ -4,6 +4,9 @@ REM Yes, that is a single quote in all those SETX > NUL commands! SETX > NUL is 
 
 SETLOCAL EnableDelayedExpansion
 
+IF NOT EXIST "%APPDATA%\net.tightener" MKDIR "%APPDATA%\net.tightener"
+IF NOT EXIST "%APPDATA%\net.tightener\SysConfig" MKDIR "%APPDATA%\net.tightener\SysConfig"
+
 REG QUERY "HKEY_CURRENT_USER\TightenerSavedEnvironment" >NUL 2>&1
 IF %ERRORLEVEL% == 1 (
     REG COPY "HKEY_CURRENT_USER\Environment" "HKEY_CURRENT_USER\TightenerSavedEnvironment" >NUL 2>&1

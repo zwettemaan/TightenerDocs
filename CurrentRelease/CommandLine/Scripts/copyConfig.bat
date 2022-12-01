@@ -8,7 +8,6 @@ IF NOT EXIST "%APPDATA%\net.tightener\SysConfig" MKDIR "%APPDATA%\net.tightener\
 
 IF EXIST "%APPDATA%\net.tightener\SysConfig\config.ini" DEL "%APPDATA%\net.tightener\SysConfig\config.ini"
 
-
 SET TIGHTENER_RELEASE_ROOT_ESCAPED=%TIGHTENER_RELEASE_ROOT:\=\\%
 
 ECHO # > "%APPDATA%\net.tightener\SysConfig\config.ini.tmp"
