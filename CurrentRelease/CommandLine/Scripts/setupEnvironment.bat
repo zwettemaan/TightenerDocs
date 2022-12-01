@@ -93,6 +93,10 @@ IF "%TIGHTENER_CONFIG_NODE_NAME%" == "" (
 
 SETX > NUL PATH "!USER_PATH_SAVED_BY_TIGHTENER!!PATH_SUFFIX!
 
+IF NOT EXIST "%APPDATA%\net.tightener\SysConfig\config.ini" (
+    CALL copyConfig.bat
+)
+
 ECHO.
 ECHO Tightener entries has been added to your Windows environment and PATH
 ECHO Your current environment as it was before install has been saved in the 
