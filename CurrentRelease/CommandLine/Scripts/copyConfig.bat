@@ -3,8 +3,8 @@
 IF "%TIGHTENER_RELEASE_ROOT%" == "" GOTO ERROR_MISSING_RELEASE_ROOT
 IF NOT EXIST "%TIGHTENER_RELEASE_ROOT%" GOTO ERROR_NON_EXISTENT_RELEASE_ROOT
 
-IF NOT EXIST "%APPDATA%\net.tightener" MKDIR "%APPDATA%\net.tightener"
-IF NOT EXIST "%APPDATA%\net.tightener\SysConfig" MKDIR "%APPDATA%\net.tightener\SysConfig"
+IF NOT EXIST "%APPDATA%\net.tightener" MD "%APPDATA%\net.tightener"
+IF NOT EXIST "%APPDATA%\net.tightener\SysConfig" MD "%APPDATA%\net.tightener\SysConfig"
 
 IF EXIST "%APPDATA%\net.tightener\SysConfig\config.ini" DEL "%APPDATA%\net.tightener\SysConfig\config.ini"
 
