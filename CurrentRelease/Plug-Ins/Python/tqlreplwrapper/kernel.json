@@ -1,0 +1,4 @@
+{
+  "argv":["python","-m","tqlreplwrapper", "-f", "{connection_file}"],
+  "display_name":"TightenerTQL"
+}
