@@ -1,15 +1,15 @@
 # To install:
 #
-# jupyter kernelspec install "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/tqlreplwrapper"
+# jupyter kernelspec install "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/jsxreplwrapper"
 #
-# jupyter kernelspec install "%TIGHTENER_RELEASE_ROOT%Plug-Ins\Python\tqlreplwrapper"
+# jupyter kernelspec install "%TIGHTENER_RELEASE_ROOT%Plug-Ins\Python\jsxreplwrapper"
 #
 # To run
 #   jupyter notebook
 # then pick kernel from dropdown
 #
 # To remove
-#   jupyter kernelspec uninstall tqlreplwrapper
+#   jupyter kernelspec uninstall jsxreplwrapper
 #
 # List:
 #   jupyter kernelspec list
@@ -19,32 +19,32 @@
 
 import pexpect.replwrap
 import sys
+import os
 from ipykernel.kernelbase import Kernel
 from ipykernel.kernelapp import IPKernelApp
 
 
 class TightenerKernel(Kernel):
 
-    tightenerTQLWrapper = pexpect.replwrap.REPLWrapper(
-        "Tightener -N console -I -e 0 -p "
-        + pexpect.replwrap.PEXPECT_PROMPT
-        + " -P "
-        + pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT,
+    os.environ["RRE_PROMPT"] = pexpect.replwrap.PEXPECT_PROMPT
+    os.environ["RRE_PROMPT_CONTINUATION"] = pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT
+    tightenerJSXWrapper = pexpect.replwrap.REPLWrapper(
+        "bash -c 'rre_REPL InDesign'",
         pexpect.replwrap.PEXPECT_PROMPT,
         None,
         pexpect.replwrap.PEXPECT_PROMPT,
         pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT)
 
-    implementation = 'TightenerTQL'
+    implementation = 'TightenerJSX'
     implementation_version = '1.0'
-    language = 'TightenerTQL'
+    language = 'TightenerJSX'
     language_version = '0.0.7'
     language_info = {
-        'name': 'TightenerTQL',
+        'name': 'TightenerJSX',
         'mimetype': 'text/plain',
-        'file_extension': '.tql'
+        'file_extension': '.jsx'
     }
-    banner = "TightenerTQL Kernel"
+    banner = "TightenerJSX Kernel"
 
     def do_execute(self, code, silent, store_history=True, user_expressions=None,
                    allow_stdin=False):
@@ -52,7 +52,7 @@ class TightenerKernel(Kernel):
 
         if not silent:
             stream_content = {'name': 'stdout', 
-                'text': self.tightenerTQLWrapper.run_command(code) 
+                'text': self.tightenerJSXWrapper.run_command(code) 
                 }
             self.send_response(self.iopub_socket, 'stream', stream_content) 
 

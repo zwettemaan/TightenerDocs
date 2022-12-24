@@ -54,7 +54,7 @@ brew install python3
 ```
 Verify installation:
 ```
-python --version
+python3 --version
 pip3 --version
 ```
 Upgrade as needed:
@@ -84,6 +84,12 @@ https://www.anaconda.com/blog/understanding-conda-and-pip
 https://codesolid.com/conda-vs-pip/
 https://stackoverflow.com/questions/38217545/what-is-the-difference-between-pyenv-virtualenv-anaconda
 https://stackoverflow.com/questions/64362772/switching-python-version-installed-by-homebrew
+
+### Install needed python modules
+
+```
+pip3 install pexpect
+```
 
 ### Install Jupyter
 

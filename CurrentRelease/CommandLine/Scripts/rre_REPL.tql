@@ -2,10 +2,20 @@ remoteExtendScriptTarget = getEnv("RRE_REMOTE_URL");
 timeoutMilliseconds = 10000;
 
 var PROMPT = "$ ";
-var PROMPT_CONTINUATION = "> ";
+var RRE_PROMPT = getEnv("RRE_PROMPT");
+if (RRE_PROMPT == "") {
+    RRE_PROMPT = PROMPT;
+}
 
-var prompt = PROMPT;
+var PROMPT_CONTINUATION = "> ";
+var RRE_PROMPT_CONTINUATION = getEnv("RRE_PROMPT_CONTINUATION")
+if (RRE_PROMPT_CONTINUATION == "") {
+    RRE_PROMPT_CONTINUATION = PROMPT_CONTINUATION;
+}
+
+var prompt = RRE_PROMPT;
 var inputData = stdIn(prompt);
+var trimmedInputData;
 
 do {
 
@@ -14,9 +24,13 @@ do {
         remoteExtendScriptTarget, 
         G.CALL_BACK_ID_EXTENDSCRIPT, // This constant is defined in the startupScript.tql
         function(result) {
-            prompt = result.substr(result.length - PROMPT.length);
-            if (prompt == PROMPT || prompt == PROMPT_CONTINUATION) {
-                result = result.substr(0, result.length - prompt.length);
+            if (result.substr(result.length - PROMPT.length) == PROMPT) {
+                result = result.substr(0, result.length - PROMPT.length);
+                prompt = RRE_PROMPT;
+            } 
+            else if (result.substr(result.length - PROMPT_CONTINUATION.length) == PROMPT_CONTINUATION) {
+                result = result.substr(0, result.length - PROMPT_CONTINUATION.length);
+                prompt = RRE_PROMPT_CONTINUATION;
             }
             else {
                 prompt = "";

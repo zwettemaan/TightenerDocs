@@ -2,21 +2,34 @@ remoteTQLTarget = getEnv("RRT_REMOTE_URL");
 timeoutMilliseconds = 10000;
 
 var PROMPT = "$ ";
-var PROMPT_CONTINUATION = "> ";
+var RRT_PROMPT = getEnv("RRT_PROMPT");
+if (RRT_PROMPT == "") {
+    RRT_PROMPT = PROMPT;
+}
 
-var prompt = PROMPT;
+var PROMPT_CONTINUATION = "> ";
+var RRT_PROMPT_CONTINUATION = getEnv("RRT_PROMPT_CONTINUATION")
+if (RRT_PROMPT_CONTINUATION == "") {
+    RRT_PROMPT_CONTINUATION = PROMPT_CONTINUATION;
+}
+
+var prompt = RRT_PROMPT;
 var inputData = stdIn(prompt);
+var trimmedInputData;
 
 do {
-
     sendData(
         inputData,
         remoteTQLTarget, 
-        G.CALL_BACK_ID_TQL,  // This constant is define in the startupScript.tql
+        G.CALL_BACK_ID_TQL,  // This constant is defined in the startupScript.tql
         function(result) {
-            prompt = result.substr(result.length - PROMPT.length);
-            if (prompt == PROMPT || prompt == PROMPT_CONTINUATION) {
-                result = result.substr(0, result.length - prompt.length);
+            if (result.substr(result.length - PROMPT.length) == PROMPT) {
+                result = result.substr(0, result.length - PROMPT.length);
+                prompt = RRT_PROMPT;
+            } 
+            else if (result.substr(result.length - PROMPT_CONTINUATION.length) == PROMPT_CONTINUATION) {
+                result = result.substr(0, result.length - PROMPT_CONTINUATION.length);
+                prompt = RRT_PROMPT_CONTINUATION;
             }
             else {
                 prompt = "";
@@ -26,15 +39,14 @@ do {
         timeoutMilliseconds
     );
 
-
     if (prompt == "") {
         inputData = "\n";
+        trimmedInputData = "";
     }
     else {
         inputData = stdIn(prompt);
-        var trimmedInputData = G.UTIL.trim(inputData);
+        trimmedInputData = G.UTIL.trim(inputData);
     }
-
 }
 while (trimmedInputData != "quit" && trimmedInputData != "quit()");
 
