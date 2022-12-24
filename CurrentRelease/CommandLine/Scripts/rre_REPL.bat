@@ -26,7 +26,7 @@ SET RRE_REMOTE_URL=%1
 
 ECHO Starting rre_REPL.tql. Enter 'quit()' to terminate the REPL loop.
 
-Tightener -N console -t n -f "%TIGHTENER_SCRIPTS%rre_REPL.tql"
+Tightener -N console -I -t n -f "%TIGHTENER_SCRIPTS%rre_REPL.tql"
 
 ECHO Done.
 

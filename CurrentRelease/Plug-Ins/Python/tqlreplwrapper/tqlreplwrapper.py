@@ -1,5 +1,8 @@
 # To install:
-#   sudo jupyter kernelspec install /home/parallels/Documents/Controlled/Rorohiko/TightenerComponents/TightenerDocs/CurrentRelease/Plug-Ins/Python/tqlreplwrapper/
+#
+# jupyter kernelspec install "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/tqlreplwrapper/"
+#
+# jupyter kernelspec install "%TIGHTENER_RELEASE_ROOT%Plug-Ins\Python\tqlreplwrapper\"
 #
 # To run
 #   jupyter notebook
@@ -23,7 +26,7 @@ from ipykernel.kernelapp import IPKernelApp
 class TightenerKernel(Kernel):
 
     tightenerTQLWrapper = pexpect.replwrap.REPLWrapper(
-        "Tightener -N console -e 0 -p "
+        "Tightener -N console -I -p "
         + pexpect.replwrap.PEXPECT_PROMPT
         + " -P "
         + pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT,
