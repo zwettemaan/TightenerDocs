@@ -102,6 +102,22 @@ Verify installation:
 jupyter notebook
 ```
 
+```
+cd "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python"
+jupyter kernelspec install "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/tqlreplwrapper"
+python3 -m tqlreplwrapper install --user
+jupyter kernelspec install "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/jsxreplwrapper"
+python3 -m jsxreplwrapper install --user
+```
+
+Installed kernelspec python3 in /Users/kris/Library/Jupyter/kernels/python3
+kris@holly Python % python3 -m jsxreplwrapper install --user
+
+
+rm /usr/local/bin/python3
+ln -s /usr/local/Cellar/python@3.10/3.10.9/bin/python3 /usr/local/bin/python3
+rm /usr/local/bin/pip3
+ln -s /usr/local/Cellar/python@3.10/3.10.9/bin/pip3 /usr/local/bin/pip3   
 
 
 ## Windows
