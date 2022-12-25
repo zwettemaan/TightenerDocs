@@ -11,10 +11,6 @@
 # rre_REPL tgh://sandy.rorohiko.com/net.tightener.coordinator.indesign.17.0/main 
 # rre_REPL tgh://sandy.rorohiko.com/net.tightener.coordinator.indesign.17.0.configuration_noport/main 
 #
-# Commands are buffered locally first.
-#
-# Entering a blank line will send the commands to the remote and output the result.
-#
 
 if [ "$1" = "" ]; then
     echo "Usage:"

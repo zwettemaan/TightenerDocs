@@ -9,10 +9,12 @@ G.LOG.setLogLevel(0);
 
 G.CALL_BACK_ID_DEFAULT      = "net.tightener.callbackid.commandline.default";
 G.CALL_BACK_ID_EXTENDSCRIPT = "net.tightener.callbackid.commandline.extendscript";
+G.CALL_BACK_ID_UXPSCRIPT    = "net.tightener.callbackid.commandline.uxpscript";
 G.CALL_BACK_ID_TQL          = "net.tightener.callbackid.commandline.tql";
 G.CALL_BACK_ID_TQL_SPLIT    = "net.tightener.callbackid.commandline.tql.split";
 G.STREAM_ID_TQL             = "net.tightener.streamid.commandline.tql";
 G.STREAM_ID_EXTENDSCRIPT    = "net.tightener.streamid.commandline.extendscript";
+G.STREAM_ID_UXPSCRIPT       = "net.tightener.streamid.commandline.uxpscript";
 G.REPL_TIMEOUT_MILLISECONDS = 10000;
 
 G.EXTENDSCRIPT_INDESIGN_ENGINE_PERSISTENT = "net.tightener.persistent";
@@ -41,6 +43,31 @@ setDataRequestCallBack(
 );
 
 if (G.IS_INDESIGN && ! G.IS_ESDLL) {
+
+    setDataRequestCallBack(
+        G.CALL_BACK_ID_UXPSCRIPT, 
+        function(senderURL, callBackID, streamData) {
+            var result = 
+                parseScript(
+                    G.STREAM_ID_UXPSCRIPT,
+                    streamData,
+                    "prompt",
+                    G.REPL_TIMEOUT_MILLISECONDS);
+            var prompt = result.substr(result.length - 2);
+            result = result.substr(0, result.length - 2);
+            if (! result) {
+                result = "\n";
+            }
+            else {
+                logNote(">>1" + result + "1<<");
+                result = 
+                    app.evalUxpScript(
+                        result) + "\n";
+                logNote(">>2" + result + "2<<");
+            }
+            sendData(result + prompt);
+        }
+    );
 
     // The InDesign plug-in Tightener allows using persistent engines
     setDataRequestCallBack(

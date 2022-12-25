@@ -1,0 +1,54 @@
+remoteUXPScriptTarget = getEnv("RRU_REMOTE_URL");
+timeoutMilliseconds = 10000;
+
+var PROMPT = "$ ";
+var RRU_PROMPT = getEnv("RRU_PROMPT");
+if (RRU_PROMPT == "") {
+    RRU_PROMPT = PROMPT;
+}
+
+var PROMPT_CONTINUATION = "> ";
+var RRU_PROMPT_CONTINUATION = getEnv("RRU_PROMPT_CONTINUATION")
+if (RRU_PROMPT_CONTINUATION == "") {
+    RRU_PROMPT_CONTINUATION = PROMPT_CONTINUATION;
+}
+
+var prompt = RRU_PROMPT;
+var inputData = stdIn(prompt);
+var trimmedInputData;
+
+do {
+
+    sendData(
+        inputData,
+        remoteUXPScriptTarget, 
+        G.CALL_BACK_ID_UXPSCRIPT, // This constant is defined in the startupScript.tql
+        function(result) {
+            if (result.substr(result.length - PROMPT.length) == PROMPT) {
+                result = result.substr(0, result.length - PROMPT.length);
+                prompt = RRU_PROMPT;
+            } 
+            else if (result.substr(result.length - PROMPT_CONTINUATION.length) == PROMPT_CONTINUATION) {
+                result = result.substr(0, result.length - PROMPT_CONTINUATION.length);
+                prompt = RRU_PROMPT_CONTINUATION;
+            }
+            else {
+                prompt = "";
+            }
+            stdOut(result);
+        },
+        timeoutMilliseconds
+    );
+
+    if (prompt == "") {
+        inputData = "\n";
+    }
+    else {
+        inputData = stdIn(prompt);
+        var trimmedInputData = G.UTIL.trim(inputData);
+    }
+
+}
+while (trimmedInputData != "quit" && trimmedInputData != "quit()");
+
+quit();

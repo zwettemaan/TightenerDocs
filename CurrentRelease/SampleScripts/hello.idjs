@@ -1,0 +1,28 @@
+//
+// hello.idjs
+//
+// Run with rru (Run Remote UXPScript)
+//
+/****
+
+rru indesign hello.jsx
+rru tgh://freddy/indesign hello.jsx
+      
+*****/
+
+function alert(msg) {
+   theDialog = app.dialogs.add();
+   col = theDialog.dialogColumns.add();
+   colText = col.staticTexts.add();
+   colText.staticLabel = "" + msg;
+   theDialog.canCancel = false;
+   theDialog.show();
+   theDialog.destroy();
+   return;
+}
+
+feedBack = function(message) {
+   alert(message); 
+};
+
+feedBack("Hello from hello.idjs");
