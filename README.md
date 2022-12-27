@@ -119,6 +119,9 @@ ln -s /usr/local/Cellar/python@3.10/3.10.9/bin/python3 /usr/local/bin/python3
 rm /usr/local/bin/pip3
 ln -s /usr/local/Cellar/python@3.10/3.10.9/bin/pip3 /usr/local/bin/pip3   
 
+## UXPScript Alert function
+
+(function(msg){theDialog = app.dialogs.add();col = theDialog.dialogColumns.add();colText = col.staticTexts.add();colText.staticLabel = '' + msg;theDialog.canCancel = false;theDialog.show();theDialog.destroy()})('hello');
 
 ## Windows
 
