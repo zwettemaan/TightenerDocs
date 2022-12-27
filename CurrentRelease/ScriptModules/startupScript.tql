@@ -67,7 +67,7 @@ if (G.IS_INDESIGN && ! G.IS_ESDLL) {
 
                 var uxpScript = 
                     "var G_RETURN = JSON.stringify(eval(" + enquote(result) + "));" + 
-                    "app.evalTQL('G.RETURN = \\"' + G_RETURN + '\\");";
+                    "app.evalTQL('G.RETURN = \\\"' + G_RETURN + '\\\");";
 
                 logNote(">>uxpScript:" + uxpScript);
                 
