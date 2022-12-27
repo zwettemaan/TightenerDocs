@@ -18,6 +18,7 @@ G.STREAM_ID_UXPSCRIPT       = "net.tightener.streamid.commandline.uxpscript";
 G.REPL_TIMEOUT_MILLISECONDS = 10000;
 
 G.EXTENDSCRIPT_INDESIGN_ENGINE_PERSISTENT = "net.tightener.persistent";
+G.UXP_INDESIGN_ENGINE                     = "net.tightener.uxpscriptengine";
 
 G.IS_INDESIGN = 
     sysInfo().coordinatorName.indexOf(".coordinator.indesign.") > 0;
@@ -57,15 +58,27 @@ if (G.IS_INDESIGN && ! G.IS_ESDLL) {
             result = result.substr(0, result.length - 2);
             if (! result) {
                 result = "\n";
+                sendData(result + prompt);
             }
             else {
-                logNote(">>1" + result + "1<<");
-                result = 
-                    app.evalUxpScript(
-                        result) + "\n";
-                logNote(">>2" + result + "2<<");
+                G.RETURN = "NONE";
+
+                logNote(">>initial G.RETURN:" + G.RETURN);
+
+                var uxpScript = 
+                    "var G_RETURN = JSON.stringify(eval(" + enquote(result) + "));" + 
+                    "app.evalTQL('G.RETURN = \\"' + G_RETURN + '\\");";
+
+                logNote(">>uxpScript:" + uxpScript);
+                
+                app.evalUxpScript(
+                    uxpScript, 
+                    function(processedResult) {
+                        logNote(">>processed G.RETURN:" + G.RETURN);
+                        sendData(eval(G.RETURN) + "\n" + prompt);
+                    }
+                );
             }
-            sendData(result + prompt);
         }
     );
 
