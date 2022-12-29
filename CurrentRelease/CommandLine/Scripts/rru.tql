@@ -30,7 +30,7 @@ TQLEOF
 UXPSEOF
 
 evalUxpScript(uxpScript, function(result) {
-    stdOut("Completed on remote: " + result + "\n");
+    //stdOut("Completed on remote: " + result + "\n");
 });
 
 TQLEOF
@@ -40,7 +40,7 @@ TQLEOF
         tqlScript,
         remoteTarget,
         function(result) {
-            stdOut("Callback received: " + result + "\n");
+            //stdOut("Callback received: " + result + "\n");
         }
     );
 }

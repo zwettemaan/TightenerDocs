@@ -61,21 +61,14 @@ if (G.IS_INDESIGN && ! G.IS_ESDLL) {
                 sendData(result + prompt);
             }
             else {
-                G.RETURN = "NONE";
-
-                logNote(">>initial G.RETURN:" + G.RETURN);
 
                 var uxpScript = 
-                    "var G_RETURN = JSON.stringify(eval(" + enquote(result) + "));" + 
-                    "app.evalTQL('G.RETURN = \\\"' + G_RETURN + '\\\");";
+                    "app.scriptReturn(JSON.stringify((function(expr){try{eval('expr=('+expr+')');}catch(err){expr=undefined;}return expr;})(" + enquote(result) + ")));";
 
-                logNote(">>uxpScript:" + uxpScript);
-                
                 app.evalUxpScript(
                     uxpScript, 
                     function(processedResult) {
-                        logNote(">>processed G.RETURN:" + G.RETURN);
-                        sendData(eval(G.RETURN) + "\n" + prompt);
+                        sendData(processedResult + "\n" + prompt);
                     }
                 );
             }
