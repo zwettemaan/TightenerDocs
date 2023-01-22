@@ -16,6 +16,12 @@
 #
 # Problems after closing notebook web page: Kernel does not respond any more. 
 # Probably because Tightener remains running but is expected to quit
+#
+# ln -s "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/jsxreplwrapper" /usr/local/share/jupyter/kernels/jsxreplwrapper
+# ln -s "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/jsxreplwrapper" /usr/local/lib/python3.10/site-packages/jsxreplwrapper
+# killApps
+# jupyter notebook
+
 
 import pexpect.replwrap
 import sys
@@ -24,10 +30,11 @@ from ipykernel.kernelbase import Kernel
 from ipykernel.kernelapp import IPKernelApp
 
 
-class TightenerKernel(Kernel):
+class JSXTightenerKernel(Kernel):
 
     os.environ["RRE_PROMPT"] = pexpect.replwrap.PEXPECT_PROMPT
     os.environ["RRE_PROMPT_CONTINUATION"] = pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT
+
     tightenerJSXWrapper = pexpect.replwrap.REPLWrapper(
         "bash -c 'rre_REPL InDesign'",
         pexpect.replwrap.PEXPECT_PROMPT,
@@ -49,7 +56,6 @@ class TightenerKernel(Kernel):
     def do_execute(self, code, silent, store_history=True, user_expressions=None,
                    allow_stdin=False):
 
-
         if not silent:
             stream_content = {'name': 'stdout', 
                 'text': self.tightenerJSXWrapper.run_command(code) 
@@ -65,4 +71,4 @@ class TightenerKernel(Kernel):
 
 
 if __name__ == '__main__':
-    IPKernelApp.launch_instance(kernel_class=TightenerKernel)
+    IPKernelApp.launch_instance(kernel_class=JSXTightenerKernel)

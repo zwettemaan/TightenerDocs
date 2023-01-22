@@ -68,7 +68,7 @@ if (G.IS_INDESIGN && ! G.IS_ESDLL) {
                 app.evalUxpScript(
                     uxpScript, 
                     function(processedResult) {
-                        sendData(processedResult + "\n" + prompt);
+                        sendData(eval(processedResult) + "\n" + prompt);
                     }
                 );
             }
