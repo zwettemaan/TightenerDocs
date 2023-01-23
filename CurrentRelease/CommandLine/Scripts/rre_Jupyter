@@ -10,14 +10,14 @@ fi
 
 export RRE_REMOTE_URL="$1"
 
+export RRE_JUPYTER_SESSION_ID=`uuidgen`
+export COORDINATOR_NAME="net.tightener.coordinator.kernelconsole.${RRE_JUPYTER_SESSION_ID}"
+
 # -N <short> : short coordinator name
 # -I         : read standard stdin 
 # -t n       : no tests to be run
 # -z         : ignore SIGINT signals
 # -f <path>  : process script
-
-export RRE_JUPYTER_SESSION_ID=`uuidgen`
-export COORDINATOR_NAME="net.tightener.coordinator.kernelconsole.${RRE_JUPYTER_SESSION_ID}"
 
 Tightener -N ${COORDINATOR_NAME} -I -t n -z -f "${TIGHTENER_SCRIPTS}rre_REPL.tql"
 
