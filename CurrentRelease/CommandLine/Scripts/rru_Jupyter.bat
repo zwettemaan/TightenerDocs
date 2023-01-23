@@ -15,7 +15,7 @@ IF "%1" == "" (
 
 SET RRU_REMOTE_URL=%1
 
-FOR %%A in ('powershell -Command "[guid]::NewGuid().ToString()"') DO SET RRU_JUPYTER_SESSION_ID=%%A
+FOR /f "usebackq tokens=*" %%A in (`powershell -Command "[guid]::NewGuid().ToString()"`) DO SET RRU_JUPYTER_SESSION_ID=%%A
 SET COORDINATOR_NAME=net.tightener.coordinator.kernelconsole.%RRU_JUPYTER_SESSION_ID%
 
 REM -N <short> : short coordinator name
