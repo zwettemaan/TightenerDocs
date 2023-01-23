@@ -26,6 +26,7 @@
 
 import pexpect.replwrap
 import sys
+import uuid
 from ipykernel.kernelbase import Kernel
 from ipykernel.kernelapp import IPKernelApp
 # from debugpy.common import log
@@ -37,7 +38,7 @@ class TQLTightenerKernel(Kernel):
     # log.info("Creating TQLTightenerKernel")
 
     tightenerTQLWrapper = pexpect.replwrap.REPLWrapper(
-        "Tightener -N console -I -e 0" + 
+        "Tightener -N net.tightener.coordinator.kernelconsole." + uuid.uuid4().hex + " -I -z -e 0" + 
         " -p " + pexpect.replwrap.PEXPECT_PROMPT +
         " -P " + pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT,
         pexpect.replwrap.PEXPECT_PROMPT,

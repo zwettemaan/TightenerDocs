@@ -5,5 +5,13 @@
 /CurrentRelease/CommandLine/Linux/TightenerGW/
 /CurrentRelease/CommandLine/Windows/TightenerGW/
 /CurrentRelease/SampleScripts/ReleaseTestScripts/data1.txt
+/CurrentRelease/Plug-Ins/Python/.ipynb_checkpoints
 /CurrentRelease/Plug-Ins/Python/jsxreplwrapper/.idea
+/CurrentRelease/Plug-Ins/Python/jsxreplwrapper/.ipynb_checkpoints
+/CurrentRelease/Plug-Ins/Python/jsxreplwrapper/pycache
 /CurrentRelease/Plug-Ins/Python/tqlreplwrapper/.idea
+/CurrentRelease/Plug-Ins/Python/tqlreplwrapper/.ipynb_checkpoints
+/CurrentRelease/Plug-Ins/Python/tqlreplwrapper/pycache
+/CurrentRelease/Plug-Ins/Python/idjsreplwrapper/.idea
+/CurrentRelease/Plug-Ins/Python/idjsreplwrapper/.ipynb_checkpoints
+/CurrentRelease/Plug-Ins/Python/idjsreplwrapper/pycache

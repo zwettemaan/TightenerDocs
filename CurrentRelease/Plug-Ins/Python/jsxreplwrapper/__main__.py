@@ -17,7 +17,9 @@
 # Problems after closing notebook web page: Kernel does not respond any more. 
 # Probably because Tightener remains running but is expected to quit
 #
+# rm -f /usr/local/share/jupyter/kernels/jsxreplwrapper
 # ln -s "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/jsxreplwrapper" /usr/local/share/jupyter/kernels/jsxreplwrapper
+# rm -f /usr/local/lib/python3.10/site-packages/jsxreplwrapper
 # ln -s "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/jsxreplwrapper" /usr/local/lib/python3.10/site-packages/jsxreplwrapper
 # killApps
 # jupyter notebook
@@ -36,7 +38,7 @@ class JSXTightenerKernel(Kernel):
     os.environ["RRE_PROMPT_CONTINUATION"] = pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT
 
     tightenerJSXWrapper = pexpect.replwrap.REPLWrapper(
-        "bash -c 'rre_REPL InDesign'",
+        "bash -c 'rre_Jupyter InDesign'",
         pexpect.replwrap.PEXPECT_PROMPT,
         None,
         pexpect.replwrap.PEXPECT_PROMPT,

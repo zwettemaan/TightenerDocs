@@ -1,0 +1,24 @@
+#
+# Remotely run UXPScript commands for a Jupyter Notebook kernel. InDesign/InCopy/InDesign Server only
+#
+
+if [ "$1" = "" ]; then
+    echo "Usage:"
+    echo "  `basename \"$0\"` target"
+    exit
+fi
+
+export RRU_REMOTE_URL="$1"
+
+# -N <short> : short coordinator name
+# -I         : read standard stdin 
+# -t n       : no tests to be run
+# -z         : ignore SIGINT signals
+# -f <path>  : process script
+
+export RRU_JUPYTER_SESSION_ID=`uuidgen`
+export COORDINATOR_NAME="net.tightener.coordinator.console${RRU_JUPYTER_SESSION_ID}"
+
+Tightener -N ${COORDINATOR_NAME} -I -t n -z -f "${TIGHTENER_SCRIPTS}rru_REPL.tql"
+
+echo "Done."

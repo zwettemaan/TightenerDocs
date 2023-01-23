@@ -21,6 +21,11 @@ export RRU_REMOTE_URL="$1"
 
 echo "Starting rru_REPL.tql. Enter 'quit()' to terminate the REPL loop."
 
+# -N <short> : short coordinator name
+# -I         : read standard stdin 
+# -t n       : no tests to be run
+# -f <path>  : process script
+
 Tightener -N console -I -t n -f "${TIGHTENER_SCRIPTS}rru_REPL.tql"
 
 echo "Done."
