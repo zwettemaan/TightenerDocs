@@ -38,9 +38,7 @@ class TQLTightenerKernel(Kernel):
     # log.info("Creating TQLTightenerKernel")
 
     tightenerTQLWrapper = pexpect.replwrap.REPLWrapper(
-        "Tightener -N net.tightener.coordinator.kernelconsole." + uuid.uuid4().hex + " -I -z -e 0" + 
-        " -p " + pexpect.replwrap.PEXPECT_PROMPT +
-        " -P " + pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT,
+        "bash -c 'rrt_Jupyter InDesign'",
         pexpect.replwrap.PEXPECT_PROMPT,
         None,
         pexpect.replwrap.PEXPECT_PROMPT,

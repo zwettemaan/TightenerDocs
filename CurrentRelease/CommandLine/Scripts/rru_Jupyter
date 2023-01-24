@@ -10,8 +10,8 @@ fi
 
 export RRU_REMOTE_URL="$1"
 
-export RRU_JUPYTER_SESSION_ID=`uuidgen`
-export COORDINATOR_NAME="net.tightener.coordinator.console${RRU_JUPYTER_SESSION_ID}"
+export RRU_JUPYTER_SESSION_ID=`uuidgen | sed "s/-//g"`
+export COORDINATOR_NAME="net.tightener.coordinator.kernelconsole.${RRU_JUPYTER_SESSION_ID}"
 
 # -N <short> : short coordinator name
 # -I         : read standard stdin 

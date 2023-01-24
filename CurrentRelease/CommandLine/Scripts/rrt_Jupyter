@@ -8,10 +8,10 @@ if [ "$1" = "" ]; then
     exit
 fi
 
-export RRE_REMOTE_URL="$1"
+export RRT_REMOTE_URL="$1"
 
-export RRE_JUPYTER_SESSION_ID=`uuidgen | sed "s/-//g"`
-export COORDINATOR_NAME="net.tightener.coordinator.kernelconsole.${RRE_JUPYTER_SESSION_ID}"
+export RRT_JUPYTER_SESSION_ID=`uuidgen | sed "s/-//g"`
+export COORDINATOR_NAME="net.tightener.coordinator.kernelconsole.${RRT_JUPYTER_SESSION_ID}"
 
 # -N <short> : short coordinator name
 # -I         : read standard stdin 
@@ -19,6 +19,6 @@ export COORDINATOR_NAME="net.tightener.coordinator.kernelconsole.${RRE_JUPYTER_S
 # -z         : ignore SIGINT signals
 # -f <path>  : process script
 
-Tightener -N ${COORDINATOR_NAME} -I -t n -z -f "${TIGHTENER_SCRIPTS}rre_REPL.tql"
+Tightener -N ${COORDINATOR_NAME} -I -t n -z -f "${TIGHTENER_SCRIPTS}rrt_REPL.tql"
 
 echo "Done."
