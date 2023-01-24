@@ -19,6 +19,6 @@ export COORDINATOR_NAME="net.tightener.coordinator.kernelconsole.${RRT_JUPYTER_S
 # -z         : ignore SIGINT signals
 # -f <path>  : process script
 
-Tightener -N ${COORDINATOR_NAME} -I -t n -z -f "${TIGHTENER_SCRIPTS}rrt_REPL.tql"
+Tightener -n ${COORDINATOR_NAME} -I -t n -z -f "${TIGHTENER_SCRIPTS}rrt_REPL.tql"
 
 echo "Done."
