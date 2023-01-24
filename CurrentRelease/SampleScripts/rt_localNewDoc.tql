@@ -2,41 +2,38 @@
 // rt_localNewDoc.tql
 // NEEDS UPDATING
 
-localSettings = eval(readFile("localSettings.json"));
+configIni = sysInfo("ini");
 
-isServer = localSettings.indesignShortCoordinatorName.indexOf(".server.") >= 0;
+inDesignSDKVersion = configIni.placeholders.INDESIGN_SDK_VERSION;
+inDesignCoordinatorSuffix = configIni.placeholders.INDESIGN_COORDINATOR_SUFFIX;
+inDesignEngineName = configIni.sampleScripts.INDESIGN_TARGET_ENGINE;
+coordinatorName = "net.tightener.coordinator.indesign." + inDesignSDKVersion + inDesignCoordinatorSuffix;
+isServer = coordinatorName.indexOf(".server.") >= 0;
+timeOut = eval(configIni.sampleScripts.LOCAL_TIMEOUT_MS);
 
 if (isServer) 
 {
-    feedBack = function(s) { 
-        stdOut(s + "\n"); 
-        evalExtendScript("alert(\"" + s + "\")");
+    feedBack = function(message) { 
+        stdOut(message + "\n"); 
+        evalExtendScript("alert(\"" + message + "\")");
     }    
 }
 else 
 {
-    feedBack = function(s) { 
-        stdOut(s + "\n"); 
+    feedBack = function(message) { 
+        stdOut(message + "\n"); 
     }
 }
 
-feedBack("rt_localNewDoc.tql");
-
-coordinatorName = 
-    "net.tightener.coordinator." + 
-    localSettings.indesignShortCoordinatorName;
+feedBack("localAccessInDesignAppName.tql");
 
 target = 
     "tgh:///" + 
     coordinatorName + 
     "/" + 
-    localSettings.inDesignEngineName;
+    inDesignEngineName;
 
-feedBack("start");
-
-retVal = "";
-
-result = undefined;
+feedBack("Targeted InDesign is " + target);
 
 inDesignScript = <<EOF
 
@@ -49,22 +46,23 @@ textFrame.contents
 
 EOF
 
-eval(
+// Use a blocking eval when timeOut value is provided.
+// This blocks until data received or timed out
+// See `localAccessInDesignSysInfo.tql` for alternate way of using 
+// a blocking eval
+
+result = eval(
     inDesignScript, 
     target, 
-    function(textFrameContents) 
-    { 
-        result = textFrameContents;
-    }, 
-    localSettings.timeout);
+    timeOut);
 
 if (result)
 {
-    retVal = result;    
+    retVal = "script returns '" + result + "'";    
 }
 else
 {
-    retVal = "failed";
+    retVal = "Cannot reach " + target;
 }
 
 feedBack(retVal);
