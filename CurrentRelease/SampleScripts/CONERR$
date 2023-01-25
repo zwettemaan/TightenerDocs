@@ -4,3 +4,9 @@
 [2023-01-24 22:47:37] [info] asio async_connect error: asio.system:10061 (No connection could be made because the target machine actively refused it.)
 [2023-01-24 22:47:37] [info] Error getting remote endpoint: asio.system:10057 (A request to send or receive data was disallowed because the socket is not connected and (when sending on a datagram socket using a sendto call) no address was supplied.)
 [2023-01-24 22:47:37] [error] handle_connect error: No connection could be made because the target machine actively refused it.
+[2023-01-25 20:45:22] [info] asio async_connect error: asio.system:10061 (No connection could be made because the target machine actively refused it.)
+[2023-01-25 20:45:22] [info] Error getting remote endpoint: asio.system:10057 (A request to send or receive data was disallowed because the socket is not connected and (when sending on a datagram socket using a sendto call) no address was supplied.)
+[2023-01-25 20:45:22] [error] handle_connect error: No connection could be made because the target machine actively refused it.
+[2023-01-25 20:48:51] [info] asio async_connect error: asio.system:10061 (No connection could be made because the target machine actively refused it.)
+[2023-01-25 20:48:51] [info] Error getting remote endpoint: asio.system:10057 (A request to send or receive data was disallowed because the socket is not connected and (when sending on a datagram socket using a sendto call) no address was supplied.)
+[2023-01-25 20:48:51] [error] handle_connect error: No connection could be made because the target machine actively refused it.
