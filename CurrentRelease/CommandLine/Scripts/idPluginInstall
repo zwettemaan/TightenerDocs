@@ -11,6 +11,6 @@ if [  "${INDESIGN_TIGHTENER_IS_SERVER}" = "1" ]; then
     cp -R "${INDESIGN_RELEASE_PLUGIN_FOLDER}TightenerServer.InDesignPlugin" "${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}TightenerServer.InDesignPlugin"
 else
     cp -R "${INDESIGN_RELEASE_PLUGIN_FOLDER}Tightener.InDesignPlugin" "${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}Tightener.InDesignPlugin"
-end if    
+fi    
 
 echo "Plug-in installed in ${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}"
