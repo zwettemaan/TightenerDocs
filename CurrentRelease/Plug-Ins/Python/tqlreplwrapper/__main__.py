@@ -26,9 +26,10 @@
 
 import pexpect.replwrap
 import sys
-import uuid
+import os
 from ipykernel.kernelbase import Kernel
 from ipykernel.kernelapp import IPKernelApp
+
 # from debugpy.common import log
 
 # log.to_file("/Users/kris/Desktop/tqlreplwrapper.log")
@@ -36,6 +37,9 @@ from ipykernel.kernelapp import IPKernelApp
 class TQLTightenerKernel(Kernel):
 
     # log.info("Creating TQLTightenerKernel")
+
+    os.environ["RRT_PROMPT"] = pexpect.replwrap.PEXPECT_PROMPT
+    os.environ["RRT_PROMPT_CONTINUATION"] = pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT
 
     tightenerTQLWrapper = pexpect.replwrap.REPLWrapper(
         "bash -c 'rrt_Jupyter InDesign'",

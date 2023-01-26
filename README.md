@@ -73,10 +73,10 @@ Might need to verify `/usr/local/bin` is on the `PATH` before `/usr/bin` in orde
 
 And managers like:
 
-pyenv
-pip
-virtualenv
-anaconda
+pyenv    
+pip    
+virtualenv    
+anaconda    
 
 which all provide somewhat similar, more or less overlapping functionality.
 
@@ -93,6 +93,25 @@ pip3 install pexpect
 
 ### Install Jupyter
 
+Beforehand, I avoid error messages by adding the python binary dir to the path: add to .zshenv en .profile, something like
+
+```
+python3 --version
+```
+-> e.g. Python 3.9.6
+```
+export PYTHON_MAIN_VERSION=3.9
+export PATH=$PATH:/Users/kris/Library/Python/${PYTHON_MAIN_VERSION}/bin
+export SITE_PACKAGES=~/Library/Python/${PYTHON_MAIN_VERSION}/lib/python/site-packages
+```
+
+On my main Mac, I have 
+```
+export PYTHON_MAIN_VERSION=3.10
+export PATH=$PATH:/usr/local/bin
+export SITE_PACKAGES=/usr/local/lib/python${PYTHON_MAIN_VERSION}/site-packages
+```
+
 Install Jupyter:
 ```
 pip3 install jupyter
@@ -102,22 +121,17 @@ Verify installation:
 jupyter notebook
 ```
 
+Install the kernels (using Python 3.9 in the example below):
+
 ```
-cd "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python"
-jupyter kernelspec install "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/tqlreplwrapper"
-python3 -m tqlreplwrapper install --user
-jupyter kernelspec install "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/jsxreplwrapper"
-python3 -m jsxreplwrapper install --user
+killApps
+ln -s "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/tqlreplwrapper" /usr/local/share/jupyter/kernels/tqlreplwrapper
+ln -s "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/tqlreplwrapper" ${SITE_PACKAGES}/tqlreplwrapper
+ln -s "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/jsxreplwrapper" /usr/local/share/jupyter/kernels/jsxreplwrapper
+ln -s "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/jsxreplwrapper" ${SITE_PACKAGES}/jsxreplwrapper
+ln -s "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/idjsreplwrapper" /usr/local/share/jupyter/kernels/idjsreplwrapper
+ln -s "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/idjsreplwrapper" ${SITE_PACKAGES}/idjsreplwrapper
 ```
-
-Installed kernelspec python3 in /Users/kris/Library/Jupyter/kernels/python3
-kris@holly Python % python3 -m jsxreplwrapper install --user
-
-
-rm /usr/local/bin/python3
-ln -s /usr/local/Cellar/python@3.10/3.10.9/bin/python3 /usr/local/bin/python3
-rm /usr/local/bin/pip3
-ln -s /usr/local/Cellar/python@3.10/3.10.9/bin/pip3 /usr/local/bin/pip3   
 
 ## UXPScript functions
 
