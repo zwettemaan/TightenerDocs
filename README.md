@@ -121,6 +121,7 @@ ln -s /usr/local/Cellar/python@3.10/3.10.9/bin/pip3 /usr/local/bin/pip3
 
 ## UXPScript functions
 
+```
 function alert(msg) {
 
 	theDialog = app.dialogs.add();
@@ -146,7 +147,7 @@ function evalJS(expr) {
 
 	return expr;
 }
-
+```
 
 ## Windows
 

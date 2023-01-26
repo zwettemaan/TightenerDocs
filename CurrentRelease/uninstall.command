@@ -22,6 +22,9 @@ fi
 
 echo ""
 echo "Tightener has been removed from your ${CLEARED_FILE_LIST} profile files"
+echo ""
+echo "The Tightener preferences are stored in ${TIGHTENER_LOCAL_DATA_ROOT}."
+echo "This folder has not been deleted - you can delete it manually if desired."
+echo ""
 echo "Any plug-ins you might have installed (e.g. by way of idPluginInstall)"
 echo "have not been removed - please remove these manually"
-echo ""

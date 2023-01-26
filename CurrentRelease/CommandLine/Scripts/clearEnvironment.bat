@@ -81,11 +81,15 @@ ECHO Tightener has been removed from your Windows environment.
 ECHO.
 ECHO The current user path as it was before uninstall has been saved under 
 ECHO USER_PATH_SAVED_BY_TIGHTENER_UNINSTALLER, just in case.
+ECHO.
 ECHO There is also a saved USER_PATH_SAVED_BY_TIGHTENER which was the user path
 ECHO when Tightener was installed. You can delete these manually if desired.
+ECHO.
+ECHO The Tightener preferences are stored in %APPDATA%\net.tightener
+ECHO These have not been deleted - you can delete these manually if desired
+ECHO.
 ECHO Any plug-ins you might have installed (e.g. by way of idPluginInstall) 
 ECHO have not been removed - please remove these manually.
-ECHO.
 
 GOTO DONE
 
