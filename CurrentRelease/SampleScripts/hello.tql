@@ -69,4 +69,4 @@ feedBack = function(message) {
    stdOut(message + "\n"); 
 };
 
-feedBack(sysInfo());
+feedBack("Hello from hello.tql");
