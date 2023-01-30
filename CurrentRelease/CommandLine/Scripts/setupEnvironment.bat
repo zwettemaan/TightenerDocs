@@ -97,7 +97,7 @@ IF "%TIGHTENER_CONFIG_NODE_NAME%" == "" (
 SETX > NUL PATH "!USER_PATH_SAVED_BY_TIGHTENER!!PATH_SUFFIX!
 
 IF NOT EXIST "%APPDATA%\net.tightener\SysConfig\config.ini" (
-    CALL copyConfig.bat
+    CALL %TIGHTENER_SCRIPTS%copyConfig.bat
 )
 
 ECHO.
