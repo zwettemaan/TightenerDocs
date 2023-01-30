@@ -1,3 +1,3 @@
 @ECHO OFF
 
-editFile "%APPDATA%\net.tightener\SysConfig\config.ini"
+editFile %APPDATA%\net.tightener\SysConfig\config.ini
