@@ -2,6 +2,5 @@
 
 SET TIGHTENER_UNINSTALL_DIR=%~dp0
 
-"%TIGHTENER_UNINSTALL_DIR%CommandLine\Scripts\clearEnvironment.bat
-
+"%TIGHTENER_UNINSTALL_DIR%CommandLine\Scripts\clearEnvironment.bat %1
 

@@ -12,19 +12,37 @@ if [ `uname` = "Darwin" ]; then
     ./clearEnvironmentInProfile ~/.zshenv 
     ./clearEnvironmentInProfile ~/.profile
 
+    if [ "$1" == "all" ]; then
+        echo ""
+        echo "Removing Tightener preferences"
+        echo ""
+        rm -rf "~/Library/Application Support/net.tightener"
+        find /Applications/Adobe\ InDesign* -iregex ".*/Tightener\(Server\)\{0,1\}\.InDesignPlugin" | while read a; do echo "Removing ${a}"; sudo rm -r "$a"; done
+    fi
+
 else
 
     CLEARED_FILE_LIST="~/.bashrc and ~/.profile"
     ./clearEnvironmentInProfile ~/.bashrc 
     ./clearEnvironmentInProfile ~/.profile
 
+    if [ "$1" == "all" ]; then
+        echo ""
+        echo "Removing Tightener preferences"
+        echo ""
+        rm -rf "~/Library/Application Support/net.tightener"
+    fi
+
 fi
 
 echo ""
 echo "Tightener has been removed from your ${CLEARED_FILE_LIST} profile files"
-echo ""
-echo "The Tightener preferences are stored in ${TIGHTENER_LOCAL_DATA_ROOT}."
-echo "This folder has not been deleted - you can delete it manually if desired."
-echo ""
-echo "Any plug-ins you might have installed (e.g. by way of idPluginInstall)"
-echo "have not been removed - please remove these manually"
+
+if [ "$1" != "all" ]; then
+    echo ""
+    echo "The Tightener preferences are stored in ${TIGHTENER_LOCAL_DATA_ROOT}."
+    echo "This folder has not been deleted - you can delete it manually if desired."
+    echo ""
+    echo "Any plug-ins you might have installed (e.g. by way of idPluginInstall)"
+    echo "have not been removed - please remove these manually"
+fi
