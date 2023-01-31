@@ -15,9 +15,12 @@ if [ `uname` = "Darwin" ]; then
     if [ "$1" == "all" ]; then
         echo ""
         echo "Removing Tightener preferences"
+        rm -rf ~/"Library/Application Support/net.tightener"
+
         echo ""
-        rm -rf "~/Library/Application Support/net.tightener"
+        echo "Searching for InDesign Plug-Ins to remove..."
         find /Applications/Adobe\ InDesign* -iregex ".*/Tightener\(Server\)\{0,1\}\.InDesignPlugin" | while read a; do echo "Removing ${a}"; sudo rm -r "$a"; done
+        echo "Search completed"
     fi
 
 else

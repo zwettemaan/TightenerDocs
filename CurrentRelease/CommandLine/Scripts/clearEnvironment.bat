@@ -36,14 +36,22 @@ IF "!LAST_CHAR_OF_USER_PATH!" == ";" (
 )
 
 IF "%1" == "all" (
+
+    ECHO.
+    ECHO Deleting Tightener saved info    
     REG DELETE HKEY_CURRENT_USER\Environment /f /v USER_PATH_SAVED_BY_TIGHTENER >NUL 2>&1
+
+    ECHO.
+    ECHO Deleting Tightener preferences
     DEL /S /Q "%APPDATA%\net.tightener" >NUL 2>&1
-    IF "%1" == "all" (
-        PUSHD "%PROGRAMFILES%"
-        FOR /f "delims=" %%i IN ('DIR /s /b /a:-d "Tightener.pln"') do (DEL /Q "%%i")
-        FOR /f "delims=" %%i IN ('DIR /s /b /a:d "(Tightener Resources)"') do (DEL /S /Q "%%i")
-        POPD
-    )
+
+    ECHO.
+    ECHO Searching for InDesign Plug-Ins to delete
+    PUSHD "%PROGRAMFILES%"
+    FOR /f "delims=" %%i IN ('DIR /s /b /a:-d "Tightener.pln"') do (DEL /Q "%%i")
+    FOR /f "delims=" %%i IN ('DIR /s /b /a:d "(Tightener Resources)"') do (DEL /S /Q "%%i")
+    POPD
+    ECHO Search completed
 
 ) ELSE (
     SETX > NUL USER_PATH_SAVED_BY_TIGHTENER_UNINSTALLER "!USER_PATH_SAVED_BY_TIGHTENER_UNINSTALLER!
