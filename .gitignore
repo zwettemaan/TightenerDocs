@@ -8,3 +8,4 @@ __pycache__
 /CurrentRelease/CommandLine/Linux/TightenerGW/
 /CurrentRelease/CommandLine/Windows/TightenerGW/
 /CurrentRelease/SampleScripts/ReleaseTestScripts/data1.txt
+dirconfig.sh

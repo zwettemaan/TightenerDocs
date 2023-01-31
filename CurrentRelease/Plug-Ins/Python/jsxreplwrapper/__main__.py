@@ -1,8 +1,6 @@
-# To install:
+# To install on a Mac with python3 and jupyter installed
 #
-# jupyter kernelspec install "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/jsxreplwrapper"
-#
-# jupyter kernelspec install "%TIGHTENER_RELEASE_ROOT%Plug-Ins\Python\jsxreplwrapper"
+# ./installMac.command
 #
 # To run
 #   jupyter notebook
