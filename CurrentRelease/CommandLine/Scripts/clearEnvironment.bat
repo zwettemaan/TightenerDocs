@@ -40,16 +40,17 @@ IF "%1" == "all" (
     ECHO.
     ECHO Deleting Tightener saved info    
     REG DELETE HKEY_CURRENT_USER\Environment /f /v USER_PATH_SAVED_BY_TIGHTENER >NUL 2>&1
+    REG DELETE HKEY_CURRENT_USER\Environment /f /v USER_PATH_SAVED_BY_TIGHTENER_UNINSTALLER >NUL 2>&1
 
     ECHO.
     ECHO Deleting Tightener preferences
-    DEL /S /Q "%APPDATA%\net.tightener" >NUL 2>&1
+    RMDIR /S /Q %APPDATA%\net.tightener >NUL 2>&1
 
     ECHO.
     ECHO Searching for InDesign Plug-Ins to delete
     PUSHD "%PROGRAMFILES%"
-    FOR /f "delims=" %%i IN ('DIR /s /b /a:-d "Tightener.pln"') do (DEL /Q "%%i")
-    FOR /f "delims=" %%i IN ('DIR /s /b /a:d "(Tightener Resources)"') do (DEL /S /Q "%%i")
+    FOR /f "delims=" %%i IN ('DIR /s /b /a:-d "Tightener.pln"') do (DEL /Q "%%i") >NUL 2>&1
+    FOR /f "delims=" %%i IN ('DIR /s /b /a:d "(Tightener Resources)"') do (RMDIR /S /Q "%%i") >NUL 2>&1
     POPD
     ECHO Search completed
 
