@@ -1,10 +1,13 @@
-scriptPath = getEnv("RRU_SCRIPT_PATH");
+var scriptPath = getEnv("RRU_SCRIPT_PATH");
 if (fileExists(scriptPath)) {
 
-    uxpScript = readFile(scriptPath);
+    var quotedScript = enquote(readFile(scriptPath));
+
+    var uxpScript = 
+        "app.scriptReturn(JSON.stringify((function(expr){var retVal;try{retVal=eval(expr)}catch(err){retVal=err.toString()}return retVal})(" + quotedScript + ")));";
 
     // Remote is meant to InDesign
-    remoteTarget = getEnv("RRU_REMOTE_URL");
+    var remoteTarget = getEnv("RRU_REMOTE_URL");
 
     // Note: we're wrapping an UxpScript inside a TQL script
     // using nested HEREDOC notation
@@ -15,14 +18,14 @@ if (fileExists(scriptPath)) {
 
 
     // >>>1>>> Segment 1 of tqlScript: start the nested HEREDOC
-    tqlScript = <<TQLEOF
+    var tqlScript = <<TQLEOF
 uxpScript = <<UXPSEOF
 TQLEOF
     // <<<1<<<  End of Segment 1
 
 
     // >>>2>>> Segment 2 of tqlScript: the whole uxpScript code
-    tqlScript += uxpScript + "\n";
+    tqlScript += "\n" + uxpScript + "\n";
     // <<<2<<<  End of Segment 2
 
 
@@ -30,7 +33,7 @@ TQLEOF
     tqlScript += <<TQLEOF
 UXPSEOF
 
-app.evalUxpScript(uxpScript, function(result) {
+app.evalUxpScript(uxpScript, function(result) {    
     //stdOut("Completed on remote: " + result + "\n");
 });
 

@@ -2,12 +2,17 @@
 
 if [ -d "${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}" ]; then
     if [  "${INDESIGN_TIGHTENER_IS_SERVER}" = "1" ]; then
-        sudo rm -rf "${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}TightenerServer.InDesignPlugin"
+        if [ -d "${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}TightenerServer.InDesignPlugin" ]; then
+            sudo rm -rf "${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}TightenerServer.InDesignPlugin"
+            echo "Plug-in removed from ${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}"
+        fi
     else 
-        sudo rm -rf "${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}Tightener.InDesignPlugin"
+        if [ -d "${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}Tightener.InDesignPlugin" ]; then
+            sudo rm -rf "${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}Tightener.InDesignPlugin"
+            echo "Plug-in removed from ${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}"
+        fi
     fi
     sudo rm -f "${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}.DS_Store"
     sudo rmdir "${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}" > /dev/null 2>&1
 fi
 
-echo "Plug-in removed from ${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}"

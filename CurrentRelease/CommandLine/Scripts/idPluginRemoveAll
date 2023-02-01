@@ -1,0 +1,10 @@
+. "${TIGHTENER_SCRIPTS}idSetEnv"
+
+echo "Searching for InDesign Plug-Ins to remove..."
+find /Applications/Adobe\ InDesign* -iregex ".*/Tightener\(Server\)\{0,1\}\.InDesignPlugin" | while read a; do echo "Removing ${a}"; sudo rm -r "$a"; done
+
+find /Applications/Adobe\ InDesign* -iregex ".*/Plug-Ins/Rorohiko" | while read a; do sudo rmdir "$a" 2>&1 > /dev/null; done
+
+echo "Search completed"
+
+

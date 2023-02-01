@@ -47,12 +47,7 @@ IF "%1" == "all" (
     RMDIR /S /Q %APPDATA%\net.tightener >NUL 2>&1
 
     ECHO.
-    ECHO Searching for InDesign Plug-Ins to delete
-    PUSHD "%PROGRAMFILES%"
-    FOR /f "delims=" %%i IN ('DIR /s /b /a:-d "Tightener.pln"') do (DEL /Q "%%i") >NUL 2>&1
-    FOR /f "delims=" %%i IN ('DIR /s /b /a:d "(Tightener Resources)"') do (RMDIR /S /Q "%%i") >NUL 2>&1
-    POPD
-    ECHO Search completed
+    CALL "%TIGHTENER_SCRIPTS%\idPluginRemoveAll.bat"
 
 ) ELSE (
     SETX > NUL USER_PATH_SAVED_BY_TIGHTENER_UNINSTALLER "!USER_PATH_SAVED_BY_TIGHTENER_UNINSTALLER!
