@@ -5,6 +5,7 @@ tell application "Adobe InDesign 2023"
 	repeat
 		try
 			set theResult to do script "app.tightenerTimeslice()" language javascript
+			delay 0.1
 		end try
 	end repeat
 end tell

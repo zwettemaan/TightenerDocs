@@ -1,1 +1,0 @@
-osascript "${TIGHTENER_SCRIPTS}PokeInDesignTimeslices.applescript"

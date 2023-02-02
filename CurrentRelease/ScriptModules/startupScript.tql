@@ -61,13 +61,8 @@ if (G.IS_INDESIGN && ! G.IS_ESDLL) {
             }
             else {
 
-                var quotedScript = enquote(result);
-
-                var uxpScript = 
-                    "app.scriptReturn(JSON.stringify((function(expr){var retVal;try{retVal=eval(expr)}catch(err){retVal=err.toString()}return retVal})(" + quotedScript + ")));";
-
                 result = eval(app.evalUxpScript(
-                    uxpScript
+                    result
                     // Omit script engine name - seems to be unsupported by the 18.x SDK as of 20230201
                     // ,UXP_INDESIGN_ENGINE
                 )) + "\n";
