@@ -13,7 +13,7 @@ export RRU_REMOTE_URL="$1"
 export RRU_JUPYTER_SESSION_ID=`uuidgen | sed "s/-//g"`
 export COORDINATOR_NAME="net.tightener.coordinator.kernelconsole.${RRU_JUPYTER_SESSION_ID}"
 
-# -N <short> : short coordinator name
+# -n <long>  : long coordinator name
 # -I         : read standard stdin 
 # -t n       : no tests to be run
 # -z         : ignore SIGINT signals

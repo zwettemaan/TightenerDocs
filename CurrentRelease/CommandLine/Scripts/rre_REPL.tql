@@ -1,5 +1,5 @@
-remoteExtendScriptTarget = getEnv("RRE_REMOTE_URL");
-timeoutMilliseconds = 10000;
+var remoteExtendScriptTarget = getEnv("RRE_REMOTE_URL");
+var timeoutMilliseconds = 10000;
 
 var PROMPT = "$ ";
 var RRE_PROMPT = getEnv("RRE_PROMPT");
@@ -13,11 +13,20 @@ if (RRE_PROMPT_CONTINUATION == "") {
     RRE_PROMPT_CONTINUATION = PROMPT_CONTINUATION;
 }
 
-var prompt = RRE_PROMPT;
-var inputData = stdIn(prompt);
-var trimmedInputData;
+var RRE_1LINE = getEnv("RRE_1LINE")
 
-do {
+var inputData;
+if (RRE_1LINE) {
+    inputData = RRE_1LINE + "\n";
+}
+else {
+    inputData = stdIn(prompt);
+}
+
+var trimmedInputData = G.UTIL.trim(inputData);
+
+var prompt = RRE_PROMPT;
+while (trimmedInputData != "quit" && trimmedInputData != "quit()") {
 
     sendData(
         inputData,
@@ -40,8 +49,13 @@ do {
         timeoutMilliseconds
     );
 
-    if (prompt == "") {
+    if (RRE_1LINE) {
         inputData = "\n";
+        trimmedInputData = "quit";
+    }
+    else if (prompt == "") {
+        inputData = "\n";
+        trimmedInputData = "";
     }
     else {
         inputData = stdIn(prompt);
@@ -49,6 +63,5 @@ do {
     }
 
 }
-while (trimmedInputData != "quit" && trimmedInputData != "quit()");
 
 quit();

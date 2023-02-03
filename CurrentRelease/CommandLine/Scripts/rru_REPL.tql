@@ -1,5 +1,5 @@
-remoteUXPScriptTarget = getEnv("RRU_REMOTE_URL");
-timeoutMilliseconds = 10000;
+var remoteUXPScriptTarget = getEnv("RRU_REMOTE_URL");
+var timeoutMilliseconds = 10000;
 
 var PROMPT = "$ ";
 var RRU_PROMPT = getEnv("RRU_PROMPT");
@@ -8,16 +8,25 @@ if (RRU_PROMPT == "") {
 }
 
 var PROMPT_CONTINUATION = "> ";
-var RRU_PROMPT_CONTINUATION = getEnv("RRU_PROMPT_CONTINUATION")
+var RRU_PROMPT_CONTINUATION = getEnv("RRU_PROMPT_CONTINUATION");
 if (RRU_PROMPT_CONTINUATION == "") {
     RRU_PROMPT_CONTINUATION = PROMPT_CONTINUATION;
 }
 
-var prompt = RRU_PROMPT;
-var inputData = stdIn(prompt);
-var trimmedInputData;
+var RRU_1LINE = getEnv("RRU_1LINE");
 
-do {
+var inputData;
+if (RRU_1LINE) {
+    inputData = RRU_1LINE + "\n";
+}
+else {
+    inputData = stdIn(prompt);
+}
+
+var trimmedInputData = G.UTIL.trim(inputData);
+
+var prompt = RRU_PROMPT;
+while (trimmedInputData != "quit" && trimmedInputData != "quit()") {
 
     sendData(
         inputData,
@@ -40,8 +49,13 @@ do {
         timeoutMilliseconds
     );
 
-    if (prompt == "") {
+    if (RRU_1LINE) {
         inputData = "\n";
+        trimmedInputData = "quit";
+    }
+    else if (prompt == "") {
+        inputData = "\n";
+        trimmedInputData = "";
     }
     else {
         inputData = stdIn(prompt);
@@ -49,6 +63,5 @@ do {
     }
 
 }
-while (trimmedInputData != "quit" && trimmedInputData != "quit()");
 
 quit();

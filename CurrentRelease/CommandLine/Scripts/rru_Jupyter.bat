@@ -19,7 +19,7 @@ FOR /f "usebackq tokens=*" %%A in (`powershell -Command "[guid]::NewGuid().ToStr
 SET RRU_JUPYTER_SESSION_ID=%RRE_JUPYTER_SESSION_ID:-=%
 SET COORDINATOR_NAME=net.tightener.coordinator.kernelconsole.%RRU_JUPYTER_SESSION_ID%
 
-REM -N <short> : short coordinator name
+REM -n <long>  : long coordinator name
 REM -I         : read standard stdin 
 REM -t n       : no tests to be run
 REM -z         : ignore SIGINT signals

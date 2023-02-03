@@ -18,7 +18,7 @@ IF "%1" == "" (
     GOTO DONE
 )
 
-SET TIMEOUT_MS=10000
+SET TIMEOUT_MS=%TIGHTENER_DEFAULT_RR_TIMEOUT_MS%
 
 REM
 REM If responses are expected, we need to wait a bit to receive them
@@ -26,7 +26,7 @@ REM If we quit too soon, the response will vanish into the bit bucket
 REM
 
 IF "%3" == "" (
-    SET QUIT_DELAY_MS=10000
+    SET QUIT_DELAY_MS=%TIGHTENER_DEFAULT_RR_QUIT_DELAY_MS%%
 ) ELSE (
     SET QUIT_DELAY_MS=%3
 )

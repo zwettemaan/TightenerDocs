@@ -22,16 +22,16 @@ if [ ! -f "$2" ]; then
     exit
 fi
 
-export TIMEOUT_MS=10000
+TIMEOUT_MS=${TIGHTENER_DEFAULT_RR_TIMEOUT_MS}
 
 #
 # If responses are expected, we need to wait a bit to receive them
 # If we quit too soon, the response will vanish into the bit bucket
 #
 if [ "$3" = "" ]; then
-    export QUIT_DELAY_MS=100
+    QUIT_DELAY_MS=${TIGHTENER_DEFAULT_RR_QUIT_DELAY_MS}
 else
-    export QUIT_DELAY_MS="$3"
+    QUIT_DELAY_MS="$3"
 fi
 
 SCRIPT_PARENT_FOLDER=`dirname "$2"`
