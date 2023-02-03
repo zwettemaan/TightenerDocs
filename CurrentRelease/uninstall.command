@@ -24,11 +24,11 @@ if [ `uname` = "Darwin" ]; then
     if [ "$1" == "all" ]; then
 
         echo ""
-        echo "Removing Tightener preferences"
-        rm -rf ~/"Library/Application Support/net.tightener"
+        ./idPluginRemoveAll
 
         echo ""
-        ./idPluginRemoveAll
+        echo "Removing Tightener preferences"
+        rm -rf ~/"Library/Application Support/net.tightener"
 
     fi
 

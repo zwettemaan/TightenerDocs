@@ -1,8 +1,18 @@
 @ECHO OFF
 
-REM Yes, that is a single quote in all those SETX > NUL commands! SETX > NUL is weird
+REM Yes, that is a lone, unterminated single quote in all those SETX > NUL commands! SETX > NUL is weird
 
 SETLOCAL EnableDelayedExpansion
+
+IF "%1" == "all" (
+    NET SESSION >NUL 2>&1
+    IF NOT !ERRORLEVEL! == 0 (
+            ECHO.
+            ECHO Need administrative privileges for this script
+            ECHO.
+            GOTO NOTINSTALLED
+    )
+)
 
 IF "%TIGHTENER_RELEASE_ROOT%" == "" (
         ECHO.
@@ -19,7 +29,7 @@ IF "%TIGHTENER_SCRIPTS%" == "" (
 )
 
 REG QUERY "HKEY_CURRENT_USER\TightenerSavedEnvironment" >NUL 2>&1
-IF %ERRORLEVEL% == 1 (
+IF !ERRORLEVEL! == 1 (
         ECHO.
         ECHO HKEY_CURRENT_USER\TightenerSavedEnvironment is missing.
         ECHO.
@@ -43,11 +53,11 @@ IF "%1" == "all" (
     REG DELETE HKEY_CURRENT_USER\Environment /f /v USER_PATH_SAVED_BY_TIGHTENER_UNINSTALLER >NUL 2>&1
 
     ECHO.
-    ECHO Deleting Tightener preferences
-    RMDIR /S /Q %APPDATA%\net.tightener >NUL 2>&1
+    CALL "%TIGHTENER_SCRIPTS%\idPluginRemoveAll.bat"
 
     ECHO.
-    CALL "%TIGHTENER_SCRIPTS%\idPluginRemoveAll.bat"
+    ECHO Deleting Tightener preferences
+    RMDIR /S /Q %APPDATA%\net.tightener >NUL 2>&1
 
 ) ELSE (
     SETX > NUL USER_PATH_SAVED_BY_TIGHTENER_UNINSTALLER "!USER_PATH_SAVED_BY_TIGHTENER_UNINSTALLER!
