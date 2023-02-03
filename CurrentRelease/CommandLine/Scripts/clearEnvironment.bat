@@ -119,6 +119,13 @@ IF NOT "%1" == "all" (
     ECHO.
     ECHO Any plug-ins you might have installed - e.g. by way of idPluginInstall -
     ECHO have not been removed - please remove these manually.
+    ECHO.
+    ECHO Alternatively, you can run
+    ECHO.
+    ECHO     cd_tightener
+    ECHO     uninstall all
+    ECHO.
+    ECHO from a Terminal window to force the uninstaller to also try to remove prefs and plug-ins
 )
 
 GOTO DONE

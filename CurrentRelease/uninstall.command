@@ -58,4 +58,10 @@ if [ "$1" != "all" ]; then
     echo "Any plug-ins you might have installed (e.g. by way of idPluginInstall)"
     echo "have not been removed - please remove these manually"
     echo ""
+    echo "Alternatively, you can run"
+    echo ""
+    echo "  cd_tightener"
+    echo "  ./uninstall.command all"
+    echo ""
+    echo "from a Terminal window to force the uninstaller to also try to remove prefs and plug-ins"
 fi
