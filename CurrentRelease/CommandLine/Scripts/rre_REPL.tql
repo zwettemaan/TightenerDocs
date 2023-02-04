@@ -49,7 +49,7 @@ while (trimmedInputData != "quit" && trimmedInputData != "quit()") {
         timeoutMilliseconds
     );
 
-    if (RRE_1LINE) {
+    if (RRE_1LINE != "") {
         inputData = "\n";
         trimmedInputData = "quit";
     }

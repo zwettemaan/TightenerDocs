@@ -5,7 +5,7 @@ SETLOCAL EnableDelayedExpansion
 REM
 REM Interactively run TQL commands
 REM
-REM rrt_REPL <target> 
+REM rrt_REPL <target> [ <TQLCommand> [quitDelayMS] ]
 REM
 REM e.g.
 REM
@@ -17,9 +17,26 @@ REM
 
 IF "%1" == "" (
     ECHO Usage:
-    ECHO   rrt_REPL target 
+    ECHO   rrt_REPL target [ tqlCommand [ quitDelayMS] ] 
     ECHO.
     GOTO DONE
+)
+
+IF "%2" == "" (
+    ECHO Starting rrt_REPL.tql. Enter 'quit' to terminate the REPL loop.
+    SET SWITCH_STDIN="-I"
+    SET RRT_1LINE=
+    SET TIMEOUT_MS=%TIGHTENER_DEFAULT_REPL_TIMEOUT_MS%
+    SET QUIT_DELAY_MS=%TIGHTENER_DEFAULT_REPL_QUIT_DELAY_MS%
+) ELSE (
+    SET SWITCH_STDIN=""
+    SET RRT_1LINE=%2
+    SET TIMEOUT_MS=%TIGHTENER_DEFAULT_RR_TIMEOUT_MS%
+    IF "%3" == "" (
+        SET QUIT_DELAY_MS=%TIGHTENER_DEFAULT_RR_QUIT_DELAY_MS%
+    ) ELSE (
+        SET QUIT_DELAY_MS=%3
+    )
 )
 
 SET RRT_REMOTE_URL=%1
@@ -30,16 +47,16 @@ FOR /f "usebackq tokens=*" %%A in (`powershell -Command "[guid]::NewGuid().ToStr
 SET RRT_REPL_SESSION_ID=%RRT_REPL_SESSION_ID:-=%
 SET COORDINATOR_NAME=net.tightener.coordinator.console.%RRT_REPL_SESSION_ID%
 
-ECHO Starting rrt_REPL.tql. Enter 'quit()' to terminate the REPL loop.
-
 REM -n <long>  : long coordinator name
 REM -I         : read standard stdin 
 REM -t n       : no tests to be run
 REM -f <path>  : process script
 
-Tightener -n %COORDINATOR_NAME% -o %TIMEOUT_MS% -w %QUIT_DELAY_MS% -I -t n -f "%TIGHTENER_SCRIPTS%rrt_REPL.tql"
+Tightener -n %COORDINATOR_NAME% -o %TIMEOUT_MS% -w %QUIT_DELAY_MS% %SWITCH_STDIN% -t n -f "%TIGHTENER_SCRIPTS%rrt_REPL.tql"
 
-ECHO Done.
+IF "%RRT_1LINE%" == "" (
+    ECHO Done.
+)
 
 :DONE
 

@@ -1,7 +1,7 @@
 #
 # Remotely run ExtendScript commands
 #
-# rre_REPL <target> [ <JSXCommand> ]
+# rre_REPL <target> [ <JSXCommand> [quitDelayMS] ]
 #
 # e.g.
 #
@@ -14,20 +14,28 @@
 
 if [ "$1" = "" ]; then
     echo "Usage:"
-    echo "  `basename \"$0\"` target"
+    echo "  `basename \"$0\"` target [ jsxCommand [ quitDelayMS] ]"
     exit
 fi
 
 if [ "$2" = "" ]; then
     echo "Starting rre_REPL.tql. Enter 'quit' to terminate the REPL loop."
+    SWITCH_STDIN="-I"
     export RRE_1LINE=""
+    TIMEOUT_MS=${TIGHTENER_DEFAULT_REPL_TIMEOUT_MS}
+    QUIT_DELAY_MS=${TIGHTENER_DEFAULT_REPL_QUIT_DELAY_MS}
 else
     export RRE_1LINE="$2"
+    SWITCH_STDIN=""
+    TIMEOUT_MS=${TIGHTENER_DEFAULT_RR_TIMEOUT_MS}
+    if [ "$3" = "" ]; then
+        QUIT_DELAY_MS=${TIGHTENER_DEFAULT_RR_QUIT_DELAY_MS}
+    else
+        QUIT_DELAY_MS=$3
+    fi
 fi
 
 export RRE_REMOTE_URL="$1"
-TIMEOUT_MS=${TIGHTENER_DEFAULT_REPL_TIMEOUT_MS}
-QUIT_DELAY_MS=${TIGHTENER_DEFAULT_REPL_QUIT_DELAY_MS}
 
 export RRE_REPL_SESSION_ID=`uuidgen | sed "s/-//g"`
 export COORDINATOR_NAME="net.tightener.coordinator.console.${RRE_REPL_SESSION_ID}"
@@ -37,6 +45,8 @@ export COORDINATOR_NAME="net.tightener.coordinator.console.${RRE_REPL_SESSION_ID
 # -t n       : no tests to be run
 # -f <path>  : process script
 
-Tightener -n ${COORDINATOR_NAME} -o ${TIMEOUT_MS} -w ${QUIT_DELAY_MS} -I -t n -f "${TIGHTENER_SCRIPTS}rre_REPL.tql"
+Tightener -n ${COORDINATOR_NAME} -o ${TIMEOUT_MS} -w ${QUIT_DELAY_MS} ${SWITCH_STDIN} -t n -f "${TIGHTENER_SCRIPTS}rre_REPL.tql"
 
-echo "Done."
+if [ "${RRE_1LINE}" = "" ]; then
+    echo "Done."
+fi
