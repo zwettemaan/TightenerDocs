@@ -1,4 +1,4 @@
-@ECHO OFF
+@ECHO off
 
 REM Yes, that is a single quote in all those SETX > NUL commands! SETX > NUL is weird
 

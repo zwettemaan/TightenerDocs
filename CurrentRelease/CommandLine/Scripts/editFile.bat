@@ -1,4 +1,4 @@
-@ECHO OFF
+@ECHO off
 
 REM
 REM The user can set up their own preferred editor %TIGHTENER_SYSCONFIG_ROOT%editFile.bat

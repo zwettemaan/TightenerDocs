@@ -1,4 +1,4 @@
-@ECHO OFF
+@ECHO off
 
 SET SUBLIME3=C:\Program Files\Sublime Text 3\subl.exe
 SET SUBLIME4=C:\Program Files\Sublime Text\subl.exe

@@ -2,7 +2,7 @@ placeholders = sysInfo().ini.placeholders;
 coordinatorMap = sysInfo().ini.coordinatorMap;
 isInDesignServer = coordinatorMap.InDesign.indexOf('server') >= 0;
 
-windowsCommands = "@ECHO OFF\n"
+windowsCommands = "@ECHO off\n"
 windowsCommands += "SET INDESIGN_TIGHTENER_VERSION=" + placeholders.INDESIGN_VERSION + "\n";
 windowsCommands += "SET INDESIGN_TIGHTENER_SDK_VERSION=" + placeholders.INDESIGN_SDK_VERSION + "\n";
 windowsCommands += "SET INDESIGN_TIGHTENER_IS_SERVER=" + (isInDesignServer ? 1 : 0) + "\n";
