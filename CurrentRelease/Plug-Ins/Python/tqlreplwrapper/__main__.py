@@ -1,15 +1,13 @@
-# To install:
+# To install on a Mac with python3 and jupyter installed
 #
-# jupyter kernelspec install "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/tqlreplwrapper"
-#
-# jupyter kernelspec install "%TIGHTENER_RELEASE_ROOT%Plug-Ins\Python\tqlreplwrapper"
+# ./installMac.command
 #
 # To run
 #   jupyter notebook
 # then pick kernel from dropdown
 #
 # To remove
-#   jupyter kernelspec uninstall tqlreplwrapper
+#   jupyter kernelspec uninstall jsxreplwrapper
 #
 # List:
 #   jupyter kernelspec list
@@ -17,12 +15,6 @@
 # Problems after closing notebook web page: Kernel does not respond any more. 
 # Probably because Tightener remains running but is expected to quit
 #
-# On my Mac, for some reason, I need to add symbolic links to the site-packages folder
-# 
-# ln -s "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/tqlreplwrapper" /usr/local/share/jupyter/kernels/tqlreplwrapper
-# ln -s "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/tqlreplwrapper" /usr/local/lib/python3.10/site-packages/tqlreplwrapper
-# killApps
-# jupyter notebook
 
 import pexpect.replwrap
 import sys
@@ -38,11 +30,15 @@ class TQLTightenerKernel(Kernel):
 
     # log.info("Creating TQLTightenerKernel")
 
-    os.environ["RRT_PROMPT"] = pexpect.replwrap.PEXPECT_PROMPT
-    os.environ["RRT_PROMPT_CONTINUATION"] = pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT
+    if "RRT_JUPYTER_TARGET" in os.environ:
+        target = os.environ["RRT_JUPYTER_TARGET"]
+    else:
+        target = "reflector"
+
+    command = "bash -c \"rrt_Jupyter " + target + " '" + pexpect.replwrap.PEXPECT_PROMPT + "' '" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "'\""
 
     tightenerTQLWrapper = pexpect.replwrap.REPLWrapper(
-        "bash -c 'rrt_Jupyter InDesign'",
+        command,
         pexpect.replwrap.PEXPECT_PROMPT,
         None,
         pexpect.replwrap.PEXPECT_PROMPT,
@@ -51,7 +47,6 @@ class TQLTightenerKernel(Kernel):
     implementation = 'TightenerTQL'
     implementation_version = '1.0'
     language = 'TightenerTQL'
-    language_version = '0.0.7'
     language_info = {
         'name': 'TightenerTQL',
         'mimetype': 'text/plain',

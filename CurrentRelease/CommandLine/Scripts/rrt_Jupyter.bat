@@ -8,15 +8,19 @@ REM
 
 IF "%1" == "" (
     ECHO Usage:
-    ECHO   rrt_Jupyter target 
+    ECHO   rrt_Jupyter target prompt continuationPrompt
     ECHO.
     GOTO DONE
 )
 
 SET RRT_REMOTE_URL=%1
+SET RRT_PROMPT=%2
+SET RRT_PROMPT_CONTINUATION=%3
 
-FOR %%A in ('powershell -Command "[guid]::NewGuid().ToString()"') DO SET RRT_JUPYTER_SESSION_ID=%%A
+FOR /f "usebackq tokens=*" %%A in (`powershell -Command "[guid]::NewGuid().ToString()"`) DO SET RRT_JUPYTER_SESSION_ID=%%A
+SET RRT_JUPYTER_SESSION_ID=%RRE_JUPYTER_SESSION_ID:-=%
 SET COORDINATOR_NAME=net.tightener.coordinator.kernelconsole.%RRT_JUPYTER_SESSION_ID%
+SET RRT_1LINE=
 
 REM -n <long>  : long coordinator name
 REM -I         : read standard stdin 

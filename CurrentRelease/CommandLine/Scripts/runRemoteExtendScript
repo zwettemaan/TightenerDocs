@@ -1,3 +1,0 @@
-echo "'runRemoteExtendScript' shorthand is 'rre'"
-
-rre $@

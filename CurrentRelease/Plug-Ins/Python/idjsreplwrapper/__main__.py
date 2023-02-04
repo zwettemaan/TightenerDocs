@@ -1,28 +1,19 @@
-# To install:
+# To install on a Mac with python3 and jupyter installed
 #
-# jupyter kernelspec install "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/idjsreplwrapper"
-#
-# jupyter kernelspec install "%TIGHTENER_RELEASE_ROOT%Plug-Ins\Python\idjsreplwrapper"
+# ./installMac.command
 #
 # To run
 #   jupyter notebook
 # then pick kernel from dropdown
 #
 # To remove
-#   jupyter kernelspec uninstall idjsreplwrapper
+#   jupyter kernelspec uninstall jsxreplwrapper
 #
 # List:
 #   jupyter kernelspec list
 #
 # Problems after closing notebook web page: Kernel does not respond any more. 
 # Probably because Tightener remains running but is expected to quit
-#
-# rm -f /usr/local/share/jupyter/kernels/idjsreplwrapper
-# ln -s "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/idjsreplwrapper" /usr/local/share/jupyter/kernels/idjsreplwrapper
-# rm -f /usr/local/lib/python3.10/site-packages/idjsreplwrapper
-# ln -s "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/idjsreplwrapper" /usr/local/lib/python3.10/site-packages/idjsreplwrapper
-# killApps
-# jupyter notebook
 
 import pexpect.replwrap
 import sys
@@ -33,11 +24,15 @@ from ipykernel.kernelapp import IPKernelApp
 
 class IDJSTightenerKernel(Kernel):
 
-    os.environ["RRU_PROMPT"] = pexpect.replwrap.PEXPECT_PROMPT
-    os.environ["RRU_PROMPT_CONTINUATION"] = pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT
+    if "RRU_JUPYTER_TARGET" in os.environ:
+        target = os.environ["RRU_JUPYTER_TARGET"]
+    else:
+        target = "InDesign"
+
+    command = "bash -c \"rru_Jupyter " + target + " '" + pexpect.replwrap.PEXPECT_PROMPT + "' '" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "'\""
 
     tightenerIDJSWrapper = pexpect.replwrap.REPLWrapper(
-        "bash -c 'rru_Jupyter InDesign'",
+        command,
         pexpect.replwrap.PEXPECT_PROMPT,
         None,
         pexpect.replwrap.PEXPECT_PROMPT,
@@ -46,7 +41,6 @@ class IDJSTightenerKernel(Kernel):
     implementation = 'TightenerIDJS'
     implementation_version = '1.0'
     language = 'TightenerIDJS'
-    language_version = '0.0.7'
     language_info = {
         'name': 'TightenerIDJS',
         'mimetype': 'text/plain',

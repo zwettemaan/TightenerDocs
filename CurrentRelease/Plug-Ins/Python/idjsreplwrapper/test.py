@@ -3,10 +3,16 @@ import os
 from pexpect.replwrap import REPLWrapper
 
 if __name__ == '__main__':   
-    os.environ["RRU_PROMPT"] = pexpect.replwrap.PEXPECT_PROMPT
-    os.environ["RRU_PROMPT_CONTINUATION"] = pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT
+
+    if "RRU_JUPYTER_TARGET" in os.environ:
+        target = os.environ["RRU_JUPYTER_TARGET"]
+    else:
+        target = "InDesign"
+
+    command = "bash -c \"rru_REPL " + target + " '" + pexpect.replwrap.PEXPECT_PROMPT + "' '" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "'\""
+
     py: REPLWrapper = REPLWrapper(
-        "bash -c 'rru_REPL InDesign'",
+        command,
         pexpect.replwrap.PEXPECT_PROMPT,
         None,
         pexpect.replwrap.PEXPECT_PROMPT,

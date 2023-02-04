@@ -15,6 +15,8 @@ if (RRT_PROMPT_CONTINUATION == "") {
 
 var RRT_1LINE = getEnv("RRT_1LINE");
 
+var prompt = RRT_PROMPT;
+
 var inputData;
 if (RRT_1LINE) {
     inputData = RRT_1LINE + "\n";
@@ -25,7 +27,6 @@ else {
 
 var trimmedInputData = G.UTIL.trim(inputData);
 
-var prompt = RRT_PROMPT;
 while (trimmedInputData != "quit" && trimmedInputData != "quit()") {
 
     sendData(
@@ -49,7 +50,7 @@ while (trimmedInputData != "quit" && trimmedInputData != "quit()") {
         timeoutMilliseconds
     );
 
-    if (RRT_1LINE != "") {
+    if (RRT_1LINE) {
         inputData = "\n";
         trimmedInputData = "quit";
     }

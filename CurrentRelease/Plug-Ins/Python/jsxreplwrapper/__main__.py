@@ -15,13 +15,6 @@
 # Problems after closing notebook web page: Kernel does not respond any more. 
 # Probably because Tightener remains running but is expected to quit
 #
-# rm -f /usr/local/share/jupyter/kernels/jsxreplwrapper
-# ln -s "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/jsxreplwrapper" /usr/local/share/jupyter/kernels/jsxreplwrapper
-# rm -f /usr/local/lib/python3.10/site-packages/jsxreplwrapper
-# ln -s "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/jsxreplwrapper" /usr/local/lib/python3.10/site-packages/jsxreplwrapper
-# killApps
-# jupyter notebook
-
 
 import pexpect.replwrap
 import sys
@@ -32,11 +25,15 @@ from ipykernel.kernelapp import IPKernelApp
 
 class JSXTightenerKernel(Kernel):
 
-    os.environ["RRE_PROMPT"] = pexpect.replwrap.PEXPECT_PROMPT
-    os.environ["RRE_PROMPT_CONTINUATION"] = pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT
+    if "RRE_JUPYTER_TARGET" in os.environ:
+        target = os.environ["RRE_JUPYTER_TARGET"]
+    else:
+        target = "InDesign"
+
+    command = "bash -c \"rre_Jupyter " + target + " '" + pexpect.replwrap.PEXPECT_PROMPT + "' '" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "'\""
 
     tightenerJSXWrapper = pexpect.replwrap.REPLWrapper(
-        "bash -c 'rre_Jupyter InDesign'",
+        command,
         pexpect.replwrap.PEXPECT_PROMPT,
         None,
         pexpect.replwrap.PEXPECT_PROMPT,
@@ -45,7 +42,6 @@ class JSXTightenerKernel(Kernel):
     implementation = 'TightenerJSX'
     implementation_version = '1.0'
     language = 'TightenerJSX'
-    language_version = '0.0.7'
     language_info = {
         'name': 'TightenerJSX',
         'mimetype': 'text/plain',

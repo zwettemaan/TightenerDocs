@@ -4,14 +4,17 @@
 
 if [ "$1" = "" ]; then
     echo "Usage:"
-    echo "  `basename \"$0\"` target"
+    echo "  `basename \"$0\"` target prompt continuationPrompt"
     exit
 fi
 
 export RRU_REMOTE_URL="$1"
+export RRU_PROMPT="$2"
+export RRU_PROMPT_CONTINUATION="$3"
 
 export RRU_JUPYTER_SESSION_ID=`uuidgen | sed "s/-//g"`
 export COORDINATOR_NAME="net.tightener.coordinator.kernelconsole.${RRU_JUPYTER_SESSION_ID}"
+export RRU_1LINE=""
 
 # -n <long>  : long coordinator name
 # -I         : read standard stdin 
