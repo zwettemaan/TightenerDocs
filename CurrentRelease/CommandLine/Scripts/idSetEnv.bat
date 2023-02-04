@@ -1,4 +1,4 @@
-@ECHO OFF
+@ECHO off
 
 REM
 REM Read the InDesign information from the active config.ini file
