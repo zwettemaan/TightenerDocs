@@ -66,7 +66,7 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
                     
                     // ESTK still works on Windows, so we still have use for a 32-bit version
 
-                    var TIGHTENER_DLL_VISUALSTUDIO_ROOT = Folder(TIGHTENER_DLL_GIT_ROOT + "/Visual Studio");
+                    var TIGHTENER_DLL_VISUALSTUDIO_ROOT = Folder(TIGHTENER_DLL_GIT_ROOT + "/VisualStudio");
                     if (! TIGHTENER_DLL_VISUALSTUDIO_ROOT.exists) {
                         break;
                     }
