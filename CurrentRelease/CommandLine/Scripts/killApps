@@ -1,6 +1,7 @@
 killall Tightener > /dev/null 2>&1 
 killall XojoTightener > /dev/null 2>&1 
 killall TightenerGW > /dev/null 2>&1 
+killall TightenerGW_Cpp > /dev/null 2>&1 
 
 if [ `uname` = "Darwin" ]; then
     rm -f "${HOME}/Library/Application Support/net.tightener/NamedPipes/"*
