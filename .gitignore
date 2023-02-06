@@ -6,13 +6,7 @@ __pycache__
 dirconfig.sh
 CONERR$
 /CurrentRelease/Apps
-/CurrentRelease/CommandLine/Mac/Tightener
-/CurrentRelease/CommandLine/Mac/TightenerGW_Cpp
 /CurrentRelease/CommandLine/Mac/TightenerGW/
-/CurrentRelease/CommandLine/Linux/Tightener
-/CurrentRelease/CommandLine/Linux/TightenerGW_Cpp
 /CurrentRelease/CommandLine/Linux/TightenerGW/
-/CurrentRelease/CommandLine/Windows/Tightener.exe
-/CurrentRelease/CommandLine/Windows/TightenerGW_Cpp.exe
 /CurrentRelease/CommandLine/Windows/TightenerGW/
 /CurrentRelease/SampleScripts/ReleaseTestScripts/data1.txt
