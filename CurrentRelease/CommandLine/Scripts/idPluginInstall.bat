@@ -19,6 +19,8 @@ IF "%INDESIGN_TIGHTENER_IS_SERVER%" == "1" (
     POWERSHELL -command "Copy-Item '%INDESIGN_RELEASE_PLUGIN_FOLDER%(Tightener Resources)' '%INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER%(Tightener Resources)' -Recurse"
 )
 
-ECHO Plug-In installed in %INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER%
+ECHO.Plug-In installed in %INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER%
+ECHO.
+ECHO.To uninstall, you can use the idPluginRemove command
 
 :DONE
