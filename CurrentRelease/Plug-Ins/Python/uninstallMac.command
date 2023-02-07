@@ -9,6 +9,6 @@ fi
 
 killApps
 
-./uninstallJupyterMacKernel.sh idjsreplwrapper
-./uninstallJupyterMacKernel.sh jsxreplwrapper
-./uninstallJupyterMacKernel.sh tqlreplwrapper
+./uninstallJupyterKernel.sh idjsreplwrapper
+./uninstallJupyterKernel.sh jsxreplwrapper
+./uninstallJupyterKernel.sh tqlreplwrapper

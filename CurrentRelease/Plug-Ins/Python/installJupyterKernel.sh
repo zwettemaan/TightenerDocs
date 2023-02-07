@@ -1,6 +1,6 @@
 export KERNEL_NAME="$1"
 
-./uninstallJupyterMacKernel.sh "$1"
+./uninstallJupyterKernel.sh "$1"
 
 . dirconfig.sh
 
