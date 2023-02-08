@@ -30,7 +30,14 @@ class JSXTightenerKernel(Kernel):
     else:
         target = "InDesign"
 
-    command = "bash -c \"rre_Jupyter " + target + " '" + pexpect.replwrap.PEXPECT_PROMPT + "' '" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "'\""
+    scripts = ""
+    if "TIGHTENER_SCRIPTS" in os.environ:
+        scripts = os.environ["TIGHTENER_SCRIPTS"]
+
+    if platform.system() == "Windows":
+        command = "\"" + scripts + "rre_Jupyter.bat\" " + target + " \"" + pexpect.replwrap.PEXPECT_PROMPT + "\" \"" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "\""
+    else:
+        command = "bash -c \"" + scripts + "rre_Jupyter " + target + " '" + pexpect.replwrap.PEXPECT_PROMPT + "' '" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "'\""
 
     tightenerJSXWrapper = pexpect.replwrap.REPLWrapper(
         command,

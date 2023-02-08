@@ -29,7 +29,14 @@ class IDJSTightenerKernel(Kernel):
     else:
         target = "InDesign"
 
-    command = "bash -c \"rru_Jupyter " + target + " '" + pexpect.replwrap.PEXPECT_PROMPT + "' '" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "'\""
+    scripts = ""
+    if "TIGHTENER_SCRIPTS" in os.environ:
+        scripts = os.environ["TIGHTENER_SCRIPTS"]
+
+    if platform.system() == "Windows":
+        command = "\"" + scripts + "rru_Jupyter.bat\" " + target + " \"" + pexpect.replwrap.PEXPECT_PROMPT + "\" \"" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "\""
+    else:
+        command = "bash -c \"" + scripts + "rru_Jupyter " + target + " '" + pexpect.replwrap.PEXPECT_PROMPT + "' '" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "'\""
 
     tightenerIDJSWrapper = pexpect.replwrap.REPLWrapper(
         command,
