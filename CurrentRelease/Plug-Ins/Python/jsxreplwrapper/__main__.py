@@ -17,6 +17,7 @@
 #
 
 import pexpect.replwrap
+import pexpect.popen_spawn
 import sys
 import os
 import platform
@@ -24,8 +25,13 @@ import platform
 from ipykernel.kernelbase import Kernel
 from ipykernel.kernelapp import IPKernelApp
 
+# from debugpy.common import log
+
+# log.to_file("/Users/kris/Desktop/jsxreplwrapper.log")
 
 class JSXTightenerKernel(Kernel):
+
+    # log.info("Creating JSXTightenerKernel")
 
     if "RRE_JUPYTER_TARGET" in os.environ:
         target = os.environ["RRE_JUPYTER_TARGET"]
@@ -39,6 +45,7 @@ class JSXTightenerKernel(Kernel):
     if platform.system() == "Windows":
         commandStr = "\"" + scripts + "rre_Jupyter.bat\" " + target + " \"" + pexpect.replwrap.PEXPECT_PROMPT + "\" \"" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "\""
         command = pexpect.popen_spawn.PopenSpawn(commandStr)
+        command.echo = False
     else:
         command = "bash -c \"" + scripts + "rre_Jupyter " + target + " '" + pexpect.replwrap.PEXPECT_PROMPT + "' '" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "'\""
 
@@ -63,6 +70,7 @@ class JSXTightenerKernel(Kernel):
                    allow_stdin=False):
 
         if not silent:
+            # log.info("running '" + code + "'")
             stream_content = {'name': 'stdout', 
                 'text': self.tightenerJSXWrapper.run_command(code) 
                 }

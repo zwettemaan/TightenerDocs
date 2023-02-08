@@ -45,6 +45,7 @@ class TQLTightenerKernel(Kernel):
     if platform.system() == "Windows":
         commandStr = "\"" + scripts + "rrt_Jupyter.bat\" " + target + " \"" + pexpect.replwrap.PEXPECT_PROMPT + "\" \"" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "\""
         command = pexpect.popen_spawn.PopenSpawn(commandStr)
+        command.echo = False
     else:
         command = "bash -c \"" + scripts + "rrt_Jupyter " + target + " '" + pexpect.replwrap.PEXPECT_PROMPT + "' '" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "'\""
 

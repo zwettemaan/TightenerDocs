@@ -13,7 +13,9 @@ ECHO Searching for InDesign Plug-Ins to delete
 PUSHD "%PROGRAMFILES%"
 
 (FOR /f "delims=" %%i IN ('DIR /s /b /a:-d "Tightener.pln"') do (DEL /Q "%%i") >NUL 2>&1
-FOR /f "delims=" %%i IN ('DIR /s /b /a:d "(Tightener Resources)"') do (RMDIR /S /Q "%%i") >NUL 2>&1) >NUL 2>&1
+FOR /f "delims=" %%i IN ('DIR /s /b /a:d "(Tightener Resources)"') do (RMDIR /S /Q "%%i") >NUL 2>&1
+FOR /f "delims=" %%i IN ('DIR /s /b /a:-d "TightenerServer.pln"') do (DEL /Q "%%i") >NUL 2>&1
+FOR /f "delims=" %%i IN ('DIR /s /b /a:d "(TightenerServer Resources)"') do (RMDIR /S /Q "%%i") >NUL 2>&1) >NUL 2>&1
 
 FOR /f "delims=" %%i IN ('DIR /s /b /a:d "Plug-Ins"') do (
 

@@ -14,8 +14,10 @@
 #
 # Problems after closing notebook web page: Kernel does not respond any more. 
 # Probably because Tightener remains running but is expected to quit
+#
 
 import pexpect.replwrap
+import pexpect.popen_spawn
 import sys
 import os
 import platform
@@ -23,8 +25,13 @@ import platform
 from ipykernel.kernelbase import Kernel
 from ipykernel.kernelapp import IPKernelApp
 
+# from debugpy.common import log
+
+# log.to_file("/Users/kris/Desktop/idsreplwrapper.log")
 
 class IDJSTightenerKernel(Kernel):
+
+    # log.info("Creating IDJSTightenerKernel")
 
     if "RRU_JUPYTER_TARGET" in os.environ:
         target = os.environ["RRU_JUPYTER_TARGET"]
@@ -38,6 +45,7 @@ class IDJSTightenerKernel(Kernel):
     if platform.system() == "Windows":
         commandStr = "\"" + scripts + "rru_Jupyter.bat\" " + target + " \"" + pexpect.replwrap.PEXPECT_PROMPT + "\" \"" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "\""
         command = pexpect.popen_spawn.PopenSpawn(commandStr)
+        command.echo = False
     else:
         command = "bash -c \"" + scripts + "rru_Jupyter " + target + " '" + pexpect.replwrap.PEXPECT_PROMPT + "' '" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "'\""
 
@@ -62,6 +70,7 @@ class IDJSTightenerKernel(Kernel):
                    allow_stdin=False):
 
         if not silent:
+            # log.info("running '" + code + "'")
             stream_content = {'name': 'stdout', 
                 'text': self.tightenerIDJSWrapper.run_command(code) 
                 }
