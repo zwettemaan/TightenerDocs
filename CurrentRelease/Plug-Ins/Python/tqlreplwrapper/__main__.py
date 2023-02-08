@@ -17,8 +17,11 @@
 #
 
 import pexpect.replwrap
+import pexpect.popen_spawn
 import sys
 import os
+import platform
+
 from ipykernel.kernelbase import Kernel
 from ipykernel.kernelapp import IPKernelApp
 
@@ -40,7 +43,8 @@ class TQLTightenerKernel(Kernel):
         scripts = os.environ["TIGHTENER_SCRIPTS"]
 
     if platform.system() == "Windows":
-        command = "\"" + scripts + "rrt_Jupyter.bat\" " + target + " \"" + pexpect.replwrap.PEXPECT_PROMPT + "\" \"" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "\""
+        commandStr = "\"" + scripts + "rrt_Jupyter.bat\" " + target + " \"" + pexpect.replwrap.PEXPECT_PROMPT + "\" \"" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "\""
+        command = pexpect.popen_spawn.PopenSpawn(commandStr)
     else:
         command = "bash -c \"" + scripts + "rrt_Jupyter " + target + " '" + pexpect.replwrap.PEXPECT_PROMPT + "' '" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "'\""
 

@@ -18,6 +18,8 @@
 import pexpect.replwrap
 import sys
 import os
+import platform
+
 from ipykernel.kernelbase import Kernel
 from ipykernel.kernelapp import IPKernelApp
 
@@ -34,7 +36,8 @@ class IDJSTightenerKernel(Kernel):
         scripts = os.environ["TIGHTENER_SCRIPTS"]
 
     if platform.system() == "Windows":
-        command = "\"" + scripts + "rru_Jupyter.bat\" " + target + " \"" + pexpect.replwrap.PEXPECT_PROMPT + "\" \"" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "\""
+        commandStr = "\"" + scripts + "rru_Jupyter.bat\" " + target + " \"" + pexpect.replwrap.PEXPECT_PROMPT + "\" \"" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "\""
+        command = pexpect.popen_spawn.PopenSpawn(commandStr)
     else:
         command = "bash -c \"" + scripts + "rru_Jupyter " + target + " '" + pexpect.replwrap.PEXPECT_PROMPT + "' '" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "'\""
 

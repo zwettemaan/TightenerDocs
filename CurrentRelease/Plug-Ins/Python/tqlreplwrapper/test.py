@@ -1,5 +1,6 @@
 import pexpect.replwrap
-from pexpect.replwrap import REPLWrapper
+import pexpect.popen_spawn
+import platform
 import os
 
 if __name__ == '__main__':
@@ -9,9 +10,17 @@ if __name__ == '__main__':
     else:
         target = "reflector"
 
-    command = "bash -c \"rrt_Jupyter " + target + " '" + pexpect.replwrap.PEXPECT_PROMPT + "' '" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "'\""
+    scripts = ""
+    if "TIGHTENER_SCRIPTS" in os.environ:
+        scripts = os.environ["TIGHTENER_SCRIPTS"]
 
-    py: REPLWrapper = REPLWrapper(
+    if platform.system() == "Windows":
+        commandStr = "\"" + scripts + "rrt_Jupyter.bat\" " + target + " \"" + pexpect.replwrap.PEXPECT_PROMPT + "\" \"" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "\""
+        command = pexpect.popen_spawn.PopenSpawn(commandStr)
+    else:
+        command = "bash -c \"" + scripts + "rrt_Jupyter " + target + " '" + pexpect.replwrap.PEXPECT_PROMPT + "' '" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "'\""
+
+    py: REPLWrapper = pexpect.replwrap.REPLWrapper(
         command,
         pexpect.replwrap.PEXPECT_PROMPT,
         None,

@@ -9,7 +9,15 @@ if __name__ == '__main__':
     else:
         target = "InDesign"
 
-    command = "bash -c \"rre_REPL " + target + " '" + pexpect.replwrap.PEXPECT_PROMPT + "' '" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "'\""
+    scripts = ""
+    if "TIGHTENER_SCRIPTS" in os.environ:
+        scripts = os.environ["TIGHTENER_SCRIPTS"]
+
+    if platform.system() == "Windows":
+        commandStr = "\"" + scripts + "rre_Jupyter.bat\" " + target + " \"" + pexpect.replwrap.PEXPECT_PROMPT + "\" \"" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "\""
+        command = pexpect.popen_spawn.PopenSpawn(commandStr)
+    else:
+        command = "bash -c \"" + scripts + "rre_Jupyter " + target + " '" + pexpect.replwrap.PEXPECT_PROMPT + "' '" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "'\""
 
     py: REPLWrapper = REPLWrapper(
         command,
