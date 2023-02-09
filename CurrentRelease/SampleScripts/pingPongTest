@@ -1,0 +1,23 @@
+# Testing turn-around speeds
+# Grab a list of strings (all files in the Tightener git repo) 
+# and shoot them off to rrt_REPL to be evaluated as strings
+#
+# Usage:
+#
+#   PingPongTest <targetcoordinator>
+#
+
+if [ "$1" = "" ]; then
+  echo "Usage:"
+  echo "  $0 COORDINATOR"
+  exit
+fi
+
+find ${TIGHTENER_GIT_ROOT} | while read filePath; do
+    echo ">>> $filePath"
+    export reverseStringExpression="s=\"${filePath}\";var sr=\"\";for(var idx=s.length-1;idx>=0;idx--){sr+=s.substr(idx,1)};sr"
+    export tightenerEval=`rrt_REPL "$1" "$reverseStringExpression"`
+    echo "<<< \"$tightenerEval\""
+    echo ""
+done
+

@@ -30,6 +30,7 @@ IF "%~2" == "" (
     SET QUIT_DELAY_MS=%TIGHTENER_DEFAULT_REPL_QUIT_DELAY_MS%
 ) ELSE (
     SET SWITCH_STDIN=
+    REM On Windows, rrt_REPL.tql strips the extra ""
     SET RRT_1LINE="%~2"
     SET TIMEOUT_MS=%TIGHTENER_DEFAULT_RR_TIMEOUT_MS%
     IF "%3" == "" (

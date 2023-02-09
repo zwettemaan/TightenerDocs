@@ -12,16 +12,15 @@ REM
 setlocal EnableDelayedExpansion
 
 IF "%1" == "" (
-  ECHO.
-  ECHO.Usage:
-  ECHO.  %0 COORDINATOR
-  GOTO DONE
+    ECHO.
+    ECHO.Usage:
+    ECHO.  %0 COORDINATOR
+    GOTO DONE
 )
-
 
 FOR /F "tokens=*" %%A IN ('DIR /B/S %TIGHTENER_GIT_ROOT%') DO (
     ECHO.^>^>^> %%A
-    CALL reverseString %1 "%%A"
+    CALL pingPongReverseString %1 "%%A"
     ECHO.
 )
 
