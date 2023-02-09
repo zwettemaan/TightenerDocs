@@ -5,7 +5,7 @@ SETLOCAL EnableDelayedExpansion
 REM
 REM Interactively run TQL commands
 REM
-REM rrt_REPL <target> [ <TQLCommand> [quitDelayMS] ]
+REM rrt_REPL <target> [ "<TQLCommand>" [quitDelayMS] ]
 REM
 REM e.g.
 REM
@@ -17,20 +17,20 @@ REM
 
 IF "%1" == "" (
     ECHO Usage:
-    ECHO   rrt_REPL target [ tqlCommand [ quitDelayMS] ] 
+    ECHO   rrt_REPL target [ "tqlCommand" [ quitDelayMS] ] 
     ECHO.
     GOTO DONE
 )
 
-IF "%2" == "" (
+IF "%~2" == "" (
     ECHO Starting rrt_REPL.tql. Enter 'quit' to terminate the REPL loop.
-    SET SWITCH_STDIN="-I"
+    SET SWITCH_STDIN=-I
     SET RRT_1LINE=
     SET TIMEOUT_MS=%TIGHTENER_DEFAULT_REPL_TIMEOUT_MS%
     SET QUIT_DELAY_MS=%TIGHTENER_DEFAULT_REPL_QUIT_DELAY_MS%
 ) ELSE (
-    SET SWITCH_STDIN=""
-    SET RRT_1LINE=%2
+    SET SWITCH_STDIN=
+    SET RRT_1LINE="%~2"
     SET TIMEOUT_MS=%TIGHTENER_DEFAULT_RR_TIMEOUT_MS%
     IF "%3" == "" (
         SET QUIT_DELAY_MS=%TIGHTENER_DEFAULT_RR_QUIT_DELAY_MS%
@@ -54,7 +54,7 @@ REM -f <path>  : process script
 
 Tightener -n %COORDINATOR_NAME% -o %TIMEOUT_MS% -w %QUIT_DELAY_MS% %SWITCH_STDIN% -t n -f "%TIGHTENER_SCRIPTS%rrt_REPL.tql"
 
-IF "%RRT_1LINE%" == "" (
+IF "%~2" == "" (
     ECHO Done.
 )
 

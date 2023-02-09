@@ -18,6 +18,9 @@ if (RRT_PROMPT_CONTINUATION == "") {
 }
 
 var RRT_1LINE = getEnv("RRT_1LINE");
+if (sysInfo().platform == "windows") {
+    RRT_1LINE = eval(RRT_1LINE);    
+}
 
 var prompt = RRT_PROMPT;
 
