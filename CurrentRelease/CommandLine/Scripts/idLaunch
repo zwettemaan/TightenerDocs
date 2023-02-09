@@ -22,6 +22,10 @@ else
 use AppleScript version "2.4" -- Yosemite (10.10) or later
 use scripting additions
 
+tell application "Adobe InDesign ${INDESIGN_TIGHTENER_VERSION}"
+    activate
+end tell
+
 tell application "System Events"
     repeat while application process "Adobe InDesign ${INDESIGN_TIGHTENER_VERSION}" exists
         try 
@@ -36,5 +40,4 @@ end tell
 EOF
 
     osascript "${TIGHTENER_SYSCONFIG_ROOT}pokeInDesignTimeslices.applescript" > /dev/null 2>&1
-    open "${INDESIGN_APP_ROOT}${INDESIGN_APP_FILE}"
 fi
