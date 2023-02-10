@@ -15,9 +15,8 @@ fi
 
 find ${TIGHTENER_GIT_ROOT} | while read filePath; do
     echo ">>> $filePath"
-    export reverseStringExpression="s=\"${filePath}\";var sr=\"\";for(var idx=s.length-1;idx>=0;idx--){sr+=s.substr(idx,1)};sr"
-    export tightenerEval=`rrt_REPL "$1" "$reverseStringExpression"`
-    echo "<<< \"$tightenerEval\""
+    export reverseStringExpression="s='${filePath}';var sr='';for(var idx=s.length-1;idx>=0;idx--){sr+=s.substr(idx,1)};sr"
+    rrt_REPL $1 "${reverseStringExpression}"
     echo ""
 done
 
