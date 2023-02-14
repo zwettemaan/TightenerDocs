@@ -46,4 +46,7 @@ popd > /dev/null
 export RRE_SCRIPT_PATH="${SCRIPT_PARENT_FOLDER}${SCRIPT_FILENAME}"
 export RRE_REMOTE_URL="$1"
 
-Tightener -N scriptrunner -o ${TIMEOUT_MS} -w ${QUIT_DELAY_MS} -t n -f "${TIGHTENER_SCRIPTS}rre.tql"
+export RRE_SESSION_ID=`uuidgen | sed "s/-//g"`
+export COORDINATOR_NAME="net.tightener.coordinator.scriptrunner.RRE.${RRE_SESSION_ID}"
+
+Tightener -n ${COORDINATOR_NAME} -o ${TIMEOUT_MS} -w ${QUIT_DELAY_MS} -t n -f "${TIGHTENER_SCRIPTS}rre.tql"

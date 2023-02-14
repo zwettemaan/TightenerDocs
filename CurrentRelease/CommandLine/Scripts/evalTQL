@@ -18,4 +18,7 @@ fi
 
 QUIT_DELAY_MS=0
 
-echo "$1" | Tightener -N scriptrunner -t n -w ${QUIT_DELAY_MS} -f -
+export EVAL_TQL_SESSION_ID=`uuidgen | sed "s/-//g"`
+export COORDINATOR_NAME="net.tightener.coordinator.scriptrunner.EVALTQL.${EVAL_TQL_SESSION_ID}"
+
+echo "$1" | Tightener -n ${COORDINATOR_NAME} -t n -w ${QUIT_DELAY_MS} -f -

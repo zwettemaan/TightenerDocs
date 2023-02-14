@@ -32,4 +32,7 @@ else
     QUIT_DELAY_MS="$3"
 fi
 
-Tightener -N scriptrunner -r "$1" -o ${TIMEOUT_MS} -w ${QUIT_DELAY_MS} -t n -f "$2"
+export RRT_SESSION_ID=`uuidgen | sed "s/-//g"`
+export COORDINATOR_NAME="net.tightener.coordinator.scriptrunner.RRT.${RRT_SESSION_ID}"
+
+Tightener -n ${COORDINATOR_NAME} -r "$1" -o ${TIMEOUT_MS} -w ${QUIT_DELAY_MS} -t n -f "$2"

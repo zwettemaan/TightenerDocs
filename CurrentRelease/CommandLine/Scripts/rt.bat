@@ -27,7 +27,10 @@ IF "%2" == "" (
     SET QUIT_DELAY_MS=%2
 )
 
+FOR /f "usebackq tokens=*" %%A in (`powershell -Command "[guid]::NewGuid().ToString()"`) DO SET RT_SESSION_ID_RAW=%%A
+SET RT_SESSION_ID=%RT_SESSION_ID_RAW:-=%
+SET COORDINATOR_NAME=net.tightener.coordinator.scriptrunner.RT.%RT_SESSION_ID%
 
-Tightener -N scriptrunner -t n -w !QUIT_DELAY_MS! -f "%1"
+Tightener -n %COORDINATOR_NAME% -t n -w !QUIT_DELAY_MS! -f "%1"
 
 :DONE

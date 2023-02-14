@@ -37,7 +37,7 @@ fi
 export RRU_REMOTE_URL="$1"
 
 export RRU_REPL_SESSION_ID=`uuidgen | sed "s/-//g"`
-export COORDINATOR_NAME="net.tightener.coordinator.console.${RRU_REPL_SESSION_ID}"
+export COORDINATOR_NAME="net.tightener.coordinator.console.RRU.${RRU_REPL_SESSION_ID}"
 
 # -n <long>  : long coordinator name
 # -I         : read standard stdin 

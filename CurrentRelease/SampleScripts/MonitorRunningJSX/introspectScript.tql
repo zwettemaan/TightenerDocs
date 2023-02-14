@@ -1,0 +1,19 @@
+
+var checkStatusScript = << EOF
+
+var status = "Not active";
+if ("undefined" != typeof TGH) {
+    if (TGH.state) {
+        if (TGH.state.docIdx < TGH.state.DOC_COUNT) {
+            status = "Processing doc#" + TGH.state.docIdx;
+        }
+        else {
+            status = "Processing completed";
+        }
+    }
+}
+status
+EOF
+
+stdOut(app.evalExtendScript(checkStatusScript, "Tgh1") + "\n");
+

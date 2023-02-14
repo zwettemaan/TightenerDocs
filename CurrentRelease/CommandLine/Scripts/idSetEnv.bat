@@ -9,7 +9,11 @@ REM To (re)initialize the active config.ini with a copy of the template file Rel
 REM use `copyConfig`
 REM
 
-Tightener -N scriptrunner -t n -w 0 -f "%TIGHTENER_RELEASE_ROOT%CommandLine\Scripts\idSetEnvWindows.tql" > "%TEMP%\idSetEnvConfig.bat"
+FOR /f "usebackq tokens=*" %%A in (`powershell -Command "[guid]::NewGuid().ToString()"`) DO SET ID_SET_ENV_SESSION_ID_RAW=%%A
+SET ID_SET_ENV_SESSION_ID=%ID_SET_ENV_SESSION_ID_RAW:-=%
+SET COORDINATOR_NAME=net.tightener.coordinator.scriptrunner.IDSETENV.%ID_SET_ENV_SESSION_ID%
+
+Tightener -n %COORDINATOR_NAME% -t n -w 0 -f "%TIGHTENER_RELEASE_ROOT%CommandLine\Scripts\idSetEnvWindows.tql" > "%TEMP%\idSetEnvConfig.bat"
 CALL "%TEMP%\idSetEnvConfig.bat"
 DEL "%TEMP%\idSetEnvConfig.bat"
 

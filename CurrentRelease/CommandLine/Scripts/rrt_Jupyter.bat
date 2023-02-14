@@ -19,7 +19,7 @@ SET RRT_PROMPT_CONTINUATION=%3
 
 FOR /f "usebackq tokens=*" %%A in (`powershell -Command "[guid]::NewGuid().ToString()"`) DO SET RRT_JUPYTER_SESSION_ID_RAW=%%A
 SET RRT_JUPYTER_SESSION_ID=%RRT_JUPYTER_SESSION_ID_RAW:-=%
-SET COORDINATOR_NAME=net.tightener.coordinator.kernelconsole.%RRT_JUPYTER_SESSION_ID%
+SET COORDINATOR_NAME=net.tightener.coordinator.kernelconsole.RRT.%RRT_JUPYTER_SESSION_ID%
 SET RRT_1LINE=
 
 SET TIMEOUT_MS=%TIGHTENER_DEFAULT_REPL_TIMEOUT_MS%

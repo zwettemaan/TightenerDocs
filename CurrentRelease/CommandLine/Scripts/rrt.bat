@@ -37,6 +37,10 @@ IF NOT EXIST "%2" (
     GOTO DONE
 )
 
-Tightener -N scriptrunner -r "%1" -o %TIMEOUT_MS% -w !QUIT_DELAY_MS! -t n -f "%2"
+FOR /f "usebackq tokens=*" %%A in (`powershell -Command "[guid]::NewGuid().ToString()"`) DO SET RRT_SESSION_ID_RAW=%%A
+SET RRT_SESSION_ID=%RRT_SESSION_ID_RAW:-=%
+SET COORDINATOR_NAME=net.tightener.coordinator.scriptrunner.RRT.%RRT_SESSION_ID%
+
+Tightener -n %COORDINATOR_NAME% -r "%1" -o %TIMEOUT_MS% -w !QUIT_DELAY_MS! -t n -f "%2"
 
 :DONE

@@ -13,7 +13,7 @@ export RRE_PROMPT="$2"
 export RRE_PROMPT_CONTINUATION="$3"
 
 export RRE_JUPYTER_SESSION_ID=`uuidgen | sed "s/-//g"`
-export COORDINATOR_NAME="net.tightener.coordinator.kernelconsole.${RRE_JUPYTER_SESSION_ID}"
+export COORDINATOR_NAME="net.tightener.coordinator.kernelconsole.RRE.${RRE_JUPYTER_SESSION_ID}"
 export RRE_1LINE=""
 
 # -n <long>  : long coordinator name

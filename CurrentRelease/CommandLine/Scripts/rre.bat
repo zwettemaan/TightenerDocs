@@ -51,8 +51,11 @@ IF NOT EXIST "!RRE_SCRIPT_PATH!" (
     GOTO DONE
 )
 
+FOR /f "usebackq tokens=*" %%A in (`powershell -Command "[guid]::NewGuid().ToString()"`) DO SET RRE_SESSION_ID_RAW=%%A
+SET RRE_SESSION_ID=%RRE_SESSION_ID_RAW:-=%
+SET COORDINATOR_NAME=net.tightener.coordinator.scriptrunner.RRE.%RRE_SESSION_ID%
 
-Tightener -N scriptrunner -o %TIMEOUT_MS% -w !QUIT_DELAY_MS! -t n -f "%TIGHTENER_SCRIPTS%rre.tql"
+Tightener -n %COORDINATOR_NAME% -o %TIMEOUT_MS% -w !QUIT_DELAY_MS! -t n -f "%TIGHTENER_SCRIPTS%rre.tql"
 
 :DONE
 

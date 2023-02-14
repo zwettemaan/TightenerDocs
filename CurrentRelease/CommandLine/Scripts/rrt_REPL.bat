@@ -46,7 +46,7 @@ SET QUIT_DELAY_MS=%TIGHTENER_DEFAULT_RR_QUIT_DELAY_MS%
 
 FOR /f "usebackq tokens=*" %%A in (`powershell -Command "[guid]::NewGuid().ToString()"`) DO SET RRT_REPL_SESSION_ID=%%A
 SET RRT_REPL_SESSION_ID=%RRT_REPL_SESSION_ID:-=%
-SET COORDINATOR_NAME=net.tightener.coordinator.console.%RRT_REPL_SESSION_ID%
+SET COORDINATOR_NAME=net.tightener.coordinator.console.RRT.%RRT_REPL_SESSION_ID%
 
 REM -n <long>  : long coordinator name
 REM -I         : read standard stdin 

@@ -13,7 +13,7 @@ export RRT_PROMPT="$2"
 export RRT_PROMPT_CONTINUATION="$3"
 
 export RRT_JUPYTER_SESSION_ID=`uuidgen | sed "s/-//g"`
-export COORDINATOR_NAME="net.tightener.coordinator.kernelconsole.${RRT_JUPYTER_SESSION_ID}"
+export COORDINATOR_NAME="net.tightener.coordinator.kernelconsole.RRT.${RRT_JUPYTER_SESSION_ID}"
 export RRT_1LINE=""
 
 TIMEOUT_MS=${TIGHTENER_DEFAULT_REPL_TIMEOUT_MS}
