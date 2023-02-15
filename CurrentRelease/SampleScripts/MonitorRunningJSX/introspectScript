@@ -1,1 +1,1 @@
-rrt indesign ${TIGHTENER_RELEASE_ROOT}SampleScripts/MonitorRunningJSX/introspectScript.tql 10000 
+rrt indesign ${TIGHTENER_RELEASE_ROOT}SampleScripts/MonitorRunningJSX/introspectScript.tql 10000

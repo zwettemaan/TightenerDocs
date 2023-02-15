@@ -45,6 +45,7 @@ popd > /dev/null
 
 export RRE_SCRIPT_PATH="${SCRIPT_PARENT_FOLDER}${SCRIPT_FILENAME}"
 export RRE_REMOTE_URL="$1"
+export RRE_SCRIPT_ENGINE="net.tightener.rre"
 
 export RRE_SESSION_ID=`uuidgen | sed "s/-//g"`
 export COORDINATOR_NAME="net.tightener.coordinator.scriptrunner.RRE.${RRE_SESSION_ID}"

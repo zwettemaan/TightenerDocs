@@ -1,9 +1,9 @@
-//@targetengine Tgh1
-
-var TGH = {};
+if ("undefined" == typeof TGH) {
+    TGH = {};
+}
 
 TGH.state = {};
-TGH.state.DOC_COUNT = 10;
+TGH.state.DOC_COUNT = 10000;
 
 var prvDocIdx = undefined;
 for (var docIdx = 0; docIdx < TGH.state.DOC_COUNT + 1; docIdx++) {
@@ -25,6 +25,7 @@ for (var docIdx = 0; docIdx < TGH.state.DOC_COUNT + 1; docIdx++) {
         tf.geometricBounds = [10,10,110,110];
         tf.contents = "Hello world " + docIdx;
 
+        alert(docPath);
         doc.save(docPath);
         doc.close(SaveOptions.NO);
     }

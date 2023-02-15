@@ -9,7 +9,7 @@
 
 # Use evalTQL once to calculate three environment variables by concatenating then splitting on ,
 
-evalTQL "sysInfo().ini.placeholders.INDESIGN_VERSION + ',' + sysInfo().ini.placeholders.INDESIGN_SDK_VERSION + ',' + (sysInfo().ini.coordinatorMap.indesign.indexOf('server') >= 0 ? 1 : 0)" | IFS=, read -r INDESIGN_TIGHTENER_VERSION INDESIGN_TIGHTENER_SDK_VERSION INDESIGN_TIGHTENER_IS_SERVER
+evalTQL "sysInfo().ini.placeholders.INDESIGN_VERSION + ',' + sysInfo().ini.placeholders.INDESIGN_SDK_VERSION + ',' + (sysInfo().ini.coordinatorMap.InDesign.toLowerCase().indexOf('server') >= 0 ? 1 : 0)" | IFS=, read -r INDESIGN_TIGHTENER_VERSION INDESIGN_TIGHTENER_SDK_VERSION INDESIGN_TIGHTENER_IS_SERVER
 export INDESIGN_TIGHTENER_VERSION
 export INDESIGN_TIGHTENER_SDK_VERSION
 export INDESIGN_TIGHTENER_IS_SERVER

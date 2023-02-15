@@ -1,41 +1,25 @@
-scriptPath = getEnv("RRE_SCRIPT_PATH");
-if (fileExists(scriptPath)) {
+var scriptPath = getEnv("RRE_SCRIPT_PATH");
+var scriptEngine = getEnv("RRE_SCRIPT_ENGINE");
+if (! scriptEngine) {
+    scriptEngine = "net.tightener.rre";
+}
 
-    extendScript = readFile(scriptPath);
+if (! fileExists(scriptPath)) {
+    stdOut("Script file " + scriptPath + " does not exist\n");
+}
+else {
+
+    var extendScript = readFile(scriptPath);
 
     // Remote is meant to InDesign
-    remoteTarget = getEnv("RRE_REMOTE_URL");
+    var remoteTarget = getEnv("RRE_REMOTE_URL");
 
-    // Note: we're wrapping an ExtendScript inside a TQL script
-    // using nested HEREDOC notation
-    // The tqlScript has three segments: a first segment where we
-    // start a nested HEREDOC (JSXEOF), a second segment with the
-    // plain, unquoted ExtendScript code, and a third segment with the
-    // end of the nested JSXEOF HEREDOC.
-
-
-    // >>>1>>> Segment 1 of tqlScript: start the nested HEREDOC
-    tqlScript = <<TQLEOF
-extendScript = <<JSXEOF
-TQLEOF
-    // <<<1<<<  End of Segment 1
-
-
-    // >>>2>>> Segment 2 of tqlScript: the whole extendScript code
-    tqlScript += extendScript + "\n";
-    // <<<2<<<  End of Segment 2
-
-
-    // >>>3>>> Segment 3 of tqlScript: finish the nested HEREDOC, and evaluate the ExtendScript
-    tqlScript += <<TQLEOF
-JSXEOF
-
-evalExtendScript(extendScript, "myJSXEngine", function(result) {
-    //stdOut("Completed on remote: " + result + "\n");
-});
-
-TQLEOF
-    // <<<3<<<  End of Segment 3
+    var tqlScript = 
+"var scriptEngine = " + enquote(scriptEngine) + ";\n" +
+"var extendScript = " + enquote(extendScript) + ";\n" +
+"evalExtendScript(extendScript, scriptEngine, function(result) {\n" +
+    "//stdOut(\"Completed on remote: \" + result + \"\\n\");\n" +
+"});\n";
 
     eval(
         tqlScript,

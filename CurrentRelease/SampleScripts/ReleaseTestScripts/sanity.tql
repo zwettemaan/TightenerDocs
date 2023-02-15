@@ -563,7 +563,22 @@ if (
     retVal += " | " + testCount;
 }
 
-  /*>>>*/ testCount++; /*<<<*/
+  /*>47>>*/ testCount++; /*<<<*/
+
+var array =  [ 1, 2, "3" ];
+if (array.keys() != [ 0, 1, 2]) {
+    retVal += " | " + testCount;
+}
+
+var map = { "0":  "aaa", "a": "xxxx", "pqr": [ 1, 2], "1": "sdssa"};
+if (map.keys() != [ "0", "1", "a", "pqr"] ) {
+    retVal += " | " + testCount;
+}
+
+  /*>48>>*/ testCount++; /*<<<*/
+  /* ..test 48... */
+}
+}
 
 // ----
 

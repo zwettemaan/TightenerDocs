@@ -1,1 +1,1 @@
-rrt indesign ${TIGHTENER_RELEASE_ROOT}SampleScripts/MonitorRunningJSX/reportStatus.tql 2000 | json_pp
+rrt indesign ${TIGHTENER_RELEASE_ROOT}SampleScripts/MonitorRunningJSX/reportStatus.tql 10000 | json_pp
