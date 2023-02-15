@@ -9,10 +9,11 @@
 
 # Use evalTQL once to calculate three environment variables by concatenating then splitting on ,
 
-evalTQL "sysInfo().ini.placeholders.INDESIGN_VERSION + ',' + sysInfo().ini.placeholders.INDESIGN_SDK_VERSION + ',' + (sysInfo().ini.coordinatorMap.InDesign.toLowerCase().indexOf('server') >= 0 ? 1 : 0)" | IFS=, read -r INDESIGN_TIGHTENER_VERSION INDESIGN_TIGHTENER_SDK_VERSION INDESIGN_TIGHTENER_IS_SERVER
-export INDESIGN_TIGHTENER_VERSION
-export INDESIGN_TIGHTENER_SDK_VERSION
-export INDESIGN_TIGHTENER_IS_SERVER
+INDESIGN_INFO=`evalTQL "sysInfo().ini.placeholders.INDESIGN_VERSION + ',' + sysInfo().ini.placeholders.INDESIGN_SDK_VERSION + ',' + (sysInfo().ini.coordinatorMap.InDesign.toLowerCase().indexOf('server') >= 0 ? 1 : 0)"`
+
+export INDESIGN_TIGHTENER_VERSION=$(echo $INDESIGN_INFO | cut -f1 -d,)
+export INDESIGN_TIGHTENER_SDK_VERSION=$(echo $INDESIGN_INFO | cut -f2 -d,)
+export INDESIGN_TIGHTENER_IS_SERVER=$(echo $INDESIGN_INFO | cut -f3 -d,)
 
 export TIGHTENER_PLUGINS_RELEASE_ROOT="${TIGHTENER_RELEASE_ROOT}Plug-Ins/"
 
