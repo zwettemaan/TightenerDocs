@@ -1,0 +1,2 @@
+//@targetengine test
+alert("Hello");
