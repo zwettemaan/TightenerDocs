@@ -17,7 +17,11 @@ IF NOT EXIST "%PLUGIN%" (
 )
 
 IF "%INDESIGN_TIGHTENER_IS_SERVER%" == "1" (
-    "%INDESIGN_APP_ROOT%%INDESIGN_APP_FILE%" -console
+    IF "%1" == "" (
+        "%INDESIGN_APP_ROOT%%INDESIGN_APP_FILE%" -console 
+    ) ELSE (
+        "%INDESIGN_APP_ROOT%%INDESIGN_APP_FILE%" -console -configuration "%1"
+    )
 ) ELSE (    
     idPoke
 )
