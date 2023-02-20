@@ -14,6 +14,12 @@ below as a downloadable file on cloud.rorohiko.com
 
 # Alpha Releases
 
+## Version 0.0.9
+
+Fifth alpha release, 21-Feb-2023
+
+https://cloud.rorohiko.com/index.php/s/jpRW3RnaZSjDG8R
+
 ## Version 0.0.8
 
 Fourth alpha release, 6-Feb-2023
