@@ -6,7 +6,8 @@ echo ""
 echo "Core Tightener Processes:"
 echo ""
 echo "----BEGIN"
-ps ax | grep -e "CommandLine/Mac/Tightener" -e "XojoTightener.app/Contents/MacOS/XojoTightener" -e "CommandLine/Mac/TightenerGW/TightenerGW" | grep -e "grep -e " -v | sed "s/^.*\///g"
+ps ax | cut -c28- | grep -e "CommandLine/Mac/Tightener" -e "XojoTightener.app/Contents/MacOS/XojoTightener" | grep -e "grep -e " -v | sed "s/^.*\///g"
+ps ax | cut -c28- | grep -e "^Tightener" -e "^XojoTightener" | grep -e "grep -e " -v 
 echo "----END"
 
 echo ""
