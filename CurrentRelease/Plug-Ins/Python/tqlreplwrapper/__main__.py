@@ -12,13 +12,12 @@
 # List:
 #   jupyter kernelspec list
 #
-# Problems after closing notebook web page: Kernel does not respond any more. 
+# Problems after closing notebook web page: Kernel does not respond anymore.
 # Probably because Tightener remains running but is expected to quit
 #
 
 import pexpect.replwrap
 import pexpect.popen_spawn
-import sys
 import os
 import platform
 
@@ -29,7 +28,17 @@ from ipykernel.kernelapp import IPKernelApp
 
 # log.to_file("/Users/kris/Desktop/tqlreplwrapper.log")
 
+
 class TQLTightenerKernel(Kernel):
+
+    def do_apply(self, content, bufs, msg_id, reply_metadata):
+        pass
+
+    def do_clear(self):
+        pass
+
+    async def do_debug_request(self, msg):
+        pass
 
     # log.info("Creating TQLTightenerKernel")
 
@@ -43,11 +52,15 @@ class TQLTightenerKernel(Kernel):
         scripts = os.environ["TIGHTENER_SCRIPTS"]
 
     if platform.system() == "Windows":
-        commandStr = "\"" + scripts + "rrt_Jupyter.bat\" " + target + " \"" + pexpect.replwrap.PEXPECT_PROMPT + "\" \"" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "\""
+        commandStr = "\"" + scripts + "rrt_Jupyter.bat\" " + target + \
+                     " \"" + pexpect.replwrap.PEXPECT_PROMPT + "\" \"" + \
+                     pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "\""
         command = pexpect.popen_spawn.PopenSpawn(commandStr)
         command.echo = False
     else:
-        command = "bash -c \"" + scripts + "rrt_Jupyter " + target + " '" + pexpect.replwrap.PEXPECT_PROMPT + "' '" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "'\""
+        command = "bash -c \"" + scripts + "rrt_Jupyter " + target + \
+                  " '" + pexpect.replwrap.PEXPECT_PROMPT + "' '" + \
+                  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "'\""
 
     tightenerTQLWrapper = pexpect.replwrap.REPLWrapper(
         command,
@@ -66,13 +79,14 @@ class TQLTightenerKernel(Kernel):
     }
     banner = "TightenerTQL Kernel"
 
-    def do_execute(self, code, silent, store_history=True, user_expressions=None,
-                   allow_stdin=False):
+    def do_execute(self, code, silent, store_history=True, user_expressions=None, allow_stdin=False, **kwargs):
 
         if not silent:
             # log.info("running '" + code + "'")
-            stream_content = {'name': 'stdout', 
-                'text': self.tightenerTQLWrapper.run_command(code, None) 
+            stream_content = \
+                {
+                    'name': 'stdout',
+                    'text': self.tightenerTQLWrapper.run_command(code)
                 }
             self.send_response(self.iopub_socket, 'stream', stream_content) 
 

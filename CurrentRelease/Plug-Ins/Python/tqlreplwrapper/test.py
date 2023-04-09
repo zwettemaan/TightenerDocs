@@ -20,7 +20,7 @@ if __name__ == '__main__':
     else:
         command = "bash -c \"" + scripts + "rrt_Jupyter " + target + " '" + pexpect.replwrap.PEXPECT_PROMPT + "' '" +  pexpect.replwrap.PEXPECT_CONTINUATION_PROMPT + "'\""
 
-    py: REPLWrapper = pexpect.replwrap.REPLWrapper(
+    py: pexpect.replwrap.REPLWrapper = pexpect.replwrap.REPLWrapper(
         command,
         pexpect.replwrap.PEXPECT_PROMPT,
         None,
