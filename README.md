@@ -10,6 +10,8 @@ https://cmap.ihmc.us/
 
 # Installing Tightener
 
+* For the absolutely latest, possibly broken 'work-in-progress':
+
 Download the .zip file for this repo
 
 https://github.com/zwettemaan/TightenerDocs/archive/refs/heads/main.zip
@@ -18,7 +20,13 @@ Decompress, and navigate into the 'CurrentRelease' folder
 
 Run the script install.command (Mac/Linux) or install.bat (Windows)
 
-Done.
+* For a stable alpha version, find your download here:
+
+https://github.com/zwettemaan/TightenerDocs/tree/main/Releases/Alpha
+
+Decompress, and navigate into the 'CurrentRelease' folder
+
+Run the script install.command (Mac/Linux) or install.bat (Windows)
 
 # Installing Tightener with Jupyter Notebooks
 
