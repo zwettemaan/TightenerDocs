@@ -8,6 +8,16 @@ Cmaps are drawn using:
 
 https://cmap.ihmc.us/
 
+# Installing Tightener
+
+Download the .zip file for this repo
+
+Decompress, and navigate into the 'CurrentRelease' folder
+
+Run the script install.command (Mac/Linux) or install.bat (Windows)
+
+Done.
+
 # Installing Tightener with Jupyter Notebooks
 
 ## Mac
