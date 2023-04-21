@@ -12,6 +12,8 @@ https://cmap.ihmc.us/
 
 Download the .zip file for this repo
 
+https://github.com/zwettemaan/TightenerDocs/archive/refs/heads/main.zip
+
 Decompress, and navigate into the 'CurrentRelease' folder
 
 Run the script install.command (Mac/Linux) or install.bat (Windows)
