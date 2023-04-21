@@ -27,7 +27,12 @@ if [ `uname` = "Darwin" ]; then
 
 else
 
-    export TIGHTENER_BINARIES="${TIGHTENER_RELEASE_ROOT}CommandLine/Linux/"
+    if [ "${HOSTTYPE}" == "aarch64" ]; then
+        TIGHTENER_BINARIES="${TIGHTENER_RELEASE_ROOT}CommandLine/Linux_ARM64/"
+    else
+        TIGHTENER_BINARIES="${TIGHTENER_RELEASE_ROOT}CommandLine/Linux/"
+    fi
+        
     . "${TIGHTENER_RELEASE_ROOT}CommandLine/Scripts/setPathLinux"
 
     if [ ! -f "${TIGHTENER_SYSCONFIG_ROOT}editFile" ]; then
