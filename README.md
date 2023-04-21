@@ -1,14 +1,6 @@
 # TightenerDocs
 
-Documentation for the Tightener project
-
-[Wiki](https://github.com/zwettemaan/TightenerDocs/wiki)
-
-Cmaps are drawn using:
-
-https://cmap.ihmc.us/
-
-# Installing Tightener
+## Installing Tightener
 
 * For the absolutely latest, possibly broken 'work-in-progress':
 
@@ -28,13 +20,23 @@ Decompress.
 
 Run the script install.command (Mac/Linux) or install.bat (Windows)
 
-# Installing Tightener with Jupyter Notebooks
+## Docs
 
-## Mac
+Documentation for the Tightener project
+
+[Wiki](https://github.com/zwettemaan/TightenerDocs/wiki)
+
+Cmaps are drawn using:
+
+https://cmap.ihmc.us/
+
+## Installing Tightener with Jupyter Notebooks
+
+### Mac
 
 Start a Terminal window:
 
-### Command Line Tools
+#### Command Line Tools
 
 Optional - Homebrew will automatically do this if need be.
 
@@ -43,7 +45,7 @@ Install the Mac OS X Command line tools from Apple (if not already installed):
 xcode-select --install
 ```
 
-### Homebrew
+#### Homebrew
 
 Install Homebrew (https://brew.sh/). 
 
@@ -53,7 +55,7 @@ Install Homebrew (https://brew.sh/).
 
 You could also use MacPorts instead of Homebrew - I'm not covering that here, but the approach is similar to Homebrew (https://www.macports.org/)
 
-### Python 3
+#### Python 3
 
 Check what version of python (if any) is installed:
 ```
@@ -105,13 +107,13 @@ https://codesolid.com/conda-vs-pip/
 https://stackoverflow.com/questions/38217545/what-is-the-difference-between-pyenv-virtualenv-anaconda
 https://stackoverflow.com/questions/64362772/switching-python-version-installed-by-homebrew
 
-### Install needed python modules
+#### Install needed python modules
 
 ```
 pip3 install pexpect
 ```
 
-### Install Jupyter
+#### Install Jupyter
 
 Beforehand, I avoid error messages by adding the python binary dir to the path: add to .zshenv en .profile, something like
 
@@ -153,7 +155,7 @@ ln -s "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/idjsreplwrapper" /usr/local/shar
 ln -s "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/idjsreplwrapper" ${SITE_PACKAGES}/idjsreplwrapper
 ```
 
-## UXPScript functions
+### UXPScript functions
 
 ```
 function alert(msg) {
@@ -183,7 +185,7 @@ function evalJS(expr) {
 }
 ```
 
-## Windows
+### Windows
 
 Install Python 3
 
