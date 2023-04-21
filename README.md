@@ -24,7 +24,7 @@ Run the script install.command (Mac/Linux) or install.bat (Windows)
 
 https://github.com/zwettemaan/TightenerDocs/tree/main/Releases/Alpha
 
-Decompress, and navigate into the 'CurrentRelease' folder
+Decompress.
 
 Run the script install.command (Mac/Linux) or install.bat (Windows)
 
