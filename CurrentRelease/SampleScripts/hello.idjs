@@ -1,0 +1,40 @@
+//
+// hello.idjs
+//
+// Run with rru (Run Remote UXPScript)
+//
+/****
+
+rru indesign hello.idjs
+rru tgh://freddy/indesign hello.idjs
+      
+*****/
+
+var IS_SERVER = "serverSettings" in app;
+
+function enquote(s) { return '"' + s.toString().replace(/\\/g,"\\\\").replace(/"/g,'\\"').replace(/\n/g,"\\n").replace(/\r/g,"\\r") + '"'; }
+
+function alert(msg) {   
+
+   if (IS_SERVER) {
+      app.evalTQL("stdOut(" + enquote(msg)  + " + \"\\n\")");
+   }
+   else {
+      theDialog = app.dialogs.add();
+      col = theDialog.dialogColumns.add();
+      colText = col.staticTexts.add();
+      colText.staticLabel = "" + msg;
+      theDialog.canCancel = false;
+      theDialog.show();
+      theDialog.destroy();
+   }
+
+   return;
+}
+
+feedBack = function(message) {
+   alert(message); 
+};
+
+feedBack("Hello from hello.idjs");
+

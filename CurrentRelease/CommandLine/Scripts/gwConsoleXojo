@@ -1,0 +1,5 @@
+if [ `uname` = "Darwin" ]; then
+    gwConsoleXojoMac
+else
+    gwConsoleXojoLinux
+fi

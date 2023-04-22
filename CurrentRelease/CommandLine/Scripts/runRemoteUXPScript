@@ -1,3 +1,0 @@
-echo "'runRemoteUXPScript' shorthand is 'rru'"
-
-rru $@

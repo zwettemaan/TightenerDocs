@@ -1,0 +1,30 @@
+var s = app.scriptStatus().ExtendScript;
+
+var keyList = s.keys();
+
+var checkStatusScript = << EOF
+
+var status = "";
+if ("undefined" != typeof TGH) {
+    if (TGH.state) {
+        if (TGH.state.docIdx < TGH.state.DOC_COUNT) {
+            status = $.engineName + ": Processing doc#" + TGH.state.docIdx;
+        }
+        else {
+            status = $.engineName + ":Processing completed";
+        }
+    }
+}
+status
+
+EOF
+
+for (var idx = 0; idx < keyList.length; idx++) {
+    var engineName = keyList[idx];
+
+    var status = app.evalExtendScript(checkStatusScript, engineName);
+    if (status != "") {
+        stdOut(engineName + ":" + status + "\n");
+    }
+}
+

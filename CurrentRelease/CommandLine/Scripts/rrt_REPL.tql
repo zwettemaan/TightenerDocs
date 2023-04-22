@@ -1,41 +1,77 @@
-remoteTQLTarget = getEnv("RRT_REMOTE_URL");
-timeoutMilliseconds = 10000;
+var remoteTQLTarget = getEnv("RRT_REMOTE_URL");
+var timeoutMilliseconds = parseInt(getEnv("TIMEOUT_MS"));
+if (isNaN(timeoutMilliseconds))
+{
+    timeoutMilliseconds = 10000;
+}
 
 var PROMPT = "$ ";
+var RRT_PROMPT = getEnv("RRT_PROMPT");
+if (RRT_PROMPT == "") {
+    RRT_PROMPT = PROMPT;
+}
+
 var PROMPT_CONTINUATION = "> ";
+var RRT_PROMPT_CONTINUATION = getEnv("RRT_PROMPT_CONTINUATION");
+if (RRT_PROMPT_CONTINUATION == "") {
+    RRT_PROMPT_CONTINUATION = PROMPT_CONTINUATION;
+}
 
-var prompt = PROMPT;
-var inputData = stdIn(prompt);
+var RRT_1LINE = getEnv("RRT_1LINE");
+if (sysInfo().platform == "windows") {
+    RRT_1LINE = eval(RRT_1LINE);    
+}
 
-do {
+var prompt = RRT_PROMPT;
 
+var inputData;
+if (RRT_1LINE) {
+    inputData = RRT_1LINE + "\n";
+}
+else {
+    inputData = stdIn(prompt);
+}
+
+var trimmedInputData = G.UTIL.trim(inputData);
+
+while (trimmedInputData != "quit" && trimmedInputData != "quit()") {
+
+    var returnData = "Timed out";
     sendData(
         inputData,
         remoteTQLTarget, 
-        G.CALL_BACK_ID_TQL,  // This constant is define in the startupScript.tql
+        G.CALL_BACK_ID_TQL,  // This constant is defined in the startupScript.tql
         function(result) {
-            prompt = result.substr(result.length - PROMPT.length);
-            if (prompt == PROMPT || prompt == PROMPT_CONTINUATION) {
-                result = result.substr(0, result.length - prompt.length);
+            if (result.substr(result.length - PROMPT.length) == PROMPT) {
+                result = result.substr(0, result.length - PROMPT.length);
+                prompt = RRT_PROMPT;
+            } 
+            else if (result.substr(result.length - PROMPT_CONTINUATION.length) == PROMPT_CONTINUATION) {
+                result = result.substr(0, result.length - PROMPT_CONTINUATION.length);
+                prompt = RRT_PROMPT_CONTINUATION;
             }
             else {
                 prompt = "";
             }
-            stdOut(result);
+            returnData = result;
         },
         timeoutMilliseconds
     );
 
-
-    if (prompt == "") {
+    if (RRT_1LINE) {
+        stdOut(returnData);
         inputData = "\n";
+        trimmedInputData = "quit";
+    }
+    else if (prompt == "") {
+        inputData = "\n";
+        trimmedInputData = "";
     }
     else {
+        stdOut(returnData);
         inputData = stdIn(prompt);
-        var trimmedInputData = G.UTIL.trim(inputData);
+        trimmedInputData = G.UTIL.trim(inputData);
     }
-
 }
-while (trimmedInputData != "quit" && trimmedInputData != "quit()");
 
 quit();

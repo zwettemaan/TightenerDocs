@@ -12,14 +12,16 @@ if [ `basename \`pwd\`` = 'TightenerDocs' ]; then
 
             export TIGHTENER_GIT_ROOT=`pwd`/
 
-            export TIGHTENER_BUILD_SCRIPTS="${TIGHTENER_GIT_ROOT}BuildScripts/"
-            if [[ :$PATH: != *:"$TIGHTENER_BUILD_SCRIPTS":* ]] ; then
-                export PATH=${TIGHTENER_BUILD_SCRIPTS}:${PATH}
+            TIGHTENER_BUILD_SCRIPTS_PATH="${TIGHTENER_GIT_ROOT}BuildScripts"
+            export TIGHTENER_BUILD_SCRIPTS="${TIGHTENER_BUILD_SCRIPTS_PATH}/"
+            if [[ :$PATH: != *:"$TIGHTENER_BUILD_SCRIPTS_PATH":* ]] ; then
+                export PATH=${TIGHTENER_BUILD_SCRIPTS_PATH}:${PATH}
             fi
 
-            export TIGHTENER_TEST_SCRIPTS="${TIGHTENER_RELEASE_ROOT}SampleScripts/TestScripts/"
-            if [[ :$PATH: != *:"$TIGHTENER_TEST_SCRIPTS":* ]] ; then
-                export PATH=${TIGHTENER_TEST_SCRIPTS}:${PATH}
+            TIGHTENER_TEST_SCRIPTS_PATH="${TIGHTENER_RELEASE_ROOT}SampleScripts/TestScripts"
+            export TIGHTENER_TEST_SCRIPTS="${TIGHTENER_TEST_SCRIPTS_PATH}/"
+            if [[ :$PATH: != *:"$TIGHTENER_TEST_SCRIPTS_PATH":* ]] ; then
+                export PATH=${TIGHTENER_TEST_SCRIPTS_PATH}:${PATH}
             fi
             
             . "${TIGHTENER_GIT_ROOT}BuildScripts/setEnv"
@@ -33,17 +35,27 @@ fi
 
 popd > /dev/null
 
-export TIGHTENER_SCRIPTS="${TIGHTENER_RELEASE_ROOT}CommandLine/Scripts/"
-export TIGHTENER_BINARIES="${TIGHTENER_RELEASE_ROOT}CommandLine/Mac/"
+export TIGHTENER_DEFAULT_RR_TIMEOUT_MS=10000
+export TIGHTENER_DEFAULT_RR_QUIT_DELAY_MS=500
+
+export TIGHTENER_DEFAULT_REPL_TIMEOUT_MS=20000
+export TIGHTENER_DEFAULT_REPL_QUIT_DELAY_MS=500
+
+TIGHTENER_SCRIPTS_PATH="${TIGHTENER_RELEASE_ROOT}CommandLine/Scripts"
+export TIGHTENER_SCRIPTS="${TIGHTENER_SCRIPTS_PATH}/"
+
+TIGHTENER_BINARIES_PATH="${TIGHTENER_RELEASE_ROOT}CommandLine/Mac"
+export TIGHTENER_BINARIES="${TIGHTENER_BINARIES_PATH}/"
+
 export TIGHTENER_LOCAL_DATA_ROOT="${HOME}/Library/Application Support/net.tightener/"
 export TIGHTENER_SYSCONFIG_ROOT="${TIGHTENER_LOCAL_DATA_ROOT}SysConfig/"
 
-if [[ :$PATH: != *:"$TIGHTENER_SCRIPTS":* ]] ; then
-    export PATH=${TIGHTENER_SCRIPTS}:${PATH}
+if [[ :$PATH: != *:"$TIGHTENER_SCRIPTS_PATH":* ]] ; then
+    export PATH=${TIGHTENER_SCRIPTS_PATH}:${PATH}
 fi
 
-if [[ :$PATH: != *:"$TIGHTENER_BINARIES":* ]] ; then
-    export PATH=${TIGHTENER_BINARIES}:${PATH}
+if [[ :$PATH: != *:"$TIGHTENER_BINARIES_PATH":* ]] ; then
+    export PATH=${TIGHTENER_BINARIES_PATH}:${PATH}
 fi
 
 . "${TIGHTENER_SCRIPTS}/idSetEnv"

@@ -22,16 +22,16 @@ if [ ! -f "$2" ]; then
     exit
 fi
 
-export TIMEOUT_MS=10000
+TIMEOUT_MS=${TIGHTENER_DEFAULT_RR_TIMEOUT_MS}
 
 #
 # If responses are expected, we need to wait a bit to receive them
 # If we quit too soon, the response will vanish into the bit bucket
 #
 if [ "$3" = "" ]; then
-    export QUIT_DELAY_MS=100
+    QUIT_DELAY_MS=${TIGHTENER_DEFAULT_RR_QUIT_DELAY_MS}
 else
-    export QUIT_DELAY_MS="$3"
+    QUIT_DELAY_MS="$3"
 fi
 
 SCRIPT_PARENT_FOLDER=`dirname "$2"`
@@ -46,4 +46,7 @@ popd > /dev/null
 export RRU_SCRIPT_PATH="${SCRIPT_PARENT_FOLDER}${SCRIPT_FILENAME}"
 export RRU_REMOTE_URL="$1"
 
-Tightener -N scriptrunner -o ${TIMEOUT_MS} -w ${QUIT_DELAY_MS} -t n -f "${TIGHTENER_SCRIPTS}rru.tql"
+export RRU_SESSION_ID=`uuidgen | sed "s/-//g"`
+export COORDINATOR_NAME="net.tightener.coordinator.scriptrunner.RRU.${RRU_SESSION_ID}"
+
+Tightener -n ${COORDINATOR_NAME} -o ${TIMEOUT_MS} -w ${QUIT_DELAY_MS} -t n -f "${TIGHTENER_SCRIPTS}rru.tql"

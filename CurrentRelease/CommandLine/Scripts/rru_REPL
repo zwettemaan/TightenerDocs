@@ -1,0 +1,51 @@
+#
+# Remotely run UXPScript commands. InDesign/InCopy/InDesign Server only
+#
+# rru_REPL <target> [ <UXPScriptCommand> [quitDelayMS] ]
+#
+# e.g.
+#
+# rru_REPL indesign 
+# rru_REPL tgh://freddy/indesign/main 
+# rru_REPL tgh://sandy.rorohiko.com/net.tightener.coordinator.indesign.17.0/main 
+# rru_REPL tgh://sandy.rorohiko.com/net.tightener.coordinator.indesign.17.0.configuration_noport/main 
+#
+
+if [ "$1" = "" ]; then
+    echo "Usage:"
+    echo "  `basename \"$0\"` target [ uxpCommand [ quitDelayMS] ]"
+    exit
+fi
+
+if [ "$2" = "" ]; then
+    echo "Starting rru_REPL.tql. Enter 'quit' to terminate the REPL loop."
+    SWITCH_STDIN="-I"
+    export RRU_1LINE=""
+    TIMEOUT_MS=${TIGHTENER_DEFAULT_REPL_TIMEOUT_MS}
+    QUIT_DELAY_MS=${TIGHTENER_DEFAULT_REPL_QUIT_DELAY_MS}
+else
+    SWITCH_STDIN=""
+    export RRU_1LINE="$2"
+    TIMEOUT_MS=${TIGHTENER_DEFAULT_RR_TIMEOUT_MS}
+    if [ "$3" = "" ]; then
+        QUIT_DELAY_MS=${TIGHTENER_DEFAULT_RR_QUIT_DELAY_MS}
+    else
+        QUIT_DELAY_MS=$3
+    fi
+fi
+
+export RRU_REMOTE_URL="$1"
+
+export RRU_REPL_SESSION_ID=`uuidgen | sed "s/-//g"`
+export COORDINATOR_NAME="net.tightener.coordinator.console.RRU.${RRU_REPL_SESSION_ID}"
+
+# -n <long>  : long coordinator name
+# -I         : read standard stdin 
+# -t n       : no tests to be run
+# -f <path>  : process script
+
+Tightener -n ${COORDINATOR_NAME} -o ${TIMEOUT_MS} -w ${QUIT_DELAY_MS} ${SWITCH_STDIN} -t n -f "${TIGHTENER_SCRIPTS}rru_REPL.tql"
+
+if [ "${RRU_1LINE}" = "" ]; then
+    echo "Done."
+fi

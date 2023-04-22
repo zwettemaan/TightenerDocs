@@ -10,7 +10,7 @@ popd > /dev/null
 
 if [ `uname` = "Darwin" ]; then
 
-    export TIGHTENER_BINARIES="${TIGHTENER_RELEASE_ROOT}CommandLine/Mac"
+    export TIGHTENER_BINARIES="${TIGHTENER_RELEASE_ROOT}CommandLine/Mac/"
     . "${TIGHTENER_RELEASE_ROOT}CommandLine/Scripts/setPathMac"
 
     if [ ! -f "${TIGHTENER_SYSCONFIG_ROOT}editFile" ]; then
@@ -21,13 +21,18 @@ if [ `uname` = "Darwin" ]; then
     "${TIGHTENER_SCRIPTS}/updateEnvironmentInProfile" ~/.zshenv "${TIGHTENER_RELEASE_ROOT}"
     "${TIGHTENER_SCRIPTS}/updateEnvironmentInProfile" ~/.profile "${TIGHTENER_RELEASE_ROOT}"
 
-    if [ ! -e "${HOME}/Library/Application Support/net.tightener/SysConfig/config.ini"]; then
+    if [ ! -f "${TIGHTENER_SYSCONFIG_ROOT}config.ini" ]; then
         "${TIGHTENER_SCRIPTS}copyConfig"
     fi
 
 else
 
-    export TIGHTENER_BINARIES="${TIGHTENER_RELEASE_ROOT}CommandLine/Linux"
+    if [ "${HOSTTYPE}" == "aarch64" ]; then
+        TIGHTENER_BINARIES="${TIGHTENER_RELEASE_ROOT}CommandLine/Linux_ARM64/"
+    else
+        TIGHTENER_BINARIES="${TIGHTENER_RELEASE_ROOT}CommandLine/Linux/"
+    fi
+        
     . "${TIGHTENER_RELEASE_ROOT}CommandLine/Scripts/setPathLinux"
 
     if [ ! -f "${TIGHTENER_SYSCONFIG_ROOT}editFile" ]; then
@@ -38,7 +43,7 @@ else
     "${TIGHTENER_SCRIPTS}/updateEnvironmentInProfile" ~/.bashrc "${TIGHTENER_RELEASE_ROOT}"
     "${TIGHTENER_SCRIPTS}/updateEnvironmentInProfile" ~/.profile "${TIGHTENER_RELEASE_ROOT}"
 
-    if [ ! -e "${HOME}/.net.tightener/net.tightener/SysConfig/config.ini"]; then
+    if [ ! -f "${TIGHTENER_SYSCONFIG_ROOT}config.ini" ]; then
         "${TIGHTENER_SCRIPTS}copyConfig"
     fi
 

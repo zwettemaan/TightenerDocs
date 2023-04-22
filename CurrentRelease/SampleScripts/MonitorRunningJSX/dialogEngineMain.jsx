@@ -1,0 +1,2 @@
+//@targetengine main
+alert("Hello");

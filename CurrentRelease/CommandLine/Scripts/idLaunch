@@ -1,7 +1,25 @@
 . "${TIGHTENER_SCRIPTS}/idSetEnv"
 
 if [  "${INDESIGN_TIGHTENER_IS_SERVER}" = "1" ]; then
-    "${INDESIGN_APP_ROOT}${INDESIGN_APP_FILE}" -console
+    PLUG_IN_FILE="${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}TightenerServer.InDesignPlugin"
 else
-    open "${INDESIGN_APP_ROOT}${INDESIGN_APP_FILE}"
+    PLUG_IN_FILE="${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}Tightener.InDesignPlugin"
+fi    
+
+if [  ! -e  "${PLUG_IN_FILE}" ]; then
+    echo "Aborting."
+    echo "No Tightener Plug-in installed in"
+    echo "  ${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}."
+    echo "You can try using idPluginInstall to install it."
+    exit
+fi
+
+if [  "${INDESIGN_TIGHTENER_IS_SERVER}" = "1" ]; then
+
+    "${INDESIGN_APP_ROOT}${INDESIGN_APP_FILE}" -console
+    
+else
+
+    idPoke
+
 fi

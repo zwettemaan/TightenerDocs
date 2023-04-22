@@ -12,6 +12,10 @@ REM
 
 SET QUIT_DELAY_MS=0
 
-echo %1 | Tightener -N scriptrunner -t n -w %QUIT_DELAY_MS% -f -
+FOR /f "usebackq tokens=*" %%A in (`powershell -Command "[guid]::NewGuid().ToString()"`) DO SET EVAL_TQL_SESSION_ID_RAW=%%A
+SET EVAL_TQL_SESSION_ID=%EVAL_TQL_SESSION_ID_RAW:-=%
+SET COORDINATOR_NAME=net.tightener.coordinator.scriptrunner.EVALTQL.%EVAL_TQL_SESSION_ID%
+
+echo %1 | Tightener -n %COORDINATOR_NAME% -t n -w %QUIT_DELAY_MS% -f -
 
 :DONE

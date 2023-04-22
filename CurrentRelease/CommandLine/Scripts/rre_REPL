@@ -1,7 +1,7 @@
 #
 # Remotely run ExtendScript commands
 #
-# rre_REPL <target>
+# rre_REPL <target> [ <JSXCommand> [quitDelayMS] ]
 #
 # e.g.
 #
@@ -11,21 +11,42 @@
 # rre_REPL tgh://sandy.rorohiko.com/net.tightener.coordinator.indesign.17.0/main 
 # rre_REPL tgh://sandy.rorohiko.com/net.tightener.coordinator.indesign.17.0.configuration_noport/main 
 #
-# Commands are buffered locally first.
-#
-# Entering a blank line will send the commands to the remote and output the result.
-#
 
 if [ "$1" = "" ]; then
     echo "Usage:"
-    echo "  `basename \"$0\"` target"
+    echo "  `basename \"$0\"` target [ jsxCommand [ quitDelayMS] ]"
     exit
+fi
+
+if [ "$2" = "" ]; then
+    echo "Starting rre_REPL.tql. Enter 'quit' to terminate the REPL loop."
+    SWITCH_STDIN="-I"
+    export RRE_1LINE=""
+    TIMEOUT_MS=${TIGHTENER_DEFAULT_REPL_TIMEOUT_MS}
+    QUIT_DELAY_MS=${TIGHTENER_DEFAULT_REPL_QUIT_DELAY_MS}
+else
+    export RRE_1LINE="$2"
+    SWITCH_STDIN=""
+    TIMEOUT_MS=${TIGHTENER_DEFAULT_RR_TIMEOUT_MS}
+    if [ "$3" = "" ]; then
+        QUIT_DELAY_MS=${TIGHTENER_DEFAULT_RR_QUIT_DELAY_MS}
+    else
+        QUIT_DELAY_MS=$3
+    fi
 fi
 
 export RRE_REMOTE_URL="$1"
 
-echo "Starting rre_REPL.tql. Enter 'quit()' to terminate the REPL loop."
+export RRE_REPL_SESSION_ID=`uuidgen | sed "s/-//g"`
+export COORDINATOR_NAME="net.tightener.coordinator.console.RRE.${RRE_REPL_SESSION_ID}"
 
-Tightener -N console -t n -f "${TIGHTENER_SCRIPTS}rre_REPL.tql"
+# -n <long>  : long coordinator name
+# -I         : read standard stdin 
+# -t n       : no tests to be run
+# -f <path>  : process script
 
-echo "Done."
+Tightener -n ${COORDINATOR_NAME} -o ${TIMEOUT_MS} -w ${QUIT_DELAY_MS} ${SWITCH_STDIN} -t n -f "${TIGHTENER_SCRIPTS}rre_REPL.tql"
+
+if [ "${RRE_1LINE}" = "" ]; then
+    echo "Done."
+fi

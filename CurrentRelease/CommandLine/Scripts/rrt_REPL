@@ -1,7 +1,7 @@
 #
 # Remotely run TQL commands
 #
-# rrt_REPL <target>
+# rrt_REPL <target> [ <TQLCommand> [quitDelayMS] ]
 #
 # e.g.
 #
@@ -11,21 +11,42 @@
 # rrt_REPL tgh://sandy.rorohiko.com/net.tightener.coordinator.indesign.17.0/main 
 # rrt_REPL tgh://sandy.rorohiko.com/net.tightener.coordinator.indesign.17.0.configuration_noport/main 
 #
-# Commands are buffered locally first.
-#
-# Entering a blank line will send the commands to the remote and output the result.
-#
 
 if [ "$1" = "" ]; then
     echo "Usage:"
-    echo "  `basename \"$0\"` target"
+    echo "  `basename \"$0\"` target [ tqlCommand [ quitDelayMS] ]"
     exit
+fi
+
+if [ "$2" = "" ]; then
+    echo "Starting rrt_REPL.tql. Enter 'quit' to terminate the REPL loop."
+    SWITCH_STDIN="-I"
+    export RRT_1LINE=""
+    TIMEOUT_MS=${TIGHTENER_DEFAULT_REPL_TIMEOUT_MS}
+    QUIT_DELAY_MS=${TIGHTENER_DEFAULT_REPL_QUIT_DELAY_MS}
+else
+    SWITCH_STDIN=""
+    export RRT_1LINE="$2"
+    TIMEOUT_MS=${TIGHTENER_DEFAULT_RR_TIMEOUT_MS}
+    if [ "$3" = "" ]; then
+        QUIT_DELAY_MS=${TIGHTENER_DEFAULT_RR_QUIT_DELAY_MS}
+    else
+        QUIT_DELAY_MS=$3
+    fi
 fi
 
 export RRT_REMOTE_URL="$1"
 
-echo "Starting rrt_REPL.tql. Enter 'quit()' to terminate the REPL loop."
+export RRT_REPL_SESSION_ID=`uuidgen | sed "s/-//g"`
+export COORDINATOR_NAME="net.tightener.coordinator.console.RRT.${RRT_REPL_SESSION_ID}"
 
-Tightener -N console -t n -f "${TIGHTENER_SCRIPTS}rrt_REPL.tql"
+# -n <long>  : long coordinator name
+# -I         : read standard stdin 
+# -t n       : no tests to be run
+# -f <path>  : process script
 
-echo "Done."
+Tightener -n ${COORDINATOR_NAME} -o ${TIMEOUT_MS} -w ${QUIT_DELAY_MS} ${SWITCH_STDIN} -t n -f "${TIGHTENER_SCRIPTS}rrt_REPL.tql"
+
+if [ "${RRT_1LINE}" = "" ]; then
+    echo "Done."
+fi

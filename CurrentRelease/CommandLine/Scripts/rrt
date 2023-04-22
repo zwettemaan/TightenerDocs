@@ -19,7 +19,7 @@ if [ ! -f "$2" ]; then
     exit
 fi
 
-TIMEOUT_MS=10000
+TIMEOUT_MS=${TIGHTENER_DEFAULT_RR_TIMEOUT_MS}
 
 #
 # If responses are expected, we need to wait a bit to receive them
@@ -27,9 +27,12 @@ TIMEOUT_MS=10000
 #
 
 if [ "$3" = "" ]; then
-    QUIT_DELAY_MS=10000
+    QUIT_DELAY_MS=${TIGHTENER_DEFAULT_RR_QUIT_DELAY_MS}
 else
     QUIT_DELAY_MS="$3"
 fi
 
-Tightener -N scriptrunner -r "$1" -o ${TIMEOUT_MS} -w ${QUIT_DELAY_MS} -t n -f "$2"
+export RRT_SESSION_ID=`uuidgen | sed "s/-//g"`
+export COORDINATOR_NAME="net.tightener.coordinator.scriptrunner.RRT.${RRT_SESSION_ID}"
+
+Tightener -n ${COORDINATOR_NAME} -r "$1" -o ${TIMEOUT_MS} -w ${QUIT_DELAY_MS} -t n -f "$2"

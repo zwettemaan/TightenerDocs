@@ -1,3 +1,0 @@
-echo "'runRemoteExtendScript_REPL' shorthand is 'rre_REPL'"
-
-rre_REPL $@

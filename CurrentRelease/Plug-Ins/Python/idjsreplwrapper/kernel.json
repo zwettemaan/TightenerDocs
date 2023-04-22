@@ -1,0 +1,4 @@
+{
+  "argv":["python3", "-m", "idjsreplwrapper", "-f", "{connection_file}"],
+  "display_name":"TightenerIDJS"
+}

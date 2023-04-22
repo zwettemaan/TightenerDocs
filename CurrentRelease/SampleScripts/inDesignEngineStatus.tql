@@ -1,0 +1,9 @@
+//
+// rrt indesign inDesignEngineStatus.tql
+// 
+
+feedBack = function(message) { 
+    stdOut(message + "\n"); 
+}
+
+feedBack(scriptStatus());

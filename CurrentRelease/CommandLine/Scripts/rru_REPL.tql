@@ -1,0 +1,78 @@
+var remoteUXPScriptTarget = getEnv("RRU_REMOTE_URL");
+var timeoutMilliseconds = parseInt(getEnv("TIMEOUT_MS"));
+if (isNaN(timeoutMilliseconds))
+{
+    timeoutMilliseconds = 10000;
+}
+
+var PROMPT = "$ ";
+var RRU_PROMPT = getEnv("RRU_PROMPT");
+if (RRU_PROMPT == "") {
+    RRU_PROMPT = PROMPT;
+}
+
+var PROMPT_CONTINUATION = "> ";
+var RRU_PROMPT_CONTINUATION = getEnv("RRU_PROMPT_CONTINUATION");
+if (RRU_PROMPT_CONTINUATION == "") {
+    RRU_PROMPT_CONTINUATION = PROMPT_CONTINUATION;
+}
+
+var RRU_1LINE = getEnv("RRU_1LINE");
+if (sysInfo().platform == "windows") {
+    RRU_1LINE = eval(RRU_1LINE);    
+}
+
+var prompt = RRU_PROMPT;
+
+var inputData;
+if (RRU_1LINE) {
+    inputData = RRU_1LINE + "\n";
+}
+else {
+    inputData = stdIn(prompt);
+}
+
+var trimmedInputData = G.UTIL.trim(inputData);
+
+while (trimmedInputData != "quit" && trimmedInputData != "quit()") {
+
+    var returnData = "Timed out";
+    sendData(
+        inputData,
+        remoteUXPScriptTarget, 
+        G.CALL_BACK_ID_UXPSCRIPT, // This constant is defined in the startupScript.tql
+        function(result) {
+            if (result.substr(result.length - PROMPT.length) == PROMPT) {
+                result = result.substr(0, result.length - PROMPT.length);
+                prompt = RRU_PROMPT;
+            } 
+            else if (result.substr(result.length - PROMPT_CONTINUATION.length) == PROMPT_CONTINUATION) {
+                result = result.substr(0, result.length - PROMPT_CONTINUATION.length);
+                prompt = RRU_PROMPT_CONTINUATION;
+            }
+            else {
+                prompt = "";
+            }
+            returnData = result;
+        },
+        timeoutMilliseconds
+    );
+
+    if (RRU_1LINE) {
+        stdOut(returnData);
+        inputData = "\n";
+        trimmedInputData = "quit";
+    }
+    else if (prompt == "") {
+        inputData = "\n";
+        trimmedInputData = "";
+    }
+    else {
+        stdOut(returnData);
+        inputData = stdIn(prompt);
+        trimmedInputData = G.UTIL.trim(inputData);
+    }
+
+}
+
+quit();

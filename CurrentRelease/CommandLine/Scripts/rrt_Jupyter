@@ -1,0 +1,28 @@
+#
+# Remotely run ExtendScript commands for a Jupyter Notebook Kernel
+#
+
+if [ "$1" = "" ]; then
+    echo "Usage:"
+    echo "  `basename \"$0\"` target prompt continuationPrompt"
+    exit
+fi
+
+export RRT_REMOTE_URL="$1"
+export RRT_PROMPT="$2"
+export RRT_PROMPT_CONTINUATION="$3"
+
+export RRT_JUPYTER_SESSION_ID=`uuidgen | sed "s/-//g"`
+export COORDINATOR_NAME="net.tightener.coordinator.kernelconsole.RRT.${RRT_JUPYTER_SESSION_ID}"
+export RRT_1LINE=""
+
+TIMEOUT_MS=${TIGHTENER_DEFAULT_REPL_TIMEOUT_MS}
+QUIT_DELAY_MS=${TIGHTENER_DEFAULT_REPL_QUIT_DELAY_MS}
+
+# -n <long>  : long coordinator name
+# -I         : read standard stdin 
+# -t n       : no tests to be run
+# -z         : ignore SIGINT signals
+# -f <path>  : process script
+
+Tightener -n ${COORDINATOR_NAME} -I -t n -z -o ${TIMEOUT_MS} -w ${QUIT_DELAY_MS} -f "${TIGHTENER_SCRIPTS}rrt_REPL.tql"

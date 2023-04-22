@@ -1,4 +1,4 @@
-@ECHO OFF
+@ECHO off
 
 ECHO Navigating to InDesign application folder
 

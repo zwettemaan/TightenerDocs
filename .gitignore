@@ -1,7 +1,9 @@
 !/CurrentRelease/CommandLine/Windows/*.exe
+__pycache__
+.ipynb_checkpoints
+.idea
 *.zip
+dirconfig.sh
+CONERR$
 /CurrentRelease/Apps
-/CurrentRelease/CommandLine/Mac/TightenerGW/
-/CurrentRelease/CommandLine/Linux/TightenerGW/
-/CurrentRelease/CommandLine/Windows/TightenerGW/
 /CurrentRelease/SampleScripts/ReleaseTestScripts/data1.txt
