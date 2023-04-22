@@ -26,6 +26,7 @@ cat > "${HOME}/Library/Application Support/net.tightener/SysConfig/config.ini" <
 [placeholders]
 
 TIGHTENER_RELEASE_ROOT = "${TIGHTENER_RELEASE_ROOT}"
+TIGHTENER_BINARIES = "${TIGHTENER_BINARIES}"
 
 EOF
 
