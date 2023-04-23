@@ -2,6 +2,14 @@
 
 ## Installing Tightener
 
+* For a stable alpha version, find your download here:
+
+https://github.com/zwettemaan/TightenerDocs/tree/main/Releases/Alpha
+
+Decompress.
+
+Run the script install.command (Mac/Linux) or install.bat (Windows)
+
 * For the absolutely latest, possibly broken 'work-in-progress':
 
 Download the .zip file for this repo
@@ -9,14 +17,6 @@ Download the .zip file for this repo
 https://github.com/zwettemaan/TightenerDocs/archive/refs/heads/main.zip
 
 Decompress, and navigate into the 'CurrentRelease' folder
-
-Run the script install.command (Mac/Linux) or install.bat (Windows)
-
-* For a stable alpha version, find your download here:
-
-https://github.com/zwettemaan/TightenerDocs/tree/main/Releases/Alpha
-
-Decompress.
 
 Run the script install.command (Mac/Linux) or install.bat (Windows)
 
