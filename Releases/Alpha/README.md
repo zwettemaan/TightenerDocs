@@ -17,7 +17,7 @@ on x64 systems and also cross-compile to x64 on ARM64 systems.
 This is what I am now using on my M2 Mac - the Mac build is
 done on the machine itself, and the Linux and Windows builds are 
 done on ARM64 virtual machines (Ubuntu Linux and Windows 11)
-which then also compile the x64 versions (including InDesign
+which then also compile the x64 components for Tightener (including InDesign
 plug-ins)
 
 ## Version 0.0.9
