@@ -6,15 +6,15 @@
 	<dict>
 		<key>Resources/Info.plist</key>
 		<data>
-		OI/WpIyAxZ0LyGfX0y03nGTDbso=
-		</data>
-		<key>Resources/TghIDSN.fr.rsrc</key>
-		<data>
-		8TXKEazb4n9vpRKfFblc4eEsEOc=
+		+DYR2YXcEDes9zBFTy8I91lB0vw=
 		</data>
 		<key>Resources/TghIDSN.rc</key>
 		<data>
 		upK95QIeD8llXsKTudjKIWwFQNQ=
+		</data>
+		<key>Resources/TightenerServer.rsrc</key>
+		<data>
+		8TXKEazb4n9vpRKfFblc4eEsEOc=
 		</data>
 		<key>Resources/idrc_CLST/500.idrc</key>
 		<data>
@@ -38,7 +38,7 @@
 		</data>
 		<key>Resources/idrc_PMST/301.idrc</key>
 		<data>
-		achh2HPhA9tJiG+Egl5mMFnqXBw=
+		XFnT/NGNFHT91pzVjHD0wIosXU4=
 		</data>
 		<key>Resources/idrc_PMST/351.idrc</key>
 		<data>
@@ -46,7 +46,7 @@
 		</data>
 		<key>Resources/idrc_PVER/450.idrc</key>
 		<data>
-		zOMrvoqFRwWvwx8xk3Czx0I4a4M=
+		Lxn1FTzF3xuMyCi+BZgXvsgkqNc=
 		</data>
 		<key>Resources/idrc_SCE2/2.idrc</key>
 		<data>
@@ -59,14 +59,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Xz3TaQHz70950lGh6POBCVV82k/dlJU+p3apMog/L1o=
-			</data>
-		</dict>
-		<key>Resources/TghIDSN.fr.rsrc</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			QNyBYV4MMbLk/mU6PBpB5QUw3PZKSyQo/4rmtXcIY7Y=
+			Mk0MfRHrAxsFYK1WQXv06shsti6MxMFia28nzeZCCQc=
 			</data>
 		</dict>
 		<key>Resources/TghIDSN.rc</key>
@@ -74,6 +67,13 @@
 			<key>hash2</key>
 			<data>
 			n19BZnnPq+hR7W6r3sAWpfzW0lo9ggiAwd2aq4bHiAg=
+			</data>
+		</dict>
+		<key>Resources/TightenerServer.rsrc</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			QNyBYV4MMbLk/mU6PBpB5QUw3PZKSyQo/4rmtXcIY7Y=
 			</data>
 		</dict>
 		<key>Resources/idrc_CLST/500.idrc</key>
@@ -115,7 +115,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			DYQ7Qtv/eDKGrjUrlRIGWuAplJ25FAfOu9VM91LvOfc=
+			Rzdptm571xZ+HRkLaKaRlvrgQtCNYRRyLDdHQWdotdU=
 			</data>
 		</dict>
 		<key>Resources/idrc_PMST/351.idrc</key>
@@ -129,7 +129,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			3A8WkAZN55CVNEQMXCe2kf3nPVYdndpkTgG3BedTTPI=
+			7WCa7nH1V3PAoXqRespTfNQ2Rc/Cp1fSd5//LCc3Phg=
 			</data>
 		</dict>
 		<key>Resources/idrc_SCE2/2.idrc</key>
