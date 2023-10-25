@@ -2,6 +2,8 @@
 
     cat > "${TIGHTENER_SYSCONFIG_ROOT}pokeInDesignTimeslices.applescript" << EOF
 
+set appName to "Adobe InDesign ${INDESIGN_TIGHTENER_VERSION}"
+
 tell application "Adobe InDesign ${INDESIGN_TIGHTENER_VERSION}"
     activate
 end tell
@@ -9,7 +11,7 @@ end tell
 tell application "System Events"
     repeat while application process "Adobe InDesign ${INDESIGN_TIGHTENER_VERSION}" exists
         try 
-            tell application "Adobe InDesign ${INDESIGN_TIGHTENER_VERSION}"      
+            tell application id "com.adobe.InDesign"
                 set theResult to do script "app.tightenerTimeslice()" language javascript
             end tell
         end try

@@ -158,6 +158,9 @@ ln -s "${TIGHTENER_RELEASE_ROOT}Plug-Ins/Python/idjsreplwrapper" ${SITE_PACKAGES
 ### UXPScript functions
 
 ```
+var id = require("indesign");
+var app = id.app;
+
 function alert(msg) {
 
 	theDialog = app.dialogs.add();

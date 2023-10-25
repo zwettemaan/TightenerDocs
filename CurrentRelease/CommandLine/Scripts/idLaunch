@@ -20,6 +20,11 @@ if [  "${INDESIGN_TIGHTENER_IS_SERVER}" = "1" ]; then
     
 else
 
+    if ! pgrep "Adobe InDesign ${INDESIGN_TIGHTENER_VERSION}" > /dev/null; then
+        open "${INDESIGN_APP_PACKAGE_PATH}"
+        sleep 5
+    fi
+    
     idPoke
 
 fi

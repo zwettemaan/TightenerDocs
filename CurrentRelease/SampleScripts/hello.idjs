@@ -10,6 +10,9 @@ rru tgh://freddy/indesign hello.idjs
       
 *****/
 
+var id = require("indesign");
+var app = id.app;
+
 var IS_SERVER = "serverSettings" in app;
 
 function enquote(s) { return '"' + s.toString().replace(/\\/g,"\\\\").replace(/"/g,'\\"').replace(/\n/g,"\\n").replace(/\r/g,"\\r") + '"'; }

@@ -1,3 +1,6 @@
+var id = require("indesign");
+var app = id.app;
+
 function dQ(s) {
     return '"' + s.replace(/\\/g,"\\\\").replace(/"/g,'\\"').replace(/\n/g,"\\n").replace(/\r/g,"\\r") + '"';
 }

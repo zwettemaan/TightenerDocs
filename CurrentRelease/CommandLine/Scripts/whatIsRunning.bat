@@ -2,6 +2,9 @@
 
 DEL /Q "%APPDATA%\net.tightener\NamedPipes\*.*"
 
+REM Sleep for 2 seconds
+ping -n 2 127.0.0.1 > NUL
+
 ECHO.
 ECHO Core Tightener Tasks:
 ECHO.
