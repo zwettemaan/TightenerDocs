@@ -1,0 +1,40 @@
+//
+// licenseCheck.tql
+//
+// Run with rt which uses the local scriptrunner:
+//
+/****
+
+rt licenseCheck.tql
+
+****/
+//
+// This script runs in the local scriptrunner and 10 times in a row 
+// sends a small TQL script (just '12*12') to the local reflector by 
+// way of the eval() function
+//
+
+configIni = sysInfo("ini");
+
+timeOut = eval(configIni.sampleScripts.LOCAL_TIMEOUT_MS);
+
+feedBack = function(message) { 
+    stdOut(message + "\n"); 
+}
+
+feedBack("licenseCheck.tql");
+
+target = "tgh:///net.tightener.coordinator.licensemgr/default";
+
+feedBack("start");
+
+eval(
+    "12*12", 
+    target, 
+    function(callBackResult) 
+    { 
+        feedBack(callBackResult); 
+    }, 
+    timeOut);
+
+feedBack("done");
