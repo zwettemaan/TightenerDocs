@@ -1,34 +1,40 @@
-"${TIGHTENER_RELEASE_ROOT}SampleScripts/TestScripts/saveConfigMac"
-
 if [ "${TIGHTENER_RELEASE_ROOT}" = "" ]; then
     echo "\$TIGHTENER_RELEASE_ROOT has not been set up. Please follow instructions in README.md"
     exit
 fi
 
 if [ ! -d "${TIGHTENER_RELEASE_ROOT}" ]; then
-    echo "Directory \$TIGHTENER_RELEASE_ROOT does not exist. Please follow instructions in README.md"
     exit
 fi
 
 pushd "${HOME}/Library/Application Support" > /dev/null
 
-
 if [ ! -d "net.tightener" ]; then
-    mkdir "net.tightener"
+    exit
 fi
 
 if [ ! -d "net.tightener/SysConfig" ]; then
-    mkdir "net.tightener/SysConfig"
+    exit
 fi
 
 cd "net.tightener/SysConfig"
 
-if [ -e config.ini ]; then
-    rm config.ini
+if [ ! -e config.ini ]; then
+    exit
 fi
 
-cp "${TIGHTENER_RELEASE_ROOT}SampleScripts/TestScripts/config.ini" config.ini
+if [ -e "${TIGHTENER_RELEASE_ROOT}SampleScripts/TestScripts/savedConfig.ini" ]; then
+    exit
+fi
+
+if grep "isDebugConfig" config.ini; then
+    exit
+fi
+
+cp config.ini "${TIGHTENER_RELEASE_ROOT}SampleScripts/TestScripts/savedConfig.ini" 
+
+echo config.ini was saved
 
 popd > /dev/null
 
-echo debug config.ini was created
+

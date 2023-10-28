@@ -2,7 +2,7 @@ if [ -d "${TIGHTENER_LOCAL_DATA_ROOT}NamedPipes" ]; then
     ls -1 "${TIGHTENER_LOCAL_DATA_ROOT}NamedPipes" | while read PIPE_NAME; do rm "${TIGHTENER_LOCAL_DATA_ROOT}NamedPipes/${PIPE_NAME}"; done
 fi
 
-sleep 2
+sleep 1
 
 echo ""
 echo "Core Tightener Processes:"

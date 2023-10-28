@@ -1,4 +1,6 @@
-"${TIGHTENER_RELEASE_ROOT}SampleScripts/TestScripts/saveConfigLinux"
+if [ -e "${TIGHTENER_RELEASE_ROOT}SampleScripts/TestScripts/savedConfig.ini" ]; then
+    exit
+fi
 
 if [ "${TIGHTENER_RELEASE_ROOT}" = "" ]; then
     echo "\$TIGHTENER_RELEASE_ROOT has not been set up. Please follow instructions in README.md"
@@ -22,6 +24,7 @@ if [ -e "${HOME}/Library/Application Support/net.tightener/SysConfig/config.ini"
     rm "${HOME}/Library/Application Support/net.tightener/SysConfig/config.ini"
 fi
 
-cp "${TIGHTENER_RELEASE_ROOT}SampleScripts/TestScripts/config.ini" "${HOME}/Library/Application Support/net.tightener/SysConfig/config.ini"
+cp "${TIGHTENER_RELEASE_ROOT}SampleScripts/TestScripts/savedConfig.ini" "${HOME}/Library/Application Support/net.tightener/SysConfig/config.ini"
+rm "${TIGHTENER_RELEASE_ROOT}SampleScripts/TestScripts/savedConfig.ini"
 
-echo debug config.ini was created
+echo config.ini was restored

@@ -6,7 +6,6 @@ feedBack = function(message) {
 target = "tgh://127.0.0.1/reflector/default";
 
 timeOut_ms = 10000;
-result;
 
 script = <<EOF
 padding = "000000";
@@ -27,11 +26,12 @@ longString
 
 EOF
 
+result = "BEFORE";
 eval(
     script, 
     target, 
     function(callBackResult) 
-    {        
+    {    
         result = callBackResult;
     }, 
     timeOut_ms);

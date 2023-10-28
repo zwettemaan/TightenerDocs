@@ -27,6 +27,7 @@ longString
 
 EOF
 
+result = "BEFORE";
 eval(
     script, 
     target, 

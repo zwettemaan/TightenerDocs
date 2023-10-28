@@ -1,6 +1,6 @@
 @ECHO off
 
-CALL "%TIGHTENER_RELEASE_ROOT%SampleScripts\TestScripts\saveConfig.bat"
+IF NOT EXIST "%TIGHTENER_RELEASE_ROOT%SampleScripts\TestScripts\savedConfig.ini" GOTO DONE
 
 IF "%TIGHTENER_RELEASE_ROOT%" == "" GOTO ERROR_MISSING_RELEASE_ROOT
 IF NOT EXIST "%TIGHTENER_RELEASE_ROOT%" GOTO ERROR_NON_EXISTENT_RELEASE_ROOT
@@ -10,9 +10,10 @@ IF NOT EXIST "%APPDATA%\net.tightener\SysConfig" MD "%APPDATA%\net.tightener\Sys
 
 IF EXIST "%APPDATA%\net.tightener\SysConfig\config.ini" DEL "%APPDATA%\net.tightener\SysConfig\config.ini"
 
-COPY "%TIGHTENER_RELEASE_ROOT%SampleScripts\TestScripts\config.ini" "%APPDATA%\net.tightener\SysConfig\config.ini" > NUL 2>&1
+COPY "%TIGHTENER_RELEASE_ROOT%SampleScripts\TestScripts\savedConfig.ini" "%APPDATA%\net.tightener\SysConfig\config.ini" > NUL 2>&1
+DEL "%TIGHTENER_RELEASE_ROOT%SampleScripts\TestScripts\savedConfig.ini"
 
-ECHO debug config.ini was created
+ECHO config.ini was restored
 
 GOTO :DONE
 
