@@ -1,5 +1,0 @@
-if [ `uname` = "Darwin" ]; then
-    restoreConfigMac
-else
-    restoreConfigLinux
-fi

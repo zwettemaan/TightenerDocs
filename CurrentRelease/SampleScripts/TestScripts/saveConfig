@@ -1,5 +1,0 @@
-if [ `uname` = "Darwin" ]; then
-    saveConfigMac
-else
-    saveConfigLinux
-fi

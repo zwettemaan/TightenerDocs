@@ -18,8 +18,8 @@ if [ `uname` = "Darwin" ]; then
     fi
 
     ADJUSTED_FILE_LIST="~/.zshenv and ~/.profile"
-    "${TIGHTENER_SCRIPTS}/updateEnvironmentInProfile" ~/.zshenv "${TIGHTENER_RELEASE_ROOT}"
-    "${TIGHTENER_SCRIPTS}/updateEnvironmentInProfile" ~/.profile "${TIGHTENER_RELEASE_ROOT}"
+    "${TIGHTENER_SCRIPTS}updateEnvironmentInProfile" ~/.zshenv "${TIGHTENER_RELEASE_ROOT}"
+    "${TIGHTENER_SCRIPTS}updateEnvironmentInProfile" ~/.profile "${TIGHTENER_RELEASE_ROOT}"
 
     if [ ! -f "${TIGHTENER_SYSCONFIG_ROOT}config.ini" ]; then
         "${TIGHTENER_SCRIPTS}copyConfig"
@@ -40,8 +40,8 @@ else
     fi
 
     ADJUSTED_FILE_LIST="~/.bashrc and ~/.profile"
-    "${TIGHTENER_SCRIPTS}/updateEnvironmentInProfile" ~/.bashrc "${TIGHTENER_RELEASE_ROOT}"
-    "${TIGHTENER_SCRIPTS}/updateEnvironmentInProfile" ~/.profile "${TIGHTENER_RELEASE_ROOT}"
+    "${TIGHTENER_SCRIPTS}updateEnvironmentInProfile" ~/.bashrc "${TIGHTENER_RELEASE_ROOT}"
+    "${TIGHTENER_SCRIPTS}updateEnvironmentInProfile" ~/.profile "${TIGHTENER_RELEASE_ROOT}"
 
     if [ ! -f "${TIGHTENER_SYSCONFIG_ROOT}config.ini" ]; then
         "${TIGHTENER_SCRIPTS}copyConfig"

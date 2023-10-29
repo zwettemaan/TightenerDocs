@@ -1,5 +1,0 @@
-if [ `uname` = "Darwin" ]; then
-    linkDebugConfigMac
-else
-    linkDebugConfigLinux
-fi
