@@ -1,6 +1,6 @@
 ﻿// Uncomment some of these for debugging
 // var LOAD_DEBUG_TIGHTENER = 1;
-// var TIGHTENER_GIT_ROOT="C:\\Users\\Administrator\\Documents\\Controlled\\Rorohiko\\Tightener\\";
+// var TIGHTENER_GIT_ROOT="C:\\Users\\Administrator\\Documents\\Controlled\\Rorohiko\\TightenerComponents\\Tightener\\";
 // var TIGHTENER_GIT_ROOT="/Users/kris/Documents/Controlled/Rorohiko/TightenerComponents/Tightener/";
 
 // ------
@@ -8,8 +8,7 @@
 var LOAD_DEBUG_TIGHTENER;
 var TIGHTENER_GIT_ROOT;
 var TIGHTENER;
-var IS_LOG_OUTPUT_TO_ESTK_CONSOLE = false;
-var TIMESLICE_RUN_TO_COMPLETION = -2;
+var IS_LOG_OUTPUT_TO_ESTK_CONSOLE = true;
 
 if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
 
@@ -38,7 +37,6 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
 
             var lib32Filename = libFileName + x32Suffix + configSuffix + fileNameExtension;
             var lib64Filename = libFileName + x64Suffix + configSuffix + fileNameExtension;
-
 
             var libPath32 = undefined;
             var libPath64 = undefined;
@@ -351,12 +349,9 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             TIGHTENER.terminate = false;
             TIGHTENER.initialized = true;
         }
-
     }
 
-	// milliSeconds == -2 -> till completion
-
-    TIGHTENER.run = function(milliSeconds) {
+    TIGHTENER.run = function() {
 
         do {
 
@@ -364,11 +359,11 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
                 break;
             }
 
-            if (TIGHTENER.inRunLoop) {
+            if (TIGHTENER.inRun) {
                 break;
             }
 
-            TIGHTENER.inRunLoop = true;
+            TIGHTENER.inRun = true;
 
             try {
 
@@ -405,13 +400,12 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
 
                     advanceScriptQueue();
                 }
-
             }
             catch (err) {
                 TIGHTENER.lastError = err;
             }
 
-            TIGHTENER.inRunLoop = false;
+            TIGHTENER.inRun = false;
         }
         while (false);
 
@@ -569,29 +563,6 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             catch (err) {
                 TIGHTENER.lastError = err;
             }
-
-        }
-
-    }
-
-    TIGHTENER.exitRunLoop = function() {
-        TIGHTENER.exitRunLoop = true;
-    }
-
-    TIGHTENER.yield = function() {
-
-        if (! TIGHTENER.yielding) {
-
-            TIGHTENER.yielding = true;
-
-            try {
-                TIGHTENER.lib.tghTimeslice();
-            }
-            catch (err) {
-                TIGHTENER.lastError = err;
-            }
-
-            TIGHTENER.yielding = false;
         }
     }
 
