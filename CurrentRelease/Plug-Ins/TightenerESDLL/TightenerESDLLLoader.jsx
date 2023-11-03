@@ -14,11 +14,11 @@ var TIMESLICE_RUN_TO_COMPLETION = -2;
 if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
 
     TIGHTENER = function() {
-        
+
         var lib = undefined;
-        
+
         do {
-            
+
             var scriptFileName = $.global.TIGHTENER_SCRIPT_FILENAME_OVERRIDE;
             if (! scriptFileName) {
                 scriptFileName = $.fileName;
@@ -43,42 +43,42 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             var libPath32 = undefined;
             var libPath64 = undefined;
             if (isDebug) {
-                            
-                if (! TIGHTENER_GIT_ROOT) {   
+
+                if (! TIGHTENER_GIT_ROOT) {
                     TIGHTENER_GIT_ROOT = $.getenv("TIGHTENER_GIT_ROOT");
                 }
 
                 if (! TIGHTENER_GIT_ROOT) {
                     break;
                 }
-                        
+
                 TIGHTENER_GIT_ROOT = Folder(TIGHTENER_GIT_ROOT);
                 if (! TIGHTENER_GIT_ROOT.exists) {
                     break;
                 }
-            
+
                 var TIGHTENER_DLL_GIT_ROOT = Folder(TIGHTENER_GIT_ROOT.parent + "/TightenerDLL");
                 if (! TIGHTENER_DLL_GIT_ROOT.exists) {
                     break;
                 }
-                
+
                 if (isWin) {
-                    
+
                     // ESTK still works on Windows, so we still have use for a 32-bit version
 
                     var TIGHTENER_DLL_VISUALSTUDIO_ROOT = Folder(TIGHTENER_DLL_GIT_ROOT + "/VisualStudio");
                     if (! TIGHTENER_DLL_VISUALSTUDIO_ROOT.exists) {
                         break;
                     }
-                    
+
                     libPath32 = TIGHTENER_DLL_VISUALSTUDIO_ROOT.fsName + "/Compiled/Win32/ESDLLDebug/" + lib32Filename;
                     libPath64 = TIGHTENER_DLL_VISUALSTUDIO_ROOT.fsName + "/Compiled/x64/ESDLLDebug/" + lib64Filename;
                 }
                 else {
 
                     // No 32-bit version for Mac
-                    
-                    var TIGHTENER_DLL_XCODE_ROOT = Folder(TIGHTENER_DLL_GIT_ROOT + "/Xcode");            
+
+                    var TIGHTENER_DLL_XCODE_ROOT = Folder(TIGHTENER_DLL_GIT_ROOT + "/Xcode");
                     if (! TIGHTENER_DLL_XCODE_ROOT.exists) {
                         break;
                     }
@@ -90,28 +90,28 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
 
                 var TIGHTENER_RELEASE_ROOT = $.getenv("TIGHTENER_RELEASE_ROOT");
 
-                var TIGHTENER_RELEASE_ROOT = 
-                    TIGHTENER_RELEASE_ROOT ? 
-                        Folder(TIGHTENER_RELEASE_ROOT) : 
-                        undefined;
-
-                TIGHTENER_RELEASE_ROOT = 
-                    (TIGHTENER_RELEASE_ROOT && TIGHTENER_RELEASE_ROOT.exists) ? 
-                        TIGHTENER_RELEASE_ROOT : 
-                        undefined;
-
-                var TIGHTENER_ESDLL_PARENT = 
+                var TIGHTENER_RELEASE_ROOT =
                     TIGHTENER_RELEASE_ROOT ?
-                        Folder(TIGHTENER_RELEASE_ROOT + "/Plug-Ins/TightenerESDLL") : 
-                        undefined;                  
+                        Folder(TIGHTENER_RELEASE_ROOT) :
+                        undefined;
 
-                TIGHTENER_ESDLL_PARENT = 
-                    (TIGHTENER_ESDLL_PARENT && TIGHTENER_ESDLL_PARENT.exists) ? 
-                        TIGHTENER_ESDLL_PARENT : 
+                TIGHTENER_RELEASE_ROOT =
+                    (TIGHTENER_RELEASE_ROOT && TIGHTENER_RELEASE_ROOT.exists) ?
+                        TIGHTENER_RELEASE_ROOT :
+                        undefined;
+
+                var TIGHTENER_ESDLL_PARENT =
+                    TIGHTENER_RELEASE_ROOT ?
+                        Folder(TIGHTENER_RELEASE_ROOT + "/Plug-Ins/TightenerESDLL") :
+                        undefined;
+
+                TIGHTENER_ESDLL_PARENT =
+                    (TIGHTENER_ESDLL_PARENT && TIGHTENER_ESDLL_PARENT.exists) ?
+                        TIGHTENER_ESDLL_PARENT :
                         undefined;
 
                 if (TIGHTENER_ESDLL_PARENT) {
-                    if (isWin) {                            
+                    if (isWin) {
                         libPath32 = TIGHTENER_ESDLL_PARENT.fsName + "/win32/" + lib32Filename;
                         if (! File(libPath32).exists) {
                             libPath32 = undefined;
@@ -120,18 +120,18 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
                         libPath64 = TIGHTENER_ESDLL_PARENT.fsName + "/win64/" + lib64Filename;
                         if (! File(libPath64).exists) {
                             libPath64 = undefined;
-                        }                    
+                        }
                     }
-                    else {                        
+                    else {
                         libPath64 = TIGHTENER_ESDLL_PARENT.fsName + "/mac64/" + lib64Filename;
                         if (! File(libPath64).exists) {
                             libPath64 = undefined;
-                        }                    
+                        }
                     }
                 }
 
                 if (! libPath32) {
-                    if (isWin) {                        
+                    if (isWin) {
                         libPath32 = Folder.current.fsName + "/win32/" + lib32Filename;
                         if (! File(libPath32).exists) {
                             libPath32 = undefined;
@@ -146,15 +146,15 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
                             libPath64 = undefined;
                         }
                     }
-                    else {                        
+                    else {
                         libPath64 = Folder.current.fsName + "/mac64/" + lib64Filename;
                         if (! File(libPath64).exists) {
                             libPath64 = undefined;
                         }
-                    }                
-                }            
+                    }
+                }
             }
-             
+
             function tryLib(libPath) {
 
                 var file = new File(libPath);
@@ -168,7 +168,7 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
                     if (! lib && isWin) {
 
                         try {
-                            
+
                             var tempFolder = Folder(Folder.temp + "/TIGHTENERTemp");
                             if (! tempFolder.exists) {
                                 tempFolder.create();
@@ -178,15 +178,15 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
                                 tempFile.remove();
                             }
 
-                            file.copy(tempFile);    
+                            file.copy(tempFile);
 
                             if (tempFile.exists) {
                                 lib = new ExternalObject("lib:" + tempFile.fsName);
-                            }                    
+                            }
                         }
                         catch (err) {
-                        }                
-                        
+                        }
+
                     }
                 }
                 return lib;
@@ -195,9 +195,9 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             // Use previously loaded lib, if any
             lib = TIGHTENER.lib;
             if (! lib) {
-                lib = tryLib(libPath64);  
+                lib = tryLib(libPath64);
                 if (! lib && libPath32) {
-                    lib = tryLib(libPath32);  
+                    lib = tryLib(libPath32);
                 }
                 TIGHTENER.lib = lib;
             }
@@ -231,7 +231,7 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             TIGHTENER.lib.tghRegisterLocalHostName(hostName);
         }
         catch (err) {
-            TIGHTENER.lastError = err;       
+            TIGHTENER.lastError = err;
         }
 
     }
@@ -241,8 +241,8 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
         try {
             TIGHTENER.lib.tghRelayHostMessage(hostName, message);
         }
-        catch (err) {            
-            TIGHTENER.lastError = err;       
+        catch (err) {
+            TIGHTENER.lastError = err;
         }
 
     }
@@ -293,7 +293,7 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
                 retVal = "[";
 
                 var separator = "";
-                for (var idx = 0; idx < data.length; idx++) {                    
+                for (var idx = 0; idx < data.length; idx++) {
                     retVal += separator + TIGHTENER.stringize(data[idx]);
                     if (! separator) {
                         separator = ",";
@@ -307,7 +307,7 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             retVal = "{";
 
             var separator = "";
-            for (var attr in data) {                    
+            for (var attr in data) {
                 retVal += separator + TIGHTENER.dQ(attr) + ":" + TIGHTENER.stringize(data[attr]);
                 if (! separator) {
                     separator = ",";
@@ -327,8 +327,8 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
         try {
             TIGHTENER.lib.tghShutdown();
         }
-        catch (err) {            
-            TIGHTENER.lastError = err;       
+        catch (err) {
+            TIGHTENER.lastError = err;
         }
 
     }
@@ -344,8 +344,8 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             try {
                 TIGHTENER.lib.tghInit(coordinatorName);
             }
-            catch (err) {  
-                TIGHTENER.lastError = err;       
+            catch (err) {
+                TIGHTENER.lastError = err;
             }
 
             TIGHTENER.terminate = false;
@@ -355,7 +355,7 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
     }
 
 	// milliSeconds == -2 -> till completion
-	
+
     TIGHTENER.run = function(milliSeconds) {
 
         do {
@@ -369,70 +369,46 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             }
 
             TIGHTENER.inRunLoop = true;
-            TIGHTENER.exitRunLoop = false;
 
             try {
-                var runTimeMicroseconds = -2;
-                if (milliSeconds > 0) {
-                	runTimeMicroseconds = milliSeconds * 1000;
+
+                while (getLogMessageQueueSize()) {
+                    if (IS_LOG_OUTPUT_TO_ESTK_CONSOLE && app.name == "ExtendScript Toolkit") {
+                        var message = getLogMessage();
+                        $.writeln(message);
+                    }
+                    advanceLogMessageQueue();
                 }
-                var totalMicroseconds = 0;
 
-                $.hiresTimer;
+                while (getHostMessageQueueSize()) {
+                    // Throw messages in the bit bucket - we're not writing
+                    // a gateway in ExtendScript
+                    advanceHostMessageQueue();
+                }
 
-                while (
-                	! TIGHTENER.exitRunLoop 
-                && 
-                	(
-                		runTimeMicroseconds == TIMESLICE_RUN_TO_COMPLETION 
-                	|| 
-                		totalMicroseconds == 0 
-                	|| 
-                		totalMicroseconds < runTimeMicroseconds
-                	)
-                ) {
+                if (getScriptQueueSize()) {
 
-                    TIGHTENER.lib.tghTimeslice();
-
-                    while (getLogMessageQueueSize()) {
-                        if (IS_LOG_OUTPUT_TO_ESTK_CONSOLE && app.name == "ExtendScript Toolkit") {
-                            var message = getLogMessage();
-                            $.writeln(message);
-                        }
-                        advanceLogMessageQueue();
-                    }
-
-                    while (getHostMessageQueueSize()) {
-                        // Throw messages in the bit bucket - we're not writing 
-                        // a gateway in ExtendScript
-                        advanceHostMessageQueue();
-                    }
-
-                    if (getScriptQueueSize()) {
-
-                        var script = getScript();
-                        var result = undefined;
+                    var script = getScript();
+                    var result = undefined;
+                    var error = undefined;
+                    if (script) {
                         var error = undefined;
-                        if (script) {
-                            var error = undefined;
-                            try {
-                                result = eval(script);
-                            }
-                            catch (err) { 
-                                error = err;                           
-                            }
+                        try {
+                            result = eval(script);
                         }
-
-                        reportScriptCompleted(error, result);
-
-                        advanceScriptQueue();
+                        catch (err) {
+                            error = err;
+                        }
                     }
 
-                    totalMicroseconds += $.hiresTimer;
+                    reportScriptCompleted(error, result);
+
+                    advanceScriptQueue();
                 }
+
             }
-            catch (err) {                
-                TIGHTENER.lastError = err;       
+            catch (err) {
+                TIGHTENER.lastError = err;
             }
 
             TIGHTENER.inRunLoop = false;
@@ -444,8 +420,8 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             try {
                 TIGHTENER.lib.tghAdvanceHostMessageQueue();
             }
-            catch (err) {            
-                TIGHTENER.lastError = err;       
+            catch (err) {
+                TIGHTENER.lastError = err;
             }
 
         };
@@ -455,8 +431,8 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             try {
                 TIGHTENER.lib.tghAdvanceLogMessageQueue();
             }
-            catch (err) {            
-                TIGHTENER.lastError = err;       
+            catch (err) {
+                TIGHTENER.lastError = err;
             }
 
         };
@@ -466,8 +442,8 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             try {
                 TIGHTENER.lib.tghAdvanceScriptQueue();
             }
-            catch (err) {            
-                TIGHTENER.lastError = err;       
+            catch (err) {
+                TIGHTENER.lastError = err;
             }
 
         };
@@ -479,8 +455,8 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             try {
                 retVal = TIGHTENER.lib.tghGetHostMessage();
             }
-            catch (err) {            
-                TIGHTENER.lastError = err;       
+            catch (err) {
+                TIGHTENER.lastError = err;
                 retVal = undefined;
             }
 
@@ -494,8 +470,8 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             try {
                 retVal = TIGHTENER.lib.tghGetHostMessageQueueSize();
             }
-            catch (err) {            
-                TIGHTENER.lastError = err;       
+            catch (err) {
+                TIGHTENER.lastError = err;
                 retVal = 0;
             }
 
@@ -509,8 +485,8 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             try {
                 retVal = TIGHTENER.lib.tghGetHostMessageTargetHost();
             }
-            catch (err) {            
-                TIGHTENER.lastError = err;       
+            catch (err) {
+                TIGHTENER.lastError = err;
                 retVal = undefined;
             }
 
@@ -524,8 +500,8 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             try {
                 retVal = TIGHTENER.lib.tghGetLogMessage();
             }
-            catch (err) {            
-                TIGHTENER.lastError = err;       
+            catch (err) {
+                TIGHTENER.lastError = err;
                 retVal = undefined;
             }
 
@@ -539,8 +515,8 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             try {
                 retVal = TIGHTENER.lib.tghGetLogMessageQueueSize();
             }
-            catch (err) {            
-                TIGHTENER.lastError = err;       
+            catch (err) {
+                TIGHTENER.lastError = err;
                 retVal = 0;
             }
 
@@ -555,8 +531,8 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             try {
                 retVal = TIGHTENER.lib.tghGetScript();
             }
-            catch (err) {            
-                TIGHTENER.lastError = err;       
+            catch (err) {
+                TIGHTENER.lastError = err;
                 retVal = undefined;
             }
 
@@ -570,8 +546,8 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             try {
                 retVal = TIGHTENER.lib.tghGetScriptQueueSize();
             }
-            catch (err) {            
-                TIGHTENER.lastError = err;       
+            catch (err) {
+                TIGHTENER.lastError = err;
                 retVal = 0;
             }
 
@@ -587,11 +563,11 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
                 }
 
                 TIGHTENER.lib.tghReportScriptCompleted(
-                    TIGHTENER.stringize(error), 
+                    TIGHTENER.stringize(error),
                     TIGHTENER.stringize(result));
             }
-            catch (err) {            
-                TIGHTENER.lastError = err;       
+            catch (err) {
+                TIGHTENER.lastError = err;
             }
 
         }
@@ -603,7 +579,7 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
     }
 
     TIGHTENER.yield = function() {
-        
+
         if (! TIGHTENER.yielding) {
 
             TIGHTENER.yielding = true;
@@ -611,8 +587,8 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             try {
                 TIGHTENER.lib.tghTimeslice();
             }
-            catch (err) {                
-                TIGHTENER.lastError = err;       
+            catch (err) {
+                TIGHTENER.lastError = err;
             }
 
             TIGHTENER.yielding = false;
@@ -626,9 +602,8 @@ try {
         $.global.TIGHTENER = TIGHTENER;
     }
 }
-catch (err) {                
-    TIGHTENER.lastError = err;       
+catch (err) {
+    TIGHTENER.lastError = err;
 }
 
 TIGHTENER;
-
