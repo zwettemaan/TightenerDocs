@@ -26,6 +26,16 @@ cd ".net.tightener/net.tightener/SysConfig"
 
 rm -f config.ini
 
+export PLATFORM=`uname -m`
+if [ "${PLATFORM}" == "aarch64" ]; then
+    export TIGHTENER_APPS_PLATFORM="Linux arm64"
+elif [ "${PLATFORM}" == "x86_64" ]; then
+    export TIGHTENER_APPS_PLATFORM="Linux x86_64"
+else
+    echo "Unexpected platform ${PLATFORM}"
+    exit
+fi
+
 cat > config.ini <<EOF
 #
 # Placeholders added by 'copyConfig'
@@ -35,6 +45,7 @@ cat > config.ini <<EOF
 
 TIGHTENER_RELEASE_ROOT = "${TIGHTENER_RELEASE_ROOT}"
 TIGHTENER_BINARIES = "${TIGHTENER_BINARIES}"
+TIGHTENER_APPS_PLATFORM = "${TIGHTENER_APPS_PLATFORM}"
 
 EOF
 

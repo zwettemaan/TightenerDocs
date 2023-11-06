@@ -27,6 +27,7 @@ cat > "${HOME}/Library/Application Support/net.tightener/SysConfig/config.ini" <
 
 TIGHTENER_RELEASE_ROOT = "${TIGHTENER_RELEASE_ROOT}"
 TIGHTENER_BINARIES = "${TIGHTENER_BINARIES}"
+TIGHTENER_APPS_PLATFORM = "macOS Universal"
 
 EOF
 
