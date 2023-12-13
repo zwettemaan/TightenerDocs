@@ -1,7 +1,7 @@
 ﻿// Uncomment some of these for debugging
-var LOAD_DEBUG_TIGHTENER = 1;
+// var LOAD_DEBUG_TIGHTENER = 1;
 // var TIGHTENER_GIT_ROOT="C:\\Users\\Administrator\\Documents\\Controlled\\Rorohiko\\TightenerComponents\\Tightener\\";
-var TIGHTENER_GIT_ROOT="/Users/kris/Documents/Controlled/Rorohiko/TightenerComponents/Tightener/";
+// var TIGHTENER_GIT_ROOT="/Users/kris/Documents/Controlled/Rorohiko/TightenerComponents/Tightener/";
 
 // ------
 
