@@ -6,15 +6,15 @@
 	<dict>
 		<key>Resources/Info.plist</key>
 		<data>
-		ACYe1QKrrJ22rS8HgjQrZCthwq8=
+		Cei8IkdpeZX1PL28d9NuPXTewvE=
+		</data>
+		<key>Resources/TghIDSN.fr.rsrc</key>
+		<data>
+		8TXKEazb4n9vpRKfFblc4eEsEOc=
 		</data>
 		<key>Resources/TghIDSN.rc</key>
 		<data>
 		upK95QIeD8llXsKTudjKIWwFQNQ=
-		</data>
-		<key>Resources/TightenerServer.rsrc</key>
-		<data>
-		8TXKEazb4n9vpRKfFblc4eEsEOc=
 		</data>
 		<key>Resources/idrc_CLST/500.idrc</key>
 		<data>
@@ -59,7 +59,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			x2SjBYG712U7XlxVWJQ3PcboM5A5hWNpzzo9dgrtjr8=
+			fUfzfJG0X+WbSEB3O5ktZk+/2dMOumfaXCg4zzuRUw0=
+			</data>
+		</dict>
+		<key>Resources/TghIDSN.fr.rsrc</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			QNyBYV4MMbLk/mU6PBpB5QUw3PZKSyQo/4rmtXcIY7Y=
 			</data>
 		</dict>
 		<key>Resources/TghIDSN.rc</key>
@@ -67,13 +74,6 @@
 			<key>hash2</key>
 			<data>
 			n19BZnnPq+hR7W6r3sAWpfzW0lo9ggiAwd2aq4bHiAg=
-			</data>
-		</dict>
-		<key>Resources/TightenerServer.rsrc</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			QNyBYV4MMbLk/mU6PBpB5QUw3PZKSyQo/4rmtXcIY7Y=
 			</data>
 		</dict>
 		<key>Resources/idrc_CLST/500.idrc</key>
