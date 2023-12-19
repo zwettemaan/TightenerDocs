@@ -1,3 +1,3 @@
-# README.md
+# CEP
 
-Placeholder file, and possibly notes
+This directory contains the Tightener CEP tools (daemon panel)

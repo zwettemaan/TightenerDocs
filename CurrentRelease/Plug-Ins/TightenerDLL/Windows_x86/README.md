@@ -1,3 +1,3 @@
-# README.md
+# Windows_x86
 
-Placeholder file, and possibly notes
+This directory contains the Tightener dll for 32-bit Windows

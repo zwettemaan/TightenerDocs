@@ -1,3 +1,3 @@
-# README.md
+# Linux
 
-Placeholder file, and possibly notes
+This directory contains the Linux 64 bit Intel versions of some Tightener command line tools

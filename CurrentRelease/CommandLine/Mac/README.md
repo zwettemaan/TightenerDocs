@@ -1,3 +1,3 @@
-# README.md
+# Mac
 
-Placeholder file, and possibly notes
+This directory contains the MacOS Universal versions of some Tightener command line tools

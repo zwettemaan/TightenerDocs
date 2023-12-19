@@ -1,3 +1,3 @@
-# README.md
+# ARM64
 
-Placeholder file, and possibly notes
+This directory contains the Windows ARM64 version of the ExtendScript DLL

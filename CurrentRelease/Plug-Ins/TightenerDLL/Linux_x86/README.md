@@ -1,3 +1,3 @@
-# README.md
+# Linux_x86
 
-Placeholder file, and possibly notes
+This directory contains the Tightener dll for Linux 32-bit Intel

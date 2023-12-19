@@ -1,3 +1,3 @@
-# README.md
+# Mac Universal
 
-Placeholder file, and possibly notes
+This directory contains the Tightener dll for Mac OS Universal

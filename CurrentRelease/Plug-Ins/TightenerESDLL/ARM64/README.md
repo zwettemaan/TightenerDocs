@@ -1,3 +1,3 @@
-# README.md
+# ARM64
 
-Placeholder file, and possibly notes
+This directory contains the Tightener ExtendScript DLL for 64-bit ARM Windows

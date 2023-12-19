@@ -1,3 +1,3 @@
-# README.md
+# win32
 
-Placeholder file, and possibly notes
+This directory contains the Tightener ExtendScript DLL for 32-bit Windows

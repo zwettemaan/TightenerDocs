@@ -1,3 +1,3 @@
-# README.md
+# win32
 
-Placeholder file, and possibly notes
+This directory contains the Windows 32-bit version of the ExtendScript DLL

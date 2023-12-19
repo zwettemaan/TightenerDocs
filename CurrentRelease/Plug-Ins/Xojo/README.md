@@ -1,3 +1,3 @@
-# README.md
+# Xojo
 
-Placeholder file, and possibly notes
+This directory contains the Tightener Xojo plugin
