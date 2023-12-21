@@ -1,0 +1,13 @@
+. "${TIGHTENER_SCRIPTS}/idSetEnv"
+
+export PLATFORM=`uname -m`
+if [ "${PLATFORM}" == "aarch64" ]; then
+    export TIGHTENER_APPS_PLATFORM="Linux arm64"
+elif [ "${PLATFORM}" == "x86_64" ]; then
+    export TIGHTENER_APPS_PLATFORM="Linux x86_64"
+else
+    echo "Unexpected platform ${PLATFORM}"
+    exit
+fi
+
+"${TIGHTENER_RELEASE_ROOT}/Apps/${TIGHTENER_APPS_PLATFORM}/LicenseManager/LicenseManager"
