@@ -79,3 +79,8 @@ alias cd_settings="cd \"${TIGHTENER_LOCAL_DATA_ROOT}\""
 alias cd_tightener="cd \"${TIGHTENER_RELEASE_ROOT}\""
 alias cd_samples="cd \"${TIGHTENER_RELEASE_ROOT}/SampleScripts\""
 alias cd_scripts="cd \"${TIGHTENER_RELEASE_ROOT}/CommandLine/Scripts\""
+
+alias view_settings="nautilus \"${TIGHTENER_LOCAL_DATA_ROOT}\""
+alias view_tightener="nautilus \"${TIGHTENER_RELEASE_ROOT}\""
+alias view_samples="nautilus \"${TIGHTENER_RELEASE_ROOT}/SampleScripts\""
+alias view_scripts="nautilus \"${TIGHTENER_RELEASE_ROOT}/CommandLine/Scripts\""
