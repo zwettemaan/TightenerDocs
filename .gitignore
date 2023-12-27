@@ -42,9 +42,9 @@ CONERR$
 /CurrentRelease/Plug-Ins/TightenerDLL/Windows_ARM64/TightenerDLL.dll
 /CurrentRelease/Plug-Ins/TightenerDLL/Windows_x64/TightenerDLL.dll
 /CurrentRelease/Plug-Ins/TightenerDLL/Windows_x86/TightenerDLL.dll
-/CurrentRelease/Plug-Ins/TightenerESDLL/ARM64/TightenerESDLL_ARM64R.dll
-/CurrentRelease/Plug-Ins/TightenerESDLL/mac64/TightenerESDLL_x64R.framework/
-/CurrentRelease/Plug-Ins/TightenerESDLL/win32/TightenerESDLL_x32R.dll
-/CurrentRelease/Plug-Ins/TightenerESDLL/win64/TightenerESDLL_x64R.dll
+/CurrentRelease/Plug-Ins/TightenerESDLL/lib/ARM64/TightenerESDLL_ARM64R.dll
+/CurrentRelease/Plug-Ins/TightenerESDLL/lib/mac64/TightenerESDLL_x64R.framework/
+/CurrentRelease/Plug-Ins/TightenerESDLL/lib/win32/TightenerESDLL_x32R.dll
+/CurrentRelease/Plug-Ins/TightenerESDLL/lib/win64/TightenerESDLL_x64R.dll
 /CurrentRelease/Plug-Ins/Xojo/XojoTightener.xojo_plugin
 /CurrentRelease/VERSION.txt
