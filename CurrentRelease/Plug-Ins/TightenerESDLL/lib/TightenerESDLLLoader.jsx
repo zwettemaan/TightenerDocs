@@ -8,7 +8,6 @@
 var LOAD_DEBUG_TIGHTENER;
 var TIGHTENER_GIT_ROOT;
 var TIGHTENER;
-var JSXGetURL;
 var IS_LOG_OUTPUT_TO_ESTK_CONSOLE = true;
 
 if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
@@ -99,30 +98,30 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
                         TIGHTENER_RELEASE_ROOT :
                         undefined;
 
-                var TIGHTENER_ESDLL_PARENT =
+                var TIGHTENER_ESDLL_LIB =
                     TIGHTENER_RELEASE_ROOT ?
-                        Folder(TIGHTENER_RELEASE_ROOT + "/Plug-Ins/TightenerESDLL") :
+                        Folder(TIGHTENER_RELEASE_ROOT + "/Plug-Ins/TightenerESDLL/lib") :
                         undefined;
 
-                TIGHTENER_ESDLL_PARENT =
-                    (TIGHTENER_ESDLL_PARENT && TIGHTENER_ESDLL_PARENT.exists) ?
-                        TIGHTENER_ESDLL_PARENT :
+                TIGHTENER_ESDLL_LIB =
+                    (TIGHTENER_ESDLL_LIB && TIGHTENER_ESDLL_LIB.exists) ?
+                        TIGHTENER_ESDLL_LIB :
                         undefined;
 
-                if (TIGHTENER_ESDLL_PARENT) {
+                if (TIGHTENER_ESDLL_LIB) {
                     if (isWin) {
-                        libPath32 = TIGHTENER_ESDLL_PARENT.fsName + "/win32/" + lib32Filename;
+                        libPath32 = TIGHTENER_ESDLL_LIB.fsName + "/win32/" + lib32Filename;
                         if (! File(libPath32).exists) {
                             libPath32 = undefined;
                         }
 
-                        libPath64 = TIGHTENER_ESDLL_PARENT.fsName + "/win64/" + lib64Filename;
+                        libPath64 = TIGHTENER_ESDLL_LIB.fsName + "/win64/" + lib64Filename;
                         if (! File(libPath64).exists) {
                             libPath64 = undefined;
                         }
                     }
                     else {
-                        libPath64 = TIGHTENER_ESDLL_PARENT.fsName + "/mac64/" + lib64Filename;
+                        libPath64 = TIGHTENER_ESDLL_LIB.fsName + "/mac64/" + lib64Filename;
                         if (! File(libPath64).exists) {
                             libPath64 = undefined;
                         }
@@ -518,7 +517,6 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             return retVal;
         }
 
-
         function getScript() {
 
             var retVal = undefined;
@@ -578,6 +576,4 @@ catch (err) {
     TIGHTENER.lastError = err;
 }
 
-// JSXGetURL is now embedded in Tightener. Provide alternate reference for compatibility
-JSXGetURL = TIGHTENER;
 TIGHTENER;
