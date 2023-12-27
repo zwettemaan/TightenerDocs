@@ -8,6 +8,7 @@
 var LOAD_DEBUG_TIGHTENER;
 var TIGHTENER_GIT_ROOT;
 var TIGHTENER;
+var JSXGetURL;
 var IS_LOG_OUTPUT_TO_ESTK_CONSOLE = true;
 
 if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
@@ -577,4 +578,6 @@ catch (err) {
     TIGHTENER.lastError = err;
 }
 
+// JSXGetURL is now embedded in Tightener. Provide alternate reference for compatibility
+JSXGetURL = TIGHTENER;
 TIGHTENER;
