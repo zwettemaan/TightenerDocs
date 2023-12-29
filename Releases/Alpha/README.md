@@ -2,6 +2,21 @@
 
 # Alpha Releases
 
+## Version 0.1.2
+
+Eighth alpha release, 30-Dec-2023
+
+https://cloud.rorohiko.com/index.php/s/mWY2fRd8Ar20n1z
+
+This version adds support for activation and licensing. There is a new app
+called 'LicenseManager' in the Apps subfolder. This app has two modes:
+- User mode: allow users to register, send purchase orders to suppliers, and
+  handle activations of softwares on their computers.
+- Developer/Supplier mode: allow developers to register, add products to their
+  catalog and sell their software. I still need to document all this, but essentially,
+  the scripting languages like TQL and ExtendScript gain two new functions: `machineGUID()` and
+  `getCapability()`.
+
 ## Version 0.1.1
 
 Seventh alpha release, 6-Nov-2023
