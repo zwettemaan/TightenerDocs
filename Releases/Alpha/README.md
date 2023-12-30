@@ -6,7 +6,7 @@
 
 Eighth alpha release, 30-Dec-2023
 
-https://cloud.rorohiko.com/index.php/s/mWY2fRd8Ar20n1z
+https://cloud.rorohiko.com/index.php/s/lsAYkvo8p0BW8Yt
 
 This version adds support for activation and licensing. There is a new app
 called 'LicenseManager' in the Apps subfolder. This app has two modes:
