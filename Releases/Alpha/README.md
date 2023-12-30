@@ -10,12 +10,16 @@ https://cloud.rorohiko.com/index.php/s/lsAYkvo8p0BW8Yt
 
 This version adds support for activation and licensing. There is a new app
 called 'LicenseManager' in the Apps subfolder. This app has two modes:
-- User mode: allow users to register, send purchase orders to suppliers, and
+- Standard mode: allow users to register, send purchase orders to suppliers, and
   handle activations of softwares on their computers.
 - Developer/Supplier mode: allow developers to register, add products to their
   catalog and sell their software. I still need to document all this, but essentially,
   the scripting languages like TQL and ExtendScript gain two new functions: `machineGUID()` and
   `getCapability()`.
+
+You can also download the License Manager here:
+
+https://shop.tgrg.net/
 
 ## Version 0.1.1
 
