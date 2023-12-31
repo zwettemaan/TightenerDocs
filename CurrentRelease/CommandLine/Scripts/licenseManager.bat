@@ -4,12 +4,4 @@ CALL "%TIGHTENER_SCRIPTS%idSetEnv.bat"
 
 CD "%TIGHTENER_RELEASE_ROOT%"
 
-IF "%PROCESSOR_ARCHITECTURE%" == "ARM64" (
-    SET TIGHTENER_APPS_PLATFORM=Windows arm64
-) ELSE (
-    SET TIGHTENER_APPS_PLATFORM=Windows x86_64
-)
-
-CD "Apps\%TIGHTENER_APPS_PLATFORM%\LicenseManager"
-
-.\LicenseManager.exe
+rt CommandLine\Scripts\licenseManager.tql
