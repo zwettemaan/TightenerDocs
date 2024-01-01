@@ -1,5 +1,5 @@
-if [ `uname` = "Darwin" ]; then
-    licenseManagerMac
-else
-    licenseManagerLinux
-fi
+. "${TIGHTENER_SCRIPTS}/idSetEnv"
+
+cd "${TIGHTENER_RELEASE_ROOT}"
+
+rt CommandLine/Scripts/licenseManager.tql

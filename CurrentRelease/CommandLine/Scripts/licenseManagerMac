@@ -1,3 +1,0 @@
-. "${TIGHTENER_SCRIPTS}/idSetEnv"
-
-open "${TIGHTENER_RELEASE_ROOT}/Apps/macOS Universal/LicenseManager.app"
