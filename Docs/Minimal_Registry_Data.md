@@ -1,0 +1,1 @@
+# Minimal Registry Data
