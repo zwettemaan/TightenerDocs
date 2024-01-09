@@ -1,5 +1,11 @@
 # Documentation
 
+## Installing
+
+[User Install](Installing/User_Install.md)
+
+[Developer Install](Installing/Developer_Install.md)
+
 ## Aspects
 
 [Automation Glue](Aspects/Automation_Glue.md)

@@ -19,7 +19,7 @@ called 'LicenseManager' in the Apps subfolder. This app has two modes:
 
 You can also download the License Manager here:
 
-https://shop.tgrg.net/
+https://store.tgrg.net/
 
 ## Version 0.1.1
 
