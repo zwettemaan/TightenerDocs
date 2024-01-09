@@ -1,8 +1,8 @@
 # copyConfig
 
-This script will overwrite the Tightener config file in the settings directory. Any changes made to the config.ini will be obliterated.
+This script will overwrite the Tightener config file in the settings directory. Any changes made to the `config.ini` will be obliterated.
 
-Also see `editConfig`.
+Also see [`editConfig`](editConfig.md) and [`cd_settings`](cd_settings.md)
 
 The 'active' config file is overwritten by a concatenation of some local settings, and a copy of the `config.ini` file in the `<root>/Config/config.ini`
 
