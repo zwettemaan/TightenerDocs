@@ -22,7 +22,7 @@
 
 [Payment Handler](Aspects/No_Payment_Handler.md)
 
-[Tightener_Versioning](Aspects/Tightener_Versioning.md)
+[Tightener Versioning](Aspects/Tightener_Versioning.md)
 
 [Unique Machine GUID](Aspects/Unique_Machine_GUID.md)
 
@@ -31,3 +31,7 @@
 [Why is Tightener?](Aspects/Why_is_Tightener.md)
 
 [XojoTightener](Aspects/XojoTightener.md)
+
+## Commands
+
+[Commands](Commands/index.md)
