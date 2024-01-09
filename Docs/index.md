@@ -2,4 +2,4 @@
 
 ## Aspects
 
-(Automation Glue)[Aspects/Automation_Glue.md]
+[Automation Glue](Aspects/Automation_Glue.md)
