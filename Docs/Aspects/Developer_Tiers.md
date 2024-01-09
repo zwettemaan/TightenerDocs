@@ -15,10 +15,10 @@ Some rough classifications:
 
 Charities and not-for-profits should be fairly obvious.
 
-Small developers are one- or two-man bands, who don't do development as their main source of income. 
+Small developers are one- or two-man bands, who don't have their software development business as their main source of income. 
 
-Medium developers are companies with two or more people, who have an established business and make a living with their company
+Medium developers are companies with two or more people, who have an established business and make a living from the profits of their company.
 
-Large developers are companies with five or more people who have a revenue over US$ 1,000,000 per year.
+Large developers are companies with ten or more people who have a revenue around US$ 2,000,000 per year or more.
 
 A developer classification is reviewed every year, and our aim is to generate an upward momentum, so small developers become medium developers, and so on...
