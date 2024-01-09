@@ -4,9 +4,9 @@
 
 ## Version 0.1.2
 
-Eighth alpha release, 31-Dec-2023, build 283
+Eighth alpha release, 1-Jan-2024, build 284
 
-https://cloud.rorohiko.com/index.php/s/QlxCJc4yNVacSeX
+https://cloud.rorohiko.com/index.php/s/TcQIxNniZ5zxOCV
 
 This version adds support for activation and licensing. There is a new app
 called 'LicenseManager' in the Apps subfolder. This app has two modes:
