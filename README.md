@@ -1,5 +1,9 @@
 # TightenerDocs
 
+## Documentation (work in progress)
+
+[Index](https://github.com/zwettemaan/TightenerDocs/blob/main/Docs/index.md)
+
 ## Installing Tightener
 
 * For a stable alpha version, find your download here:
