@@ -27,9 +27,15 @@ if [ `uname` = "Darwin" ]; then
         ./idPluginRemoveAll
 
         echo ""
-        echo "Removing Tightener preferences"
-        rm -rf ~/"Library/Application Support/net.tightener"
-
+        echo "Removing Tightener preferences."
+        if [ -d ~/"Library/Application Support/net.tightener/Licensing" ]; then
+            echo "Retaining ~/Library/Application Support/net.tightener/Licensing - need to delete manually"
+            cd ~/"Library/Application Support/net.tightener"
+            find . -maxdepth 1 -type d -not -name '.' -not -name '..' -not -name 'Licensing' -print0 | xargs -0 rm -rf --
+        else
+            rm -rf ~/"Library/Application Support/net.tightener"
+        fi
+        
     fi
 
 else
@@ -39,10 +45,17 @@ else
     ./clearEnvironmentInProfile ~/.profile
 
     if [ "$1" == "all" ]; then
+
         echo ""
-        echo "Removing Tightener preferences"
-        echo ""
-        rm -rf "~/Library/Application Support/net.tightener"
+        echo "Removing Tightener preferences."
+
+        if [ -d ~/.net.tightener/net.tightener/Licensing ]; then
+            echo "Retaining ~/.net.tightener/net.tightener/Licensing - need to delete manually"
+            cd ~/.net.tightener/net.tightener
+            find . -maxdepth 1 -type d -not -name '.' -not -name '..' -not -name 'Licensing' -print0 | xargs -0 rm -rf --
+        else
+            rm -rf ~/.net.tightener/net.tightener
+        fi
     fi
 
 fi
