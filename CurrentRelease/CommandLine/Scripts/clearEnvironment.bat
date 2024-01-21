@@ -57,7 +57,12 @@ IF "%1" == "all" (
 
     ECHO.
     ECHO Deleting Tightener preferences
-    RMDIR /S /Q %APPDATA%\net.tightener >NUL 2>&1
+    ECHO %APPDATA%\net.tightener\Licensing needs to be manually deleted
+    
+    RMDIR /S /Q %APPDATA%\net.tightener\Logs >NUL 2>&1
+    RMDIR /S /Q %APPDATA%\net.tightener\SessionData >NUL 2>&1
+    RMDIR /S /Q %APPDATA%\net.tightener\NamedPipes >NUL 2>&1
+    RMDIR /S /Q %APPDATA%\net.tightener\SysConfig >NUL 2>&1
 
 ) ELSE (
     SETX > NUL USER_PATH_SAVED_BY_TIGHTENER_UNINSTALLER "!USER_PATH_SAVED_BY_TIGHTENER_UNINSTALLER!
