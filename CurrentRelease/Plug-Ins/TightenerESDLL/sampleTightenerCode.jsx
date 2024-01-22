@@ -4,7 +4,7 @@ TIGHTENER.init();
 
 TIGHTENER.lib.tghInit('ESDLLSampleCoordinator');
 
-alert("Machine GUID = " + TIGHTENER.lib.getMachineGUID());
+alert("Machine GUID = " + TIGHTENER.lib.machineGUID());
 
 var e = TIGHTENER.lib.encryptStr("Hello World", "mykey");
 alert("Encrypted string = " + e);
