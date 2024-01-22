@@ -14,7 +14,7 @@ Tightener can run as a daemon and run a little local HTTPS server on
 ```
 https://localhost.tgrg.net:18888
 ```
-This resolves to 127.0.0.1 and can be accesed by the `fetch` API in UXP.
+This resolves to 127.0.0.1 and can be accessed by the `fetch` API in UXP.
 
 ## Version 0.1.2
 
