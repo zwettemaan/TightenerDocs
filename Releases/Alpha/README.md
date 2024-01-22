@@ -8,7 +8,7 @@ Ninth alpha release, 1-Jan-2024, build 291
 
 https://cloud.rorohiko.com/index.php/s/JuuyN2NEfEmr8Rc
 
-This version adds support for UXP and UXP script by way of a 'daemon' mode.
+This version adds support for UXP and UXPScript by way of a 'daemon' mode.
 
 Tightener can run as a daemon and run a little local HTTPS server on 
 ```
