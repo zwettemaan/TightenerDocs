@@ -4,6 +4,9 @@ TIGHTENER.init();
 
 TIGHTENER.lib.tghInit('ESDLLSampleCoordinator');
 
+var tqlResult = TIGHTENER.lib.evalTQL("sysInfo().APP_DIR");
+alert("sysInfo().APP_DIR = " + tqlResult);
+
 alert("Machine GUID = " + TIGHTENER.lib.machineGUID());
 
 var e = TIGHTENER.lib.encryptStr("Hello World", "mykey");

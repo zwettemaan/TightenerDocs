@@ -1,6 +1,6 @@
 
 //@include "lib/TightenerESDLLLoader.jsx"
-var getURL = JSXGetURL();
+var getURL = TIGHTENER();
 
 alert(getURL.isJSXGetURLDemo());
 
