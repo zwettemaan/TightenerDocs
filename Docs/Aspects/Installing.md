@@ -25,7 +25,7 @@ activate the software that they want to use.
 
 ## Installing a full version
 
-Download a copy of a Tightener release from the [Releases](https://github.com/zwettemaan/TightenerDocs/Releases) folder
+Download a copy of a Tightener release from the [Releases](https://github.com/zwettemaan/TightenerDocs/tree/main/Releases) folder
 
 Decompress and move to a convenient spot.
 
