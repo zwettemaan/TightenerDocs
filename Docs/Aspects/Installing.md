@@ -29,11 +29,13 @@ Download a copy of a Tightener release from the [Releases](https://github.com/zw
 
 Decompress and move to a convenient spot.
 
-Start a command line window into the Tightener folder and run the install script (install.command for Mac/Linux, install.bat for Windows)
+Start a command line window into the Tightener folder and run the install script (`install.command` for Mac/Linux, `install.bat` for Windows)
 
-Uninstalling is done by running the uninstall script.
+Uninstalling is done by running the `uninstall.command` or `uninstall.bat` script.
 
-You would also install a copy of the License Manager, and switch it to developer mode to create a developer account.
+You can also install a copy of the License Manager. Make sure to switch License Manager to developer mode in order to create a developer account.
+
+## Human Readable
 
 A lot of aspects in Tightener are driven by way of command line scripts, `.tql` scripts, and the `config.ini` file. 
 

@@ -22,6 +22,7 @@ This default version can either be a desktop version, or a server version of InD
 Once this configuration is made, InDesign or InDesign Server can be managed from the command line by way
 of commands like
 ```
+cd_id
 idPluginInstall
 idPluginRemove
 idPluginRemoveAll
