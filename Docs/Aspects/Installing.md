@@ -34,3 +34,8 @@ Start a command line window into the Tightener folder and run the install script
 Uninstalling is done by running the uninstall script.
 
 You would also install a copy of the License Manager, and switch it to developer mode to create a developer account.
+
+A lot of aspects in Tightener are driven by way of command line scripts, `.tql` scripts, and the `config.ini` file. 
+
+Care has been taken to make all of these files human-readable. Feel free to browse the release version and inspect the many
+scripts and samples that have been provided.

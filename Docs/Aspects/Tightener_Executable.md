@@ -11,3 +11,12 @@ of Tightener the same executable can be launched multiple times in concurrent fa
 This executable is part of a full Tightener release. It is also embedded into the License Manager, where it is used
 for a daemon on computers that don't have a full Tightener installed.
 
+## Target Platforms
+
+Tightener is provided for multiple target plaforms:
+
+- Mac (Universal Binary: M1/x86)
+- Windows (x64)
+- Windows (ARM64)
+- Linux (x64)
+- Linux (ARM64)
