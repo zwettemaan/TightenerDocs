@@ -28,6 +28,8 @@ Run the script install.command (Mac/Linux) or install.bat (Windows)
 
 Documentation for the Tightener project
 
+[Markdown Docs](https://github.com/zwettemaan/TightenerDocs/blob/main/Docs/index.md)
+
 [Wiki](https://github.com/zwettemaan/TightenerDocs/wiki)
 
 Cmaps are drawn using:
