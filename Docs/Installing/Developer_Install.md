@@ -2,6 +2,14 @@
 
 Note: at the time of this writing, Tightener is still in the Alpha stage.
 
+The developer version of Tightener integrates the Tightener eco-system into your
+command line environment. Mac, Windows and Ubuntu Linux are supported.
+
+There is also an end-user version of Tightener, which is largely invisible. 
+It is embedded into the [License Manager](License_Manager.md). If you need Tightener for UXP, you can get 
+by with just installing the [License Manager](License_Manager.md); you don't need to install the full Tightener
+developer version.
+
 ## Downloading
 
 First download the complete Tightener release from one of the following pages:

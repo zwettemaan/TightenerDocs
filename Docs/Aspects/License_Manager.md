@@ -9,3 +9,4 @@ Accounts registered in standard mode are unrelated to accounts registered in dev
 License Manager also embeds a copy of the Tightener command-line app, to serve as a daemon when
 other tools (e.g. UXP) need to access Tightener features.
 
+Launching License Manager will automatically start the daemon.
