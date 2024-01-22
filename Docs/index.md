@@ -2,9 +2,7 @@
 
 ## Installing
 
-[User Install](Installing/User_Install.md)
-
-[Developer Install](Installing/Developer_Install.md)
+[Installing](Aspects/Installing.md)
 
 ## Aspects
 
@@ -15,8 +13,6 @@
 [Developer Tiers](Aspects/Developer_Tiers.md)
 
 [Free For Small Developers](Aspects/Free_For_Small_Developers.md)
-
-[Installing](Aspects/Installing.md)
 
 [License Manager](Aspects/License_Manager.md)
 
