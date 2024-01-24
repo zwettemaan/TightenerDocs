@@ -20,8 +20,8 @@ to some convenient location, then double-click the LicenseManager.app or License
 
 The user would create and register at least one account, then download catalog entries from one or more software developers.
 
-Once the catalog entries have been loaded, the user can then order a license file from a supplier, and once the order is fulfilled,
-activate the software that they want to use.
+Once the catalog entries have been loaded, the user can then order a license file from a supplier, and when the order is fulfilled,
+they can activate the software.
 
 ## Installing a full version
 
