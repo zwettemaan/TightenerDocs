@@ -2,6 +2,14 @@
 
 # Alpha Releases
 
+## Version 0.1.4
+
+Tenth alpha release, 5-Feb-2024, build 319
+
+https://cloud.rorohiko.com/index.php/s/WmqCY2jcRVaZz1Y
+
+This version adds support for sublicensing: a developer can now purchase activations and embed them in their own source code, so the end-user can remain oblivious of any license management.
+
 ## Version 0.1.3
 
 Ninth alpha release, 1-Jan-2024, build 291
