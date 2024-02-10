@@ -6,6 +6,8 @@
 
 Eleventh alpha release, 10-Feb-2024, build 336
 
+https://cloud.rorohiko.com/index.php/s/KzmEY7SujHn64dT
+
 Added new APIs that give access to additional licensing data: remaining lifetime, order GUID...
 Tweaks and bug fixes for issues found while creating some 'real' products (JSXGetURL, Creative Developer Tools).
 
