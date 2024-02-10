@@ -2,19 +2,22 @@
 
 # Alpha Releases
 
+## Version 0.1.5
+
+Eleventh alpha release, 10-Feb-2024, build 336
+
+Added new APIs that give access to additional licensing data: remaining lifetime, order GUID...
+Tweaks and bug fixes for issues found while creating some 'real' products (JSXGetURL, Creative Developer Tools).
+
 ## Version 0.1.4
 
 Tenth alpha release, 5-Feb-2024, build 319
-
-https://cloud.rorohiko.com/index.php/s/WmqCY2jcRVaZz1Y
 
 This version adds support for sublicensing: a developer can now purchase activations and embed them in their own source code, so the end-user can remain oblivious of any license management.
 
 ## Version 0.1.3
 
 Ninth alpha release, 1-Jan-2024, build 291
-
-https://cloud.rorohiko.com/index.php/s/JuuyN2NEfEmr8Rc
 
 This version adds support for UXP and UXPScript by way of a 'daemon' mode.
 
@@ -27,8 +30,6 @@ This resolves to 127.0.0.1 and can be accessed by the `fetch` API in UXP.
 ## Version 0.1.2
 
 Eighth alpha release, 1-Jan-2024, build 284
-
-https://cloud.rorohiko.com/index.php/s/TcQIxNniZ5zxOCV
 
 This version adds support for activation and licensing. There is a new app
 called 'LicenseManager' in the Apps subfolder. This app has two modes:
@@ -47,8 +48,6 @@ https://store.tgrg.net/
 
 Seventh alpha release, 6-Nov-2023
 
-https://cloud.rorohiko.com/index.php/s/6q4TCOJ7w4fnPst
-
 Much debugging and fixing. The ESDLL and Xojo versions (ExtendScript DLL/Xojo plugin) 
 now use a separate C++ thread to run the main Tightener core, so it remains responsive even 
 when the host app is not paying attention (e.g. running a script). This makes the Tightener 
@@ -59,8 +58,6 @@ inactive is that you cannot launch ExtendScripts remotely, but you can still run
 ## Version 0.1.0
 
 Sixth alpha release, 23-Apr-2023
-
-https://cloud.rorohiko.com/index.php/s/3JnnSYNAMTbO32Q
 
 This version adds support for ARM64 on Windows and Linux.
 The reason for that is that I've got a new M2 MacBook Pro, 
@@ -78,28 +75,18 @@ which then also compile the x64 components for Tightener
 
 Fifth alpha release, 21-Feb-2023
 
-https://cloud.rorohiko.com/index.php/s/jpRW3RnaZSjDG8R
-
 ## Version 0.0.8
 
 Fourth alpha release, 6-Feb-2023
-
-https://cloud.rorohiko.com/index.php/s/VLbxiACYx5WoPSl
 
 ## Version 0.0.7
 
 Third alpha release, 3-Feb-2023
 
-https://cloud.rorohiko.com/index.php/s/6JKR2vCivkWIN6u
-
 ## Version 0.0.6
 
 Second alpha release, 14-Sep-2022
 
-https://cloud.rorohiko.com/index.php/s/hEPHdmtFvrbxFuU
-
 ## Version 0.0.5
 
 First alpha release, 13-Aug-2022
-
-https://cloud.rorohiko.com/index.php/s/26rb16f8X0v1gqA
