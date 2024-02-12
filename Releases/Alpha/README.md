@@ -4,9 +4,16 @@
 
 ## Version 0.1.5
 
-Eleventh alpha release, 10-Feb-2024, build 336
+Twelfth alpha release, 12-Feb-2024, build 354
 
-https://cloud.rorohiko.com/index.php/s/KzmEY7SujHn64dT
+https://cloud.rorohiko.com/index.php/s/95kVh1o1ZoQvrO6
+
+Fix issues with License Manager. 
+Add support for 'sidecar' sublicensing activation files, so sublicenses can be bundled without source code embedding.
+
+## Version 0.1.5
+
+Eleventh alpha release, 10-Feb-2024, build 336
 
 Added new APIs that give access to additional licensing data: remaining lifetime, order GUID...
 Tweaks and bug fixes for issues found while creating some 'real' products (JSXGetURL, Creative Developer Tools).
