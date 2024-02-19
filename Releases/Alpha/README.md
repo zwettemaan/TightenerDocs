@@ -6,7 +6,7 @@
 
 Twelfth alpha release, 19-Feb-2024, build 406
 
-https://cloud.rorohiko.com/index.php/s/95kVh1o1ZoQvrO6
+https://cloud.rorohiko.com/index.php/s/N7UXLFHhVWcRDiF
 
 Fix issues with License Manager. 
 Add support for 'sidecar' sublicensing activation files, so sublicenses can be bundled without source code embedding.
