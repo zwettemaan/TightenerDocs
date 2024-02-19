@@ -2,11 +2,17 @@
 
 # Alpha Releases
 
+## Version 0.1.7
+
+Twelfth alpha release, 20-Feb-2024, build 417
+
+https://cloud.rorohiko.com/index.php/s/46hjcgmA7Q1ymyx
+
+Fix issues with auto-transfer of embedded or sidecar activations.
+
 ## Version 0.1.6
 
 Twelfth alpha release, 19-Feb-2024, build 406
-
-https://cloud.rorohiko.com/index.php/s/N7UXLFHhVWcRDiF
 
 Fix issues with License Manager. 
 Add support for 'sidecar' sublicensing activation files, so sublicenses can be bundled without source code embedding.
