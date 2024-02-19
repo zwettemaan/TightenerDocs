@@ -2,9 +2,9 @@
 
 # Alpha Releases
 
-## Version 0.1.5
+## Version 0.1.6
 
-Twelfth alpha release, 12-Feb-2024, build 354
+Twelfth alpha release, 19-Feb-2024, build 406
 
 https://cloud.rorohiko.com/index.php/s/95kVh1o1ZoQvrO6
 
