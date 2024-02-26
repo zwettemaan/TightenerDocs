@@ -8,7 +8,7 @@ Thirteenth alpha release, 26-Feb-2024, build 429
 
 https://cloud.rorohiko.com/index.php/s/ARfdmGyxLrasVts
 
-Fix hand-on-quit in License Manager
+Fix hang-on-quit in License Manager
 Reduced protocol chattiness to Registry
 
 ## Version 0.1.8
