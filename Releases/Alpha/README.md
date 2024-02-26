@@ -14,8 +14,6 @@ Fix issues with auto-transfer of embedded or sidecar activations.
 
 Twelfth alpha release, 20-Feb-2024, build 417
 
-https://cloud.rorohiko.com/index.php/s/46hjcgmA7Q1ymyx
-
 Fix issues with auto-transfer of embedded or sidecar activations.
 
 ## Version 0.1.6
