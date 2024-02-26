@@ -2,11 +2,18 @@
 
 # Alpha Releases
 
+## Version 0.1.9
+
+Thirteenth alpha release, 26-Feb-2024, build 429
+
+https://cloud.rorohiko.com/index.php/s/ARfdmGyxLrasVts
+
+Fix hand-on-quit in License Manager
+Reduced protocol chattiness to Registry
+
 ## Version 0.1.8
 
-Twelfth alpha release, 21-Feb-2024, build 428
-
-https://cloud.rorohiko.com/index.php/s/BQJ7nDym6awTWGj
+Twelfth alpha release, 21-Feb-2024, build 423
 
 Fix issues with auto-transfer of embedded or sidecar activations.
 
