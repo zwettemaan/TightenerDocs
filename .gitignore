@@ -14,8 +14,10 @@ CONERR$
 /CurrentRelease/CommandLine/Mac/TightenerGW_Cpp
 /CurrentRelease/CommandLine/Windows/Tightener.exe
 /CurrentRelease/CommandLine/Windows/TightenerGW_Cpp.exe
+/CurrentRelease/CommandLine/Windows/*.dll
 /CurrentRelease/CommandLine/Windows/ARM64/Tightener.exe
 /CurrentRelease/CommandLine/Windows/ARM64/TightenerGW_Cpp.exe
+/CurrentRelease/CommandLine/Windows/ARM64/*.dll
 /CurrentRelease/Plug-Ins/CEP/*.zxp
 /CurrentRelease/Plug-Ins/InDesign2022.17.0/Mac/Tightener.InDesignPlugin/
 /CurrentRelease/Plug-Ins/InDesign2022.17.0/Mac/TightenerServer.InDesignPlugin/
