@@ -4,7 +4,7 @@
 
 ## Version 0.1.9
 
-Thirteenth alpha release, 26-Feb-2024, build 429
+Fifteenth alpha release, 26-Feb-2024, build 429
 
 https://cloud.rorohiko.com/index.php/s/ARfdmGyxLrasVts
 
@@ -13,13 +13,13 @@ Reduced protocol chattiness to Registry
 
 ## Version 0.1.8
 
-Twelfth alpha release, 21-Feb-2024, build 423
+Fourteenth alpha release, 21-Feb-2024, build 423
 
 Fix issues with auto-transfer of embedded or sidecar activations.
 
 ## Version 0.1.7
 
-Twelfth alpha release, 20-Feb-2024, build 417
+Thirteenth alpha release, 20-Feb-2024, build 417
 
 Fix issues with auto-transfer of embedded or sidecar activations.
 
