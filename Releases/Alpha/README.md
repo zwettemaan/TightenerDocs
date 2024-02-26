@@ -2,6 +2,14 @@
 
 # Alpha Releases
 
+## Version 0.1.8
+
+Twelfth alpha release, 21-Feb-2024, build 428
+
+https://cloud.rorohiko.com/index.php/s/BQJ7nDym6awTWGj
+
+Fix issues with auto-transfer of embedded or sidecar activations.
+
 ## Version 0.1.7
 
 Twelfth alpha release, 20-Feb-2024, build 417
