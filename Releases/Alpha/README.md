@@ -2,11 +2,19 @@
 
 # Alpha Releases
 
+## Version 0.2.0
+
+Sixteenth alpha release, 26-Mar-2024, build 451
+
+https://cloud.rorohiko.com/index.php/s/ImlTiqw4tPedgFX
+
+Support for code signing, encrypting, activation/licensing, installing, removing of ExtendScripts
+
+License Manager supports dark mode
+
 ## Version 0.1.9
 
 Fifteenth alpha release, 26-Feb-2024, build 429
-
-https://cloud.rorohiko.com/index.php/s/ARfdmGyxLrasVts
 
 Fix hang-on-quit in License Manager
 Reduced protocol chattiness to Registry
