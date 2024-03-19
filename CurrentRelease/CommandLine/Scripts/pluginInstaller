@@ -2,4 +2,4 @@
 
 cd "${TIGHTENER_RELEASE_ROOT}"
 
-rt CommandLine/Scripts/licenseManager.tql
+rt CommandLine/Scripts/pluginInstaller.tql

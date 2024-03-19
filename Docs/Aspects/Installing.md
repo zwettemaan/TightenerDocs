@@ -3,20 +3,20 @@
 There are two common approaches to installing Tightener: a 'light' version for end-users,
 and a 'full' version for developers.
 
-End-users would install just the License Manager, which has an embedded copy of the light
+End-users would install just the PluginInstaller, which has an embedded copy of the light
 version of Tightener
 
 Developers would install the full version of Tightener, which provides an extensive range of 
 command-line tools for using, developing, monitoring, testing, configuring...
 
-## Installing the License Manager
+## Installing the PluginInstaller
 
-To install the license manager, visit
+To install the PluginInstaller, visit
 
 https://store.tgrg.net
 
 and download the latest version. There is no installer - you simply 'unzip' the download, and move the downloaded folder
-to some convenient location, then double-click the LicenseManager.app or LicenseManager.exe file.
+to some convenient location, then double-click the PluginInstaller.app or PluginInstaller.exe file.
 
 The user would create and register at least one account, then download catalog entries from one or more software developers.
 
@@ -33,7 +33,7 @@ Start a command line window into the Tightener folder and run the install script
 
 Uninstalling is done by running the `uninstall.command` or `uninstall.bat` script.
 
-You can also install a copy of the License Manager. Make sure to switch License Manager to developer mode in order to create a developer account.
+You can also install a copy of the PluginInstaller. Make sure to switch PluginInstaller to developer mode in order to create a developer account.
 
 ## Human Readable
 

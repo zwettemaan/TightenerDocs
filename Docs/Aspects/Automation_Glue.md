@@ -11,7 +11,7 @@ Tightener has multiple possible integration paths:
 - into [ExtendScript](ExtendScript_Integration.md) (as an ExtendScript DLL)
 - as an HTTPS-based API that is accessible from UXP
 - embdedded into standalone command line apps (the Tightener [executable](Tightener_Executable.md))
-- into GUI apps ([License Manager](License_Manager.md))
+- into GUI apps ([PluginInstaller](PluginInstaller.md))
 - into Xojo apps ([XojoTightener.xojo_plugin](XojoTightener.md))
 - into InDesign C++ plugins
 - as a DLL/dylib

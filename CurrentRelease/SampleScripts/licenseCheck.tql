@@ -24,7 +24,7 @@ feedBack = function(message) {
 
 feedBack("licenseCheck.tql");
 
-target = "tgh:///net.tightener.coordinator.licensemgr/default";
+target = "tgh:///net.tightener.coordinator.plugininstaller/default";
 
 feedBack("start");
 

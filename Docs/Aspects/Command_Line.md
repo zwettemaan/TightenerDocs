@@ -2,7 +2,7 @@
 
 Tightener can be more or less present and obvious to the computer user, all depending on the context. 
 
-For end-users, Tightener would be mostly invisible - they might need to use the License Manager to handle licensing and activation, but that might be the end of it. Inside the License Manager is an embedded version of the Tightener executable.
+For end-users, Tightener would be mostly invisible - they might need to use the PluginInstaller to handle licensing and activation, but that might be the end of it. Inside the PluginInstaller is an embedded version of the Tightener executable.
 
 For developers, Tightener can be installed with a whole host of infrastructure and helper scripts. 
 

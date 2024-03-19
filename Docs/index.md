@@ -14,7 +14,7 @@
 
 [Free For Small Developers](Aspects/Free_For_Small_Developers.md)
 
-[License Manager](Aspects/License_Manager.md)
+[PluginInstaller](Aspects/PluginInstaller.md)
 
 [Licensing/Activation](Aspects/Licensing_Activation.md)
 
