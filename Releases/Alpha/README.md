@@ -2,21 +2,29 @@
 
 # Alpha Releases
 
+## Version 0.2.1
+
+Seventeenth alpha release, 22-Mar-2024, build 463
+
+https://cloud.rorohiko.com/index.php/s/BxFShiW9VRdWcvp
+
+Rename License Manager to PluginInstaller. Various bug fixes and improvements in PluginInstaller
+
 ## Version 0.2.0
 
-Sixteenth alpha release, 26-Mar-2024, build 451
+Sixteenth alpha release, 19-Mar-2024, build 451
 
 https://cloud.rorohiko.com/index.php/s/ImlTiqw4tPedgFX
 
 Support for code signing, encrypting, activation/licensing, installing, removing of ExtendScripts
 
-PluginInstaller supports dark mode
+License Manager supports dark mode
 
 ## Version 0.1.9
 
 Fifteenth alpha release, 26-Feb-2024, build 429
 
-Fix hang-on-quit in PluginInstaller
+Fix hang-on-quit in License Manager
 Reduced protocol chattiness to Registry
 
 ## Version 0.1.8
@@ -35,7 +43,7 @@ Fix issues with auto-transfer of embedded or sidecar activations.
 
 Twelfth alpha release, 19-Feb-2024, build 406
 
-Fix issues with PluginInstaller. 
+Fix issues with License Manager. 
 Add support for 'sidecar' sublicensing activation files, so sublicenses can be bundled without source code embedding.
 
 ## Version 0.1.5
@@ -68,7 +76,7 @@ This resolves to 127.0.0.1 and can be accessed by the `fetch` API in UXP.
 Eighth alpha release, 1-Jan-2024, build 284
 
 This version adds support for activation and licensing. There is a new app
-called 'PluginInstaller' in the Apps subfolder. This app has two modes:
+called 'License Manager' in the Apps subfolder. This app has two modes:
 - Standard mode: allow users to register, send purchase orders to suppliers, and
   handle activations of softwares on their computers.
 - Developer/Supplier mode: allow developers to register, add products to their
@@ -76,7 +84,7 @@ called 'PluginInstaller' in the Apps subfolder. This app has two modes:
   the scripting languages like TQL and ExtendScript gain two new functions: `machineGUID()` and
   `getCapability()`.
 
-You can also download the PluginInstaller here:
+You can also download the License Manager here:
 
 https://store.tgrg.net/
 
