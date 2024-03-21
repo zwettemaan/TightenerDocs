@@ -14,8 +14,6 @@ Rename License Manager to PluginInstaller. Various bug fixes and improvements in
 
 Sixteenth alpha release, 19-Mar-2024, build 451
 
-https://cloud.rorohiko.com/index.php/s/ImlTiqw4tPedgFX
-
 Support for code signing, encrypting, activation/licensing, installing, removing of ExtendScripts
 
 License Manager supports dark mode
