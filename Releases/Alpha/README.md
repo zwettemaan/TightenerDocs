@@ -2,11 +2,23 @@
 
 # Alpha Releases
 
+## Version 0.2.3
+
+Nineteenth alpha release, 25-Apr-2024, build 479
+
+https://cloud.rorohiko.com/index.php/s/gN0BSi2wWcuNDUG
+
+Installing/verifying/protecting CEP/JS solutions
+
+## Version 0.2.2
+
+Eighteenth alpha release, 31-Mar-2024, build 479
+
+Installing/verifying/protecting ExtendScript solutions
+
 ## Version 0.2.1
 
 Seventeenth alpha release, 22-Mar-2024, build 463
-
-https://cloud.rorohiko.com/index.php/s/BxFShiW9VRdWcvp
 
 Rename License Manager to PluginInstaller. Various bug fixes and improvements in PluginInstaller
 
