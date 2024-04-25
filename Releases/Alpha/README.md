@@ -4,7 +4,7 @@
 
 ## Version 0.2.3
 
-Nineteenth alpha release, 25-Apr-2024, build 479
+Nineteenth alpha release, 25-Apr-2024, build 501
 
 https://cloud.rorohiko.com/index.php/s/gN0BSi2wWcuNDUG
 
