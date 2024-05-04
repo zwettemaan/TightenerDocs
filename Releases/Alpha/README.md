@@ -84,7 +84,7 @@ called 'License Manager' in the Apps subfolder. This app has two modes:
 
 You can also download the License Manager here:
 
-https://store.tgrg.net/
+https://PluginInstaller.com
 
 ## Version 0.1.1
 

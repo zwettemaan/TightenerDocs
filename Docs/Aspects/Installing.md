@@ -13,7 +13,7 @@ command-line tools for using, developing, monitoring, testing, configuring...
 
 To install the PluginInstaller, visit
 
-https://store.tgrg.net
+https://PluginInstaller.com
 
 and download the latest version. There is no installer - you simply 'unzip' the download, and move the downloaded folder
 to some convenient location, then double-click the PluginInstaller.app or PluginInstaller.exe file.
