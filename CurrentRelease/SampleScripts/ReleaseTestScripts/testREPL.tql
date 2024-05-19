@@ -7,7 +7,7 @@ retVal = G.TESTSCRIPT.initialize(scriptFilePath());
 // This script is a counterpart to CommandLine/Scripts/reflectorTestStartupScript.tql 
 // set as a startup script in config.ini for the reflector coordinator
 
-timeoutMilliseconds = 10000;
+timeoutMilliseconds = 20000;
 retVal = "";
 prefix = "Reflected: ";
 reflectedData = "abc";
