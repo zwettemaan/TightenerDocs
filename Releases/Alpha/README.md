@@ -2,11 +2,17 @@
 
 # Alpha Releases
 
+## Version 0.2.4
+
+Nineteenth alpha release, 8-Aug-2024, build 583
+
+https://cloud.rorohiko.com/index.php/s/nYGTgNDfSLHo84a
+
+UXP support/CRDT_UXP/file-based API for daemon as fallback if no network APIs
+
 ## Version 0.2.3
 
 Nineteenth alpha release, 25-Apr-2024, build 501
-
-https://cloud.rorohiko.com/index.php/s/gN0BSi2wWcuNDUG
 
 Installing/verifying/protecting CEP/JS solutions
 
