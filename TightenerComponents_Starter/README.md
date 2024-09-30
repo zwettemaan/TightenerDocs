@@ -1,0 +1,3 @@
+# TightenerComponents
+
+See TightenerDocs/TightenerComponents_Starters/SETUP_README.md
