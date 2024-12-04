@@ -4,9 +4,15 @@
 
 ## Version 0.2.4
 
-Nineteenth alpha release, 8-Aug-2024, build 583
+Nineteenth alpha release, 5-Dec-2024, build 632
 
-https://cloud.rorohiko.com/index.php/s/nYGTgNDfSLHo84a
+https://cloud.rorohiko.com/index.php/s/T2IOPZq1IHl9YG0
+
+Incremental Improvements
+
+## Version 0.2.4
+
+Nineteenth alpha release, 8-Aug-2024, build 583
 
 UXP support/CRDT_UXP/file-based API for daemon as fallback if no network APIs
 
