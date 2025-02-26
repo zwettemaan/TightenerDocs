@@ -15,5 +15,7 @@ alert("Encrypted string = " + e);
 var d = TIGHTENER.lib.decryptStr(e, "mykey");
 alert("Decrypted string = " + d);
 
+var c = TIGHTENER.lib.hiresClock();
+alert(c);
 //var c = TIGHTENER.lib.getCapability("c09f0226c1b21909b7415341c1d55a07", "code", "password");
 //alert(">" + c + "<");
