@@ -70,6 +70,10 @@ if [ ! -d Swimmer ]; then
     git clone -b main git@rorohiko.glueco.de:/home/git/Swimmer.git
 fi
 
+if [ ! -d TableAxe ]; then
+    git clone -b main git@rorohiko.glueco.de:/home/git/TableAxe.git
+fi
+
 if [ ! -d TextExporter5 ]; then
     git clone -b master git@rorohiko.glueco.de:/home/git/TextExporter4.git TextExporter5
 fi

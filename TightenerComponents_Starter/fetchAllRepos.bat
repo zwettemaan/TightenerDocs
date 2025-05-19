@@ -78,6 +78,10 @@ IF NOT EXIST Swimmer (
     git clone -b main git@rorohiko.glueco.de:/home/git/Swimmer.git
 )
 
+IF NOT EXIST TableAxe (
+    git clone -b main git@rorohiko.glueco.de:/home/git/TableAxe.git
+)
+
 IF NOT EXIST TextExporter5 (
     git clone -b master git@rorohiko.glueco.de:/home/git/TextExporter4.git TextExporter5
 )
