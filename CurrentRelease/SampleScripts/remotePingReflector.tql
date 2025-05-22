@@ -18,8 +18,15 @@ feedBack = function(message) {
 
 feedBack("remotePingReflector.tql");
 
-coordinatorName = "net.tightener.coordinator.reflector"; 
-engineName = "default";
+coordinatorName = remoteSettings.coordinatorName;
+if (! coordinatorName) {
+    coordinatorName = "net.tightener.coordinator.reflector"; 
+}
+
+engineName = remoteSettings.engineName;
+if (! engineName) {
+    engineName = "default";
+}
 
 target = 
     "tgh://" + 
@@ -41,7 +48,8 @@ for (idx = 0; idx < 10; idx++)
         function(callBackResult) 
         { 
             feedBack(
-                lineCtr++ + ": 12*12 = " + callBackResult); 
+                lineCtr + ": 12*12 = " + callBackResult); 
+            lineCtr++;
         }, 
         remoteSettings.timeout);
 }

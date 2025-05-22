@@ -1,0 +1,7 @@
+{
+	"remoteHost": "",
+	"quitReflectorAtEnd": true,
+	"timeout": 10000,
+	"coordinatorName": "net.tightener.coordinator.plugininstaller",
+	"engineName": "default"
+}
