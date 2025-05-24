@@ -119,7 +119,7 @@ python3 --version
 -> e.g. Python 3.9.6
 ```
 export PYTHON_MAIN_VERSION=3.9
-export PATH=$PATH:/Users/kris/Library/Python/${PYTHON_MAIN_VERSION}/bin
+export PATH=$PATH:/Users/kris2/Library/Python/${PYTHON_MAIN_VERSION}/bin
 export SITE_PACKAGES=~/Library/Python/${PYTHON_MAIN_VERSION}/lib/python/site-packages
 ```
 

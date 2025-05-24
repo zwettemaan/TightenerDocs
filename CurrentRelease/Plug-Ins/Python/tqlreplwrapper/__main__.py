@@ -26,7 +26,7 @@ from ipykernel.kernelapp import IPKernelApp
 
 # from debugpy.common import log
 
-# log.to_file("/Users/kris/Desktop/tqlreplwrapper.log")
+# log.to_file("/Users/kris2/Desktop/tqlreplwrapper.log")
 
 
 class TQLTightenerKernel(Kernel):
