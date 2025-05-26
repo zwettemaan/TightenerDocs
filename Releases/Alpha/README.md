@@ -2,11 +2,17 @@
 
 # Alpha Releases
 
+## Version 0.2.5
+
+Alpha release, 26-May-2025, build 677
+
+https://cloud.rorohiko.com/index.php/s/Yrb64eIIQvjfYQw
+
+Incremental Improvements
+
 ## Version 0.2.4
 
 Nineteenth alpha release, 5-Dec-2024, build 632
-
-https://cloud.rorohiko.com/index.php/s/T2IOPZq1IHl9YG0
 
 Incremental Improvements
 
