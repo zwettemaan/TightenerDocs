@@ -27,7 +27,7 @@ from ipykernel.kernelapp import IPKernelApp
 
 # from debugpy.common import log
 
-# log.to_file("/Users/kris2/Desktop/jsxreplwrapper.log")
+# log.to_file("/Users/USERNAME/Desktop/jsxreplwrapper.log")
 
 class JSXTightenerKernel(Kernel):
 
