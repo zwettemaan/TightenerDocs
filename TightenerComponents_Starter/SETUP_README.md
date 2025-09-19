@@ -18,6 +18,4 @@ from a donor host (README.md, fetchAllRepos...)
 
 Read the README.md in the Tightener repo
 
-Windows needs a manual copy of the TightenerSecrets folder (a Mac can pull the encrypted dmg from the repo)
-
 Pay attention to line endings for .sh and .command files on Windows which need to be lf and not crlf
