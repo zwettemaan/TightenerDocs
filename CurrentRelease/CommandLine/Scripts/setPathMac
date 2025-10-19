@@ -1,12 +1,12 @@
-pushd "${TIGHTENER_RELEASE_ROOT}.." > /dev/null
+pushd "${TIGHTENER_RELEASE_ROOT}/.." > /dev/null
 
 if [ `basename \`pwd\`` = 'TightenerDocs' ]; then
 
     export TIGHTENER_DOCS_ROOT=`pwd`/
 
-    if [ -d "${TIGHTENER_DOCS_ROOT}../Tightener" ]; then
+    if [ -d "${TIGHTENER_DOCS_ROOT}/../Tightener" ]; then
 
-        pushd "${TIGHTENER_DOCS_ROOT}../Tightener" > /dev/null
+        pushd "${TIGHTENER_DOCS_ROOT}/../Tightener" > /dev/null
 
         if [ -e '.gitignore' -a -e 'CMakeLists.txt' -a -e 'README.md' ]; then
 
@@ -63,11 +63,11 @@ fi
 alias cd_id="cd \"${INDESIGN_APP_ROOT}\""
 alias cd_settings="cd \"${TIGHTENER_LOCAL_DATA_ROOT}\""
 alias cd_tightener="cd \"${TIGHTENER_RELEASE_ROOT}\""
-alias cd_samples="cd \"${TIGHTENER_RELEASE_ROOT}SampleScripts\""
-alias cd_scripts="cd \"${TIGHTENER_RELEASE_ROOT}CommandLine/Scripts\""
+alias cd_samples="cd \"${TIGHTENER_RELEASE_ROOT}/SampleScripts\""
+alias cd_scripts="cd \"${TIGHTENER_RELEASE_ROOT}/CommandLine/Scripts\""
 
 alias view_id="open \"${INDESIGN_APP_ROOT}\""
 alias view_settings="open \"${TIGHTENER_LOCAL_DATA_ROOT}\""
 alias view_tightener="open \"${TIGHTENER_RELEASE_ROOT}\""
-alias view_samples="open \"${TIGHTENER_RELEASE_ROOT}SampleScripts\""
-alias view_scripts="open \"${TIGHTENER_RELEASE_ROOT}CommandLine/Scripts\""
+alias view_samples="open \"${TIGHTENER_RELEASE_ROOT}/SampleScripts\""
+alias view_scripts="open \"${TIGHTENER_RELEASE_ROOT}/CommandLine/Scripts\""
