@@ -8,7 +8,7 @@ if [ `basename \`pwd\`` = 'TightenerDocs' ]; then
     
         pushd "${TIGHTENER_DOCS_ROOT}/../Tightener" > /dev/null
 
-        if [ -e '.gitignore' -a -e 'CMakeLists.txt' -a -e 'README.md' ]; then
+        if [ -e '.gitignore' -a -e 'CMakeLists.txt' ]; then
 
             export TIGHTENER_GIT_ROOT=`pwd`/
 
