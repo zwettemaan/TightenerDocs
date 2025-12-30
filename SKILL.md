@@ -37,6 +37,28 @@ This document serves as the entry point for AI agents working with the Tightener
   - TPKG package format
   - Machine registration and linking
   - Privacy-centric design principles
+- **Discount Code Management** (IMPORTANT - FREQUENTLY NEEDED):
+  - **Location**: Database on `moth` server
+  - **Access**: `ssh moth` → `sudo -s` → `db_crdt` → `mariadb -u root -p[passwordFromMothScripts]` → `use crdt;`
+  - **Create Code**: `insert into discountCodes (discountCode, issuerGUID, productCode, useSandbox, discountPercent, isPerCustomer, maxUseCount) values ('CODE_NAME', '1186cb863f80e0c2d5ee377c49d7eade', 'ProductCode', 0, 100, 1, 100);`
+  - **Parameters**:
+    - `discountCode`: The code users enter (e.g., 'APID_KRIS_TEST_123')
+    - `issuerGUID`: Rorohiko GUID = '1186cb863f80e0c2d5ee377c49d7eade'
+    - `productCode`: Product identifier (e.g., 'APIDToolAssistant', 'TextExporter')
+    - `useSandbox`: 0 for production, 1 for testing
+    - `discountPercent`: Percentage off (0-100)
+    - `isPerCustomer`: 1 = one use per customer, 0 = multiple uses
+    - `maxUseCount`: Total number of times code can be used
+  - **Common Examples**:
+    ```sql
+    -- 100% off, one per customer, max 100 uses
+    insert into discountCodes (discountCode, issuerGUID, productCode, useSandbox, discountPercent, isPerCustomer, maxUseCount) 
+    values ('PROMO_CODE', '1186cb863f80e0c2d5ee377c49d7eade', 'APIDToolAssistant', 0, 100, 1, 100);
+    
+    -- 50% off, unlimited uses per customer, max 500 total
+    insert into discountCodes (discountCode, issuerGUID, productCode, useSandbox, discountPercent, isPerCustomer, maxUseCount) 
+    values ('SALE50', '1186cb863f80e0c2d5ee377c49d7eade', 'TextExporter', 0, 50, 0, 500);
+    ```
 
 ## Infrastructure Skills
 
@@ -58,6 +80,17 @@ This document serves as the entry point for AI agents working with the Tightener
   - Cross-platform compilation
   - Code signing and notarization
   - TPKG creation and distribution
+- **Build VM Details** (IMPORTANT - Avoid common path errors):
+  - **Windows VM** (`tightenerwindows`):
+    - User: `kris` (NOT `Administrator`)
+    - TightenerComponents path: `C:\Users\kris\Documents\Controlled\Rorohiko\TightenerComponents`
+    - Use PowerShell for complex commands: `ssh tightenerwindows 'powershell "command"'`
+    - Python libs location: `TightenerPython\python\VS2022\{arm64,x64,x86}\python314.lib`
+  - **Verifying Windows Library Architectures**:
+    - Find dumpbin: `Get-ChildItem "C:\Program Files\Microsoft Visual Studio\2022" -Recurse -Filter dumpbin.exe | Select-Object -First 1 FullName`
+    - Check architecture: `dumpbin /headers file.lib | findstr machine`
+    - Expected output: `AA64 machine (ARM64)` or `8664 machine (x64)`
+    - Note: Hash comparison is NOT proof of different architectures (compile timestamps differ)
 - **Build Orchestration Techniques**:
   - **Multi-stage build process**: Mac coordinator triggers Linux and Windows builds via SSH
   - **Version extraction**: Uses gcc preprocessor to extract version from header files (e.g., `gcc -E src/ExtractVersionData.h`)
@@ -99,6 +132,9 @@ This document serves as the entry point for AI agents working with the Tightener
   - **Archive formats**: Uses .nzip (native zip) for Mac-specific attributes preservation
   - **Version injection**: Build scripts auto-generate manifest.json with version info extracted from headers
   - **Multi-target support**: Single manifest can define multiple installation targets (different InDesign versions, platforms)
+- **Discount Code Management** (Also see SKILL 3 for detailed info):
+  - Quick access: `ssh moth` → `sudo -s` → `db_crdt` → `mariadb -u root -p[passwordFromMothScripts]` → `use crdt;`
+  - Example: `insert into discountCodes (discountCode, issuerGUID, productCode, useSandbox, discountPercent, isPerCustomer, maxUseCount) values ('CODE_NAME', '1186cb863f80e0c2d5ee377c49d7eade', 'ProductCode', 0, 100, 1, 100);`
 
 ## Application & Plugin Skills
 

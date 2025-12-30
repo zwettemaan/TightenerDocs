@@ -2,6 +2,45 @@
 
 This document outlines the coding conventions used in the Tightener ecosystem. These conventions are derived from the existing codebase and should be followed for all new development.
 
+## 0. Critical Design Principles
+
+### NEVER Add Silent Fallback Mechanisms
+
+**CRITICAL RULE**: Do NOT add fallback mechanisms, silent error recovery, or "helpful" workarounds unless **EXPLICITLY** requested.
+
+**Rationale**:
+- Fallbacks mask bugs and make code extremely difficult to debug
+- Silent failures hide the root cause of problems
+- Code must fail explicitly, loudly, and clearly so bugs can be identified and fixed
+- When something goes wrong, we need to know immediately, not discover it weeks later
+
+**Examples of FORBIDDEN patterns**:
+```python
+# WRONG - Silent fallback masks the real problem
+try:
+    result = primary_method()
+except:
+    result = fallback_method()  # DON'T DO THIS
+
+# WRONG - Hiding errors
+if not credential_manager_write():
+    file_based_write()  # This masks why credential_manager failed
+
+# RIGHT - Fail loudly and clearly
+try:
+    result = primary_method()
+except Exception as e:
+    logger.error(f"primary_method failed: {e}")
+    raise  # Let it fail so we can fix it
+```
+
+**When fallbacks ARE acceptable**:
+- Only when explicitly documented in requirements
+- Only when the fallback is a known, intentional design decision
+- Never as a "quick fix" to make errors go away
+
+**If something fails**: Stop, investigate, fix the root cause. Don't paper over it with fallbacks.
+
 ## 1. Formatting
 
 ### Indentation
@@ -107,7 +146,7 @@ Standard C++ control structures are wrapped in macros to ensure consistent scopi
 - **Older Projects**: Projects like **ActivePageItems** may follow older conventions that differ from the core Tightener style. When modifying these projects, follow the existing style of the file.
 - **Language Differences**: As noted above, JavaScript/ExtendScript projects follow different formatting rules (e.g., brace placement) compared to C/C++ projects.
 
-## 4. Logging
+## 5. Logging
 
 - **Mechanism**: Use the `TGH::logMessage` function or project-specific wrappers.
 - **Levels**: Log levels are integer-based.
@@ -115,18 +154,18 @@ Standard C++ control structures are wrapped in macros to ensure consistent scopi
     - `logentry` / `logexit` patterns are often used to trace function entry and exit (sometimes implicitly handled by `BEGIN_FUNCTION` macros in debug builds).
     - **Flexible Logger**: The logging system supports multiple sinks (console, file, remote).
 
-## 5. File Structure
+## 6. File Structure
 
 - **Headers**: Use `#pragma once` or standard `#ifndef` include guards.
 - **Namespaces**: Most core code resides within the `TGH` namespace.
 - **Organization**: Code is organized into modules (e.g., `TghMain`, `TghUtils`, `TghNetwork`).
 
-## 6. C++ Standards
+## 7. C++ Standards
 - The codebase targets C++11 standard.
 - Use `std::shared_ptr` (often aliased as `Ptr` types, e.g., `IInternalCoordinatorPtr`) for memory management.
 - Avoid raw pointers where possible.
 
-## 7. Comments
+## 8. Comments
 - Use `//` for single-line comments.
 - Use `/* ... */` for multi-line comments.
 - Javadoc-style comments (`///`) are used for documentation generation in some headers.
