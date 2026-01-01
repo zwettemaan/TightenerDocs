@@ -148,7 +148,7 @@ This document serves as the entry point for AI agents working with the Tightener
   - **Multi-version builds**: Separate Xcode projects per InDesign version (e.g., CS18_20.0, CS19_21.0)
   - **Build script parameterization**: `buildForTarget` scripts accept InDesign version as parameter, compute CS version and year
   - **SDK location conventions**: SDKs stored under `/Users/Shared/Documents/SDKs/Adobe/InDesign/InDesignCS##_##.#/`
-  - **Mac SDK setup**: After installing a new InDesign SDK, dequarantine the resource compiler: `xattr -d com.apple.quarantine /Users/Shared/Documents/SDKs/Adobe/InDesign/InDesignCS##_##.#/devtools/bin/odfrc-cmd`
+  - **Mac SDK setup**: After installing a new InDesign SDK, dequarantine the resource compiler: `xattr -dr com.apple.quarantine /Users/Shared/Documents/SDKs/Adobe/InDesign/InDesignCS##_##.#/devtools/bin/odfrc-cmd`
   - **Windows SDK setup**: After installing a new InDesign SDK, apply the xlocnum hack:
     1. Copy `xlocnum` from Visual Studio (e.g., `C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Tools\MSVC\14.##.#####\include\xlocnum`) to SDK folder (e.g., `C:\SDKs\Adobe\InDesign\InDesignCS##_##.#\source\precomp\msvc\xlocnum_hack_vs20##.h`)
     2. Edit `xlocnum_hack.h` to add new version to `#if` ladder (e.g., `#elif _MSC_VER >= #### && _MSC_VER < #### #include "xlocnum_hack_vs20##.h"`)
