@@ -52,11 +52,11 @@ This document serves as the entry point for AI agents working with the Tightener
   - **Common Examples**:
     ```sql
     -- 100% off, one per customer, max 100 uses
-    insert into discountCodes (discountCode, issuerGUID, productCode, useSandbox, discountPercent, isPerCustomer, maxUseCount) 
+    insert into discountCodes (discountCode, issuerGUID, productCode, useSandbox, discountPercent, isPerCustomer, maxUseCount)
     values ('PROMO_CODE', '1186cb863f80e0c2d5ee377c49d7eade', 'APIDToolAssistant', 0, 100, 1, 100);
-    
+
     -- 50% off, unlimited uses per customer, max 500 total
-    insert into discountCodes (discountCode, issuerGUID, productCode, useSandbox, discountPercent, isPerCustomer, maxUseCount) 
+    insert into discountCodes (discountCode, issuerGUID, productCode, useSandbox, discountPercent, isPerCustomer, maxUseCount)
     values ('SALE50', '1186cb863f80e0c2d5ee377c49d7eade', 'TextExporter', 0, 50, 0, 500);
     ```
 
@@ -147,7 +147,12 @@ This document serves as the entry point for AI agents working with the Tightener
 - **InDesign SDK Integration Patterns**:
   - **Multi-version builds**: Separate Xcode projects per InDesign version (e.g., CS18_20.0, CS19_21.0)
   - **Build script parameterization**: `buildForTarget` scripts accept InDesign version as parameter, compute CS version and year
-  - **SDK location conventions**: SDKs stored under `~/Documents/SDKs/Adobe/InDesign/InDesignCS##_##.#/`
+  - **SDK location conventions**: SDKs stored under `/Users/Shared/Documents/SDKs/Adobe/InDesign/InDesignCS##_##.#/`
+  - **Mac SDK setup**: After installing a new InDesign SDK, dequarantine the resource compiler: `xattr -d com.apple.quarantine /Users/Shared/Documents/SDKs/Adobe/InDesign/InDesignCS##_##.#/devtools/bin/odfrc-cmd`
+  - **Windows SDK setup**: After installing a new InDesign SDK, apply the xlocnum hack:
+    1. Copy `xlocnum` from Visual Studio (e.g., `C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Tools\MSVC\14.##.#####\include\xlocnum`) to SDK folder (e.g., `C:\SDKs\Adobe\InDesign\InDesignCS##_##.#\source\precomp\msvc\xlocnum_hack_vs20##.h`)
+    2. Edit `xlocnum_hack.h` to add new version to `#if` ladder (e.g., `#elif _MSC_VER >= #### && _MSC_VER < #### #include "xlocnum_hack_vs20##.h"`)
+    3. In copied file, comment out `_CRTIMP2_PURE_IMPORT` in locale::id line and add `#define XLOCNUM_HACK_TO_FIX_NUM_PUNCT_IN_OUR_UTF8_STREAM` near top
   - **Universal binaries**: Both x86_64 and arm64 architectures built in single pass (`ONLY_ACTIVE_ARCH=NO`)
   - **Version extraction formula**: `IDSN_CS_VERSION = IDSN_MAJOR_VERSION - 2`, `IDSN_YEAR_VERSION = IDSN_MAJOR_VERSION + 2005`
   - **Release directory structure**: Organized by InDesign major version (e.g., `IDSN.20/`, `IDSN.21/`)
