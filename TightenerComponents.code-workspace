@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**/.DS_Store": true,
+			"**/node_modules": true
+		}
+	}
+}
