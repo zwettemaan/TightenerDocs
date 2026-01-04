@@ -148,6 +148,10 @@ This document serves as the entry point for AI agents working with the Tightener
   - **Multi-version builds**: Separate Xcode projects per InDesign version (e.g., CS18_20.0, CS19_21.0)
   - **Build script parameterization**: `buildForTarget` scripts accept InDesign version as parameter, compute CS version and year
   - **SDK location conventions**: SDKs stored under `/Users/Shared/Documents/SDKs/Adobe/InDesign/InDesignCS##_##.#/`
+  - **Xcode custom paths setup**: Before building, configure named locations in Xcode → Settings → Locations → Custom Paths:
+    - `ID_SDK_ROOT_2025_20.0` → `/Users/Shared/Documents/SDKs/Adobe/InDesign/InDesignCS18_20.0`
+    - `ID_SDK_ROOT_2026_21.0` → `/Users/Shared/Documents/SDKs/Adobe/InDesign/InDesignCS19_21.0`
+    - Add new entries following pattern: `ID_SDK_ROOT_yyyy_xx.z` pointing to corresponding SDK path
   - **Mac SDK setup**: After installing a new InDesign SDK, dequarantine the resource compiler: `xattr -dr com.apple.quarantine /Users/Shared/Documents/SDKs/Adobe/InDesign/InDesignCS##_##.#/devtools/bin/odfrc-cmd`
   - **Windows SDK setup**: After installing a new InDesign SDK, apply the xlocnum hack:
     1. Copy `xlocnum` from Visual Studio (e.g., `C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Tools\MSVC\14.##.#####\include\xlocnum`) to SDK folder (e.g., `C:\SDKs\Adobe\InDesign\InDesignCS##_##.#\source\precomp\msvc\xlocnum_hack_vs20##.h`)
