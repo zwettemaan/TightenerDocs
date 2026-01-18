@@ -719,6 +719,38 @@ Idle tasks check `appFlags` to avoid running when:
 
 ## Implementation Details
 
+## Event-Driven Pipe Handling (Draft)
+
+This section captures the current plan to move pipe I/O from poll-driven loops to event-driven wakeups **inside `TghPipes` only**, so higher layers never block on OS pipes and only consume buffered data. It is a consolidation of the working design note and should be kept in sync with pipe-related changes.
+
+### Goals
+- Preserve public behavior: higher layers can continue calling existing `poll()` entry points.
+- Make pipe reads/writes responsive without CPU-heavy polling.
+- Keep all blocking OS I/O and readiness waiting inside `TghPipes`.
+- Provide buffered access patterns for higher layers (e.g., `isDataAvailable`, `numBytesAvailable`, `readBytesWait`, `readBytesNoWait`).
+
+### Non-Goals
+- No API changes in `TghInternalCoordinator` or `TghSiblingCoordinator` unless unavoidable.
+- No changes to message formats or pipe naming conventions.
+
+### Architecture Sketch
+1. **Internal pipe reader** (per pipe or shared) blocks on OS readiness and pushes bytes into `ReadPipeHandleBuffer`.
+2. **Wait tokens / tasks** inside `TghPipes` can block on a semaphore/event and resume as soon as new data is buffered.
+3. **`poll()` becomes a façade** over readiness flags set by the event-driven reader.
+4. **Higher layers only read buffered data**; they do not wait on OS pipe handles.
+
+### Likely Touch Points
+- `Tightener/TghUtils/TghPipes.h`
+- `Tightener/TghUtils/TghPipes.cpp`
+- (Behavioral impact only) `Tightener/TghCoordinator/TghInternalCoordinator.cpp`
+- (Behavioral impact only) `Tightener/TghCoordinator/TghSiblingCoordinator.cpp`
+
+### Open Questions
+- Platform strategy: one thread per pipe vs shared reactor (Windows named pipes vs POSIX).
+- How to map readiness → wake for multi-consumer scenarios.
+- Buffer sizing/backpressure rules.
+- Do we expose new public helpers or keep them internal for now?
+
 ### Function State Stack
 
 ```cpp
