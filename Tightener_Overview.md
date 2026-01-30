@@ -3,7 +3,14 @@
 ## Introduction
 **Tightener** is a comprehensive distributed computing framework designed primarily for automating workflows involving Adobe Creative Suite applications. It features a custom scripting language called **TQL (Tightener Query Language)** and is orchestrated via a sophisticated multi-VM automated build system.
 
+**Repo structure note**: `TightenerComponents` is a collating folder that contains many independent git repositories (one per subproject). Each top-level folder is its own repo with its own history; there is no single monorepo.
+
 The ecosystem consists of over 25 interconnected software projects, ranging from the core C++ infrastructure to cross-platform applications, native plugins, and web services.
+
+## TghPipes ReadPipe Notes (BG/FG Separation)
+- ReadPipe now separates BG (blocking OS reads) from FG (cooperative packet processing). BG only touches OS read handles; FG only touches shared buffers and status.
+- An internal wake pipe lets FG wake a blocked BG read during close. BG blocks on OS pipe + wake pipe.
+- Configurable backlog policy via `maxReadPipeBufferedPackets` and `readPipeBacklogPolicy` (crash or stall).
 
 ## Ecosystem Map
 

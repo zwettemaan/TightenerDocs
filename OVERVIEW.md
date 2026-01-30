@@ -1,6 +1,17 @@
 # Repositories Overview
 
+TightenerComponents is a collating folder that holds many separate git repositories (one per subproject). Each top-level folder (e.g. `Tightener`, `TightenerGW`, `PluginInstaller`, `TightenerDocs`) is its own repo with its own history. There is no single monorepo for the whole ecosystem.
+
 TightenerComponents is a comprehensive ecosystem of 25+ software projects primarily for Adobe Creative Suite applications. The main component is **Tightener**, a distributed computing framework with a custom scripting language (TQL), orchestrated via multi-VM automated builds.
+
+## Recent Engineering Notes (TghPipes)
+- ReadPipe data structures now use explicit realm suffixes: _BG (background thread only), _FG (foreground only), _Shared (mutex/atomic shared). WritePipe remains cooperative-only with no renaming.
+- ReadPipe BG thread is the only code that touches the OS read handle. FG only touches shared buffers/status. BG blocks on the OS pipe and pushes raw packets into a shared packet queue; FG drains that queue and assembles messages.
+- Added an internal wake pipe so FG can wake a blocked BG read during close. BG listens on both the OS pipe and the wake pipe.
+- Split status concerns into separate flags: `threadIsProcessingPackets` vs `readPipeIsActive`.
+- Backlog policy added and read from config: `maxReadPipeBufferedPackets` + `readPipeBacklogPolicy` (crash or stall). When backlog hits the max, BG either aborts or stalls the read (blocking writers).
+- Windows: ReadPipe OS handle is now created inside the BG thread (not in FG factory) and closed by BG on exit. FG stop only signals wake and joins.
+- POSIX: `threadedReadExact` treats `read()` returning 0 as a valid "no data/EOF" state and returns success to the caller.
 
 ## Automated Build System (Cross-Platform Orchestration)
 
