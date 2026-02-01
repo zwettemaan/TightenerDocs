@@ -11,6 +11,9 @@ TightenerComponents is a comprehensive ecosystem of 25+ software projects primar
 - Split status concerns into separate flags: `threadIsProcessingPackets` vs `readPipeIsActive`.
 - Backlog policy added and read from config: `maxReadPipeBufferedPackets` + `readPipeBacklogPolicy` (crash or stall). When backlog hits the max, BG either aborts or stalls the read (blocking writers).
 - Windows: ReadPipe OS handle is now created inside the BG thread (not in FG factory) and closed by BG on exit. FG stop only signals wake and joins.
+- Windows: `ConnectNamedPipe` now uses overlapped I/O with event-driven blocking on `WaitForMultipleObjects`. BG thread blocks on both the connection event and wake pipe event with **no polling**. This ensures immediate response when clients connect while allowing clean shutdown via wake pipe signaling.
+- Windows: Both `ConnectNamedPipe` and `ReadFile` operations use OVERLAPPED structures with manual event objects. BG thread blocks indefinitely on events (INFINITE timeout) for zero CPU usage while waiting.
+- POSIX (Mac/Linux): BG thread uses `poll()` syscall with timeout=-1 (infinite) to block on both pipe_fd and wake_fd. Zero CPU while waiting. `threadedReadExact()` uses nested `poll()` calls with timeout=-1 to accumulate packet data chunk by chunk - each iteration blocks in kernel until data arrives. Pipes opened with O_NONBLOCK to enable event-driven I/O (not for busy-wait polling).
 - POSIX: `threadedReadExact` treats `read()` returning 0 as a valid "no data/EOF" state and returns success to the caller.
 
 ## Automated Build System (Cross-Platform Orchestration)

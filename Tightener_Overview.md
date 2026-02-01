@@ -11,6 +11,9 @@ The ecosystem consists of over 25 interconnected software projects, ranging from
 - ReadPipe now separates BG (blocking OS reads) from FG (cooperative packet processing). BG only touches OS read handles; FG only touches shared buffers and status.
 - An internal wake pipe lets FG wake a blocked BG read during close. BG blocks on OS pipe + wake pipe.
 - Configurable backlog policy via `maxReadPipeBufferedPackets` and `readPipeBacklogPolicy` (crash or stall).
+- **Windows implementation**: All pipe operations (ConnectNamedPipe, ReadFile) use overlapped I/O with event-driven blocking. BG threads block on WaitForMultipleObjects with INFINITE timeout - **zero polling, zero CPU usage while waiting**.
+- **POSIX implementation (Mac/Linux)**: BG thread uses `poll()` syscall with timeout=-1 (infinite) to block on [pipe_fd, wake_fd]. Nested `poll()` calls in `threadedReadExact()` accumulate packet data - **zero polling, zero CPU usage while waiting**.
+- Wake pipe mechanism allows immediate thread shutdown by signaling wake event/fd, which unblocks any pending ConnectNamedPipe, ReadFile (Windows), or poll() (POSIX) operation.
 
 ## Ecosystem Map
 

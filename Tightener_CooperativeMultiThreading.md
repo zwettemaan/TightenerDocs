@@ -719,37 +719,71 @@ Idle tasks check `appFlags` to avoid running when:
 
 ## Implementation Details
 
-## Event-Driven Pipe Handling (Draft)
+## Event-Driven Pipe Handling (IMPLEMENTED)
 
-This section captures the current plan to move pipe I/O from poll-driven loops to event-driven wakeups **inside `TghPipes` only**, so higher layers never block on OS pipes and only consume buffered data. It is a consolidation of the working design note and should be kept in sync with pipe-related changes.
+This section documents the event-driven pipe I/O implementation in `TghPipes`. Pipe I/O has been moved from poll-driven loops to event-driven blocking **inside `TghPipes` only**, so higher layers never block on OS pipes and only consume buffered data.
 
-### Goals
-- Preserve public behavior: higher layers can continue calling existing `poll()` entry points.
-- Make pipe reads/writes responsive without CPU-heavy polling.
-- Keep all blocking OS I/O and readiness waiting inside `TghPipes`.
-- Provide buffered access patterns for higher layers (e.g., `isDataAvailable`, `numBytesAvailable`, `readBytesWait`, `readBytesNoWait`).
+### Implementation Status: ✅ COMPLETE
+- Background threads use blocking OS waits (not polling)
+- Higher layers call `poll()` which consumes pre-buffered data
+- All OS-level blocking is isolated in BG threads
+- Wake pipe mechanism enables clean shutdown
 
-### Non-Goals
-- No API changes in `TghInternalCoordinator` or `TghSiblingCoordinator` unless unavoidable.
-- No changes to message formats or pipe naming conventions.
+### Goals (ACHIEVED)
+- ✅ Preserve public behavior: higher layers can continue calling existing `poll()` entry points.
+- ✅ Make pipe reads/writes responsive without CPU-heavy polling.
+- ✅ Keep all blocking OS I/O and readiness waiting inside `TghPipes`.
+- ✅ Provide buffered access patterns for higher layers.
 
-### Architecture Sketch
-1. **Internal pipe reader** (per pipe or shared) blocks on OS readiness and pushes bytes into `ReadPipeHandleBuffer`.
-2. **Wait tokens / tasks** inside `TghPipes` can block on a semaphore/event and resume as soon as new data is buffered.
-3. **`poll()` becomes a façade** over readiness flags set by the event-driven reader.
-4. **Higher layers only read buffered data**; they do not wait on OS pipe handles.
+### Architecture (AS IMPLEMENTED)
+1. **BG threads** (one per pipe on Windows, one per pipe on POSIX) block on OS events and push packets into shared queue.
+2. **FG `poll()`** drains the shared packet queue and assembles messages cooperatively.
+3. **Wake pipe** allows FG to interrupt BG blocking operations for clean shutdown.
+4. **Zero polling**: BG threads use `WaitForMultipleObjects` (Windows) or `poll()` (POSIX) with INFINITE timeout.
 
-### Likely Touch Points
-- `Tightener/TghUtils/TghPipes.h`
-- `Tightener/TghUtils/TghPipes.cpp`
-- (Behavioral impact only) `Tightener/TghCoordinator/TghInternalCoordinator.cpp`
-- (Behavioral impact only) `Tightener/TghCoordinator/TghSiblingCoordinator.cpp`
+### Platform-Specific Implementation
 
-### Open Questions
-- Platform strategy: one thread per pipe vs shared reactor (Windows named pipes vs POSIX).
-- How to map readiness → wake for multi-consumer scenarios.
-- Buffer sizing/backpressure rules.
-- Do we expose new public helpers or keep them internal for now?
+#### Windows (Named Pipes)
+- **ConnectNamedPipe**: Overlapped with event, blocks on WaitForMultipleObjects [wake_event, connect_event]
+- **ReadFile**: Overlapped with event, blocks on WaitForMultipleObjects [wake_event, read_event]
+- **Pipe creation**: `FILE_FLAG_OVERLAPPED` flag set on CreateNamedPipeA
+- **Wake mechanism**: Internal named pipe created per ReadPipeHandleBuffer
+- **Thread model**: One BG thread per pipe instance (pool of 5 on Windows)
+- **Blocking pattern**: `WaitForMultipleObjects` with INFINITE timeout - zero polling, zero CPU while waiting
+
+#### POSIX (FIFOs - Mac/Linux)
+- **open()**: Opens FIFO with O_RDWR | O_NONBLOCK (initial open) or O_RDONLY | O_NONBLOCK (subsequent)
+  - **Why O_NONBLOCK**: Required so read() returns EAGAIN if data isn't immediately available after poll() returns, preventing hangs
+  - **Not for polling**: The O_NONBLOCK flag enables event-driven I/O with poll(), not busy-wait polling
+- **poll()**: Blocks on [pipe_fd, wake_fd] with timeout=-1 (INFINITE) - zero CPU while waiting
+- **Wake mechanism**: Anonymous pipe pair created via `pipe()` syscall
+- **Thread model**: One BG thread per ReadPipe
+- **Read pattern**: 
+  - `poll()` **blocks** waiting for POLLIN on either pipe_fd or wake_fd
+  - On wake_fd activity: drain buffer and check stop flag
+  - On pipe_fd activity: call `threadedReadExact()` to read full packet
+- **threadedReadExact()**: Event-driven state machine (NOT a polling loop):
+  - While loop that accumulates packet data chunk by chunk
+  - Each iteration **blocks** on `poll()` with timeout=-1 until data arrives
+  - Uses non-blocking `read()` after poll() confirms data is ready
+  - Handles EINTR (continue blocking), EAGAIN/EWOULDBLOCK (continue blocking)
+  - Treats `read()` returning 0 as EOF (sets fReadExactReachedEOF_BG flag)
+  - **Zero CPU usage**: Thread blocks in kernel on poll(-1), wakes only when data arrives or wake pipe signaled
+- **Key pattern**: O_NONBLOCK + poll(-1) = event-driven blocking I/O (standard Unix pattern)
+
+### Key Files
+- `Tightener/TghUtils/TghPipes.h` - Class definitions
+- `Tightener/TghUtils/TghPipes.cpp` - Implementation (4211 lines)
+  - `ReadPipeHandleBuffer::threadedReadLoopImpl()` - BG thread main loop
+  - `ReadPipeHandleBuffer::threadedReadPacketWindows()` - Windows overlapped I/O
+  - `ReadPipeHandleBuffer::threadedReadPacketPosix()` - POSIX poll-based I/O
+- `Tightener/TghCoordinator/TghInternalCoordinator.cpp` - FG consumer (monitorNamedPipe)
+
+### Performance Characteristics
+- **CPU usage while idle**: 0% (threads blocked on events)
+- **Latency**: Immediate wakeup when data arrives (no polling delay)
+- **Memory**: Bounded by `maxReadPipeBufferedPackets` config setting
+- **Backpressure**: Configurable via `readPipeBacklogPolicy` (crash or stall)
 
 ### Function State Stack
 
