@@ -1,7 +1,9 @@
 {
-	"remoteHost": "",
+	"remoteHost": "localhost",
 	"quitReflectorAtEnd": true,
 	"timeout": 10000,
 	"coordinatorName": "net.tightener.coordinator.plugininstaller",
-	"engineName": "default"
+	"indesignShortCoordinatorName": "indesign.21.0",
+	"engineName": "default",
+	"inDesignEngineName": "main"
 }
