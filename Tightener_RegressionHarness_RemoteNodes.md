@@ -72,37 +72,37 @@ runRemoteRegressionHarnessMac smoke all gateway
 Prepare the generated config on Mac, Linux, and Windows:
 
 ```bash
-bash Tightener/BuildScripts/runRemoteRegressionHarnessMac prepare all
+runRemoteRegressionHarnessMac prepare all
 ```
 
 Start gateway mode on one remote node:
 
 ```bash
-bash Tightener/BuildScripts/runRemoteRegressionHarnessMac start linux gateway
+runRemoteRegressionHarnessMac start linux gateway
 ```
 
 Check Linux and Windows status:
 
 ```bash
-bash Tightener/BuildScripts/runRemoteRegressionHarnessMac status all
+runRemoteRegressionHarnessMac status all
 ```
 
 Collect logs into a known folder on the Mac:
 
 ```bash
-bash Tightener/BuildScripts/runRemoteRegressionHarnessMac collect all /tmp/TightenerRemoteHarness/manual-run
+runRemoteRegressionHarnessMac collect all /tmp/TightenerRemoteHarness/manual-run
 ```
 
 Stop the remote nodes when done:
 
 ```bash
-bash Tightener/BuildScripts/runRemoteRegressionHarnessMac stop all
+runRemoteRegressionHarnessMac stop all
 ```
 
 For the standard end-to-end harness check after a full build, use:
 
 ```bash
-bash Tightener/BuildScripts/runRemoteRegressionHarnessMac smoke all gateway
+runRemoteRegressionHarnessMac smoke all gateway
 ```
 
 ## Config Pattern
