@@ -46,6 +46,10 @@ It is intentionally limited to what is already in-tree today. It does not propos
 | `TightenerDocs/CurrentRelease/SampleScripts/localQuitReflector.tql` | Manual sample | same-machine remote quit path | `eval("quit();", ...)` |
 | `TightenerDocs/CurrentRelease/SampleScripts/remoteQuitReflector.tql` | Manual sample | cross-host remote quit path | `eval("quit();", ...)` |
 | `TightenerDocs/CurrentRelease/SampleScripts/remoteSettings.json` | Manual config | remote-host selector for future `tightenerlinux` / `tightenerwindows` use | `remoteHost`, `coordinatorName`, `timeout` at `:1-8` |
+| `InDesignTightener/TestScripts/runEmbeddedCommunicationRegression.tql` | Manual smoke script | embedded InDesign `self`, `main`, `reflector` communication wrapper | runs `pingSelf.tql`, `pingMain.tql`, `pingReflector.tql` |
+| `InDesignTightener/TestScripts/pingSelf.tql` | Manual smoke script | embedded InDesign in-app coordinator -> self | target built from `sysInfo().coordinatorName` and `$.engineName` |
+| `TightenerDocs/CurrentRelease/Plug-Ins/TightenerESDLL/testCommunication.jsx` | Manual smoke script | embedded ExtendScript `self`, `main`, `reflector` communication wrapper | inline TQL eval against same-machine targets |
+| `TightenerDocs/Tightener_RegressionCoverage_EmbeddedInDesignExtendScript.md` | Documentation | embedded InDesign / ExtendScript coverage plus ExtendScript gateway limitation | Session F coverage summary |
 | `Tightener/Docs/README.md` | Manual instructions | local console smoke, `consoletested`, sample remote-script invocations from debugger | testing section around `:739-785` and Xcode args around `:1019-1028` |
 
 ## Coverage Mapping
@@ -88,6 +92,16 @@ It is intentionally limited to what is already in-tree today. It does not propos
 - `localPingReflector.tql` and `remotePingReflector.tql` extend the same idea from the released sample area.
 - These scripts are good smoke assets for future remote-node work because they already separate target selection from the calling coordinator.
 
+### 6. Embedded InDesign / ExtendScript communication coverage
+
+- `InDesignTightener/TestScripts/runEmbeddedCommunicationRegression.tql` now provides one checked-in wrapper for:
+  - in-app coordinator -> self
+  - in-app coordinator -> main
+  - in-app coordinator -> reflector
+- It reuses the existing `pingMain.tql` and `pingReflector.tql` scripts and adds `pingSelf.tql` for the self-route.
+- `TightenerDocs/CurrentRelease/Plug-Ins/TightenerESDLL/testCommunication.jsx` provides the same-machine ExtendScript DLL counterpart for `self`, `main`, and `reflector`.
+- ExtendScript gateway-forwarding remains unsupported; that limitation is now documented and surfaced explicitly by the host loop instead of being hidden.
+
 ## Pipe-Specific Hooks Present but Not Covered Directly
 
 The codebase already exposes several pipe-specific behaviors that currently lack dedicated regression coverage:
@@ -120,6 +134,7 @@ These are exactly the hooks a direct `TghPipes` regression suite should target l
 - No automated gateway-specific assertions inside `TightenerGW`.
 - No automated cross-host route using real remote nodes.
 - No automated reply-path coverage through `main -> gateway -> remote gateway -> remote coordinator -> origin`.
+- No real cross-host gateway coverage from the ExtendScript host loop.
 
 ### Manual/process gaps
 

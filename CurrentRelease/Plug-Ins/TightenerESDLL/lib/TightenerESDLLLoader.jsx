@@ -376,8 +376,9 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
                 }
 
                 while (getHostMessageQueueSize()) {
-                    // Throw messages in the bit bucket - we're not writing
-                    // a gateway in ExtendScript
+                    reportUnsupportedGatewayMessage(
+                        getHostMessageTargetHost(),
+                        getHostMessage());
                     advanceHostMessageQueue();
                 }
 
@@ -470,6 +471,29 @@ if (LOAD_DEBUG_TIGHTENER || "undefined" == typeof(TIGHTENER)) {
             }
 
             return retVal;
+        }
+
+        function reportUnsupportedGatewayMessage(targetHost, message) {
+
+            var warning =
+                "TIGHTENER: unsupported gateway forwarding in ExtendScript host loop; discarding host message";
+
+            if (targetHost) {
+                warning += " targetHost=" + targetHost;
+            }
+
+            if (message) {
+                warning += " message=" + message;
+            }
+
+            TIGHTENER.lastUnsupportedGatewayMessage = warning;
+            TIGHTENER.lastError = warning;
+
+            try {
+                $.writeln(warning);
+            }
+            catch (err) {
+            }
         }
 
         function getHostMessageTargetHost() {

@@ -41,8 +41,8 @@ This matrix turns the current inventory into a target regression plan. It separa
 | Mac main -> local gateway -> remote gateway -> windows coordinator | Missing | none | no gateway harness or assertions | Session E |
 | End-to-end reply path back to origin across gateways | Missing | none | no route-level verifier | Session E |
 | Remote coordinator restart/reconnect under traffic | Missing | none | no automation or documented manual flow | Session E |
-| Embedded InDesign / ExtendScript -> self | Missing for this stack document | sample ecosystem exists elsewhere | not inventoried into this communication plan yet | Session F |
-| Embedded InDesign / ExtendScript -> main/reflector | Missing for this stack document | sample ecosystem exists elsewhere | not inventoried into this communication plan yet | Session F |
+| Embedded InDesign / ExtendScript -> self | Manual | `InDesignTightener/TestScripts/pingSelf.tql`, `runEmbeddedCommunicationRegression.tql`, `CurrentRelease/Plug-Ins/TightenerESDLL/testCommunication.jsx` | not part of the compiled/release runner yet | Session G |
+| Embedded InDesign / ExtendScript -> main/reflector | Manual | `InDesignTightener/TestScripts/pingMain.tql`, `pingReflector.tql`, `runEmbeddedCommunicationRegression.tql`, `CurrentRelease/Plug-Ins/TightenerESDLL/testCommunication.jsx`, `Tightener_RegressionCoverage_EmbeddedInDesignExtendScript.md` | ExtendScript host loop still has no gateway-forwarding implementation | Session G |
 
 ## Recommended Minimum Regression Set
 
