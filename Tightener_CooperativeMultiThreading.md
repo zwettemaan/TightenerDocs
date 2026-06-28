@@ -741,6 +741,16 @@ This section documents the event-driven pipe I/O implementation in `TghPipes`. P
 3. **Wake pipe** allows FG to interrupt BG blocking operations for clean shutdown.
 4. **Zero polling**: BG threads use `WaitForMultipleObjects` (Windows) or `poll()` (POSIX) with INFINITE timeout.
 
+### Thread Realm Guardrails (IMPLEMENTED)
+- **Ownership model**:
+  - `_FG` members and methods are main-thread / cooperative-thread only.
+  - `_BG` members and methods are background-thread only.
+  - `_Shared` members may be touched from both realms and must be protected explicitly.
+- **Optional realm assertions**: `OPTIONAL_L1_MAIN_THREAD_CHECK(...)` and `OPTIONAL_L1_NOT_MAIN_THREAD_CHECK(...)` are defined in `TghCoordinator/TghInternalCoordinator.h` and are used in `TghPipes` entry points to catch realm violations without changing release behavior.
+- **Shared thread-state flags**: `ReadPipeHandleBuffer` now keeps `fThreadIsProcessingPackets_Shared`, `fReadPipeIsActive_Shared`, `fThreadIsRunning_Shared`, and `fThreadShouldStop_Shared` as plain `bool` values guarded by `fThreadStateMutex_Shared` via dedicated getters/setters.
+- **ReadPipe close state**: `ReadPipe::fCloseRequested_Shared` is likewise a mutex-guarded `bool` protected by `fBufferMutex_Shared`.
+- **Practical rule**: BG owns the OS read handles and blocking waits; FG owns cooperative packet processing and public pipe control; handoff happens only through the guarded shared state and packet queue.
+
 ### Platform-Specific Implementation
 
 #### Windows (Named Pipes)

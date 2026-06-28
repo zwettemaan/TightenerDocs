@@ -1,0 +1,183 @@
+G.UTIL.include("testScript.mtql");
+
+retVal = G.TESTSCRIPT.initialize(scriptFilePath());
+
+// ----
+
+appendFailure = function(message) {
+    if (retVal != "")
+    {
+        retVal += " | ";
+    }
+
+    retVal += message;
+    G.TESTSCRIPT.console("FAIL: " + message);
+};
+
+readTimeout = function(name, defaultValue) {
+    var value = sysInfo(name);
+    var parsedValue = parseInt(value);
+
+    if (isNaN(parsedValue))
+    {
+        return defaultValue;
+    }
+
+    return parsedValue;
+};
+
+runRemoteViaMain = function(remoteScript, timeoutMilliseconds, mainTarget, remoteTarget, localMainTimeoutMilliseconds) {
+    var mainScript =
+        "eval("
+        + remoteScript.enquote()
+        + ", "
+        + remoteTarget.enquote()
+        + ", "
+        + timeoutMilliseconds
+        + ")";
+
+    return eval(
+        mainScript,
+        mainTarget,
+        localMainTimeoutMilliseconds);
+};
+
+remoteHost = sysInfo("REMOTE_GATEWAY_TEST_HOST");
+targetCoordinator = sysInfo("REMOTE_GATEWAY_TEST_TARGET_COORDINATOR");
+
+if (! targetCoordinator)
+{
+    targetCoordinator = "net.tightener.coordinator.reflector";
+}
+
+timeoutMilliseconds = readTimeout("REMOTE_GATEWAY_TEST_TIMEOUT_MS", 10000);
+restartTimeoutMilliseconds = readTimeout("REMOTE_GATEWAY_TEST_RESTART_TIMEOUT_MS", 20000);
+localMainTimeoutMilliseconds = readTimeout("REMOTE_GATEWAY_TEST_LOCAL_MAIN_TIMEOUT_MS", 25000);
+
+if (! remoteHost)
+{
+    appendFailure("REMOTE_GATEWAY_TEST_HOST is not configured");
+}
+
+mainTarget = "tgh:///net.tightener.coordinator.main/default";
+remoteTarget = "tgh://" + remoteHost + "/" + targetCoordinator + "/default";
+
+if (retVal == "")
+{
+    G.TESTSCRIPT.console("route target: " + remoteTarget);
+    G.TESTSCRIPT.console("route leg: verifier -> local main -> local gateway -> remote gateway -> " + targetCoordinator);
+
+    result = runRemoteViaMain(
+        "sysInfo().coordinatorName",
+        timeoutMilliseconds,
+        mainTarget,
+        remoteTarget,
+        localMainTimeoutMilliseconds);
+
+    G.TESTSCRIPT.console("initial coordinator result: " + result);
+
+    if (result != targetCoordinator)
+    {
+        appendFailure(
+            "initial route to "
+            + remoteHost
+            + " returned "
+            + result
+            + " instead of "
+            + targetCoordinator);
+    }
+}
+
+if (retVal == "")
+{
+    replyToken = "reply-path-" + remoteHost + "-token";
+
+    G.TESTSCRIPT.console("reply leg: validating token return to verifier");
+
+    result = runRemoteViaMain(
+        replyToken.enquote(),
+        timeoutMilliseconds,
+        mainTarget,
+        remoteTarget,
+        localMainTimeoutMilliseconds);
+
+    G.TESTSCRIPT.console("reply token result: " + result);
+
+    if (result != replyToken)
+    {
+        appendFailure(
+            "reply path from "
+            + remoteHost
+            + " returned "
+            + result
+            + " instead of "
+            + replyToken);
+    }
+}
+
+if (retVal == "")
+{
+    G.TESTSCRIPT.console("restart leg: quitting remote coordinator on " + remoteHost);
+
+    runRemoteViaMain(
+        "quit()",
+        timeoutMilliseconds,
+        mainTarget,
+        remoteTarget,
+        localMainTimeoutMilliseconds);
+
+    G.TESTSCRIPT.console("restart leg: waiting for reconnect on " + remoteHost);
+
+    result = runRemoteViaMain(
+        "sysInfo().coordinatorName",
+        restartTimeoutMilliseconds,
+        mainTarget,
+        remoteTarget,
+        localMainTimeoutMilliseconds);
+
+    G.TESTSCRIPT.console("restart coordinator result: " + result);
+
+    if (result != targetCoordinator)
+    {
+        appendFailure(
+            "restart/reconnect to "
+            + remoteHost
+            + " returned "
+            + result
+            + " instead of "
+            + targetCoordinator);
+    }
+}
+
+if (retVal == "")
+{
+    replyToken = "reply-path-" + remoteHost + "-after-restart";
+
+    G.TESTSCRIPT.console("restart reply leg: validating token return after reconnect");
+
+    result = runRemoteViaMain(
+        replyToken.enquote(),
+        restartTimeoutMilliseconds,
+        mainTarget,
+        remoteTarget,
+        localMainTimeoutMilliseconds);
+
+    G.TESTSCRIPT.console("restart reply token result: " + result);
+
+    if (result != replyToken)
+    {
+        appendFailure(
+            "reply path after restart from "
+            + remoteHost
+            + " returned "
+            + result
+            + " instead of "
+            + replyToken);
+    }
+}
+
+// ----
+
+retVal = G.TESTSCRIPT.finalize(retVal);
+
+return retVal;
