@@ -111,6 +111,7 @@ Add direct regression coverage for the event-driven pipe implementation and its 
   - wake-pipe shutdown
   - bounded backlog with `stall`
   - subprocess-style coverage for `crash` if appropriate
+  - throughput and passthrough A/B runs with the same workload and `enablePipePassthrough` set both on and off
 
 ### Prompt
 
