@@ -15,6 +15,7 @@ G.CALL_BACK_ID_TQL_SPLIT    = "net.tightener.callbackid.commandline.tql.split";
 G.CALL_BACK_ID_BLOB_BENCH   = "net.tightener.callbackid.commandline.blobbench";
 G.CALL_BACK_ID_BLOB_PUSH_BENCH = "net.tightener.callbackid.commandline.blobpushbench";
 G.CALL_BACK_ID_BLOB_PUSH_TRACE = "net.tightener.callbackid.commandline.blobpushtrace";
+G.CALL_BACK_ID_ONE_WAY_TIMING = "net.tightener.callbackid.commandline.onewaytiming";
 G.STREAM_ID_TQL             = "net.tightener.streamid.commandline.tql";
 G.STREAM_ID_EXTENDSCRIPT    = "net.tightener.streamid.commandline.extendscript";
 G.STREAM_ID_UXPSCRIPT       = "net.tightener.streamid.commandline.uxpscript";

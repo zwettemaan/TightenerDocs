@@ -131,3 +131,30 @@ setDataRequestCallBack(
         sendData(trace);
     }
 );
+
+setDataRequestCallBack(
+    G.CALL_BACK_ID_ONE_WAY_TIMING,
+    function(senderURL, callBackID, requestSpec, receiveMetrics) {
+        var callbackEnteredAtUs = hiresClock();
+        var senderFinalizedAtUs = requestSpec.senderFinalizedAtUs;
+        var label = requestSpec.label;
+
+        if (! receiveMetrics) {
+            receiveMetrics = {};
+        }
+
+        sendData(
+            {
+                label: label,
+                senderURL: senderURL,
+                callBackID: callBackID,
+                senderFinalizedAtUs: senderFinalizedAtUs,
+                reflectorRequestFirstByteAtUs: callbackEnteredAtUs - receiveMetrics.receiveSpanMicroseconds,
+                reflectorRequestCompleteAtUs: callbackEnteredAtUs,
+                reflectorCallbackEnteredAtUs: callbackEnteredAtUs,
+                oneWayDeliveryUs: callbackEnteredAtUs - senderFinalizedAtUs,
+                requestReceiveMetrics: receiveMetrics
+            }
+        );
+    }
+);
