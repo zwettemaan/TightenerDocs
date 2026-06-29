@@ -144,6 +144,7 @@ Standard C++ control structures are wrapped in macros to ensure consistent scopi
 > Coding conventions may differ based on the context or the age of the subproject.
 
 - **Older Projects**: Projects like **ActivePageItems** may follow older conventions that differ from the core Tightener style. When modifying these projects, follow the existing style of the file.
+- **Cleanup While Editing**: When touching existing code, clean up obvious local convention drift in the area you are already editing so the file moves toward the current standard. Do not do broad drive-by rewrites, but do fix nearby issues such as namespace-scope helper placement, ordering of globals/statics, brace style, and indentation.
 - **Language Differences**: As noted above, JavaScript/ExtendScript projects follow different formatting rules (e.g., brace placement) compared to C/C++ projects.
 
 ## 5. Logging
@@ -158,6 +159,9 @@ Standard C++ control structures are wrapped in macros to ensure consistent scopi
 
 - **Headers**: Use `#pragma once` or standard `#ifndef` include guards.
 - **Namespaces**: Most core code resides within the `TGH` namespace.
+- **Namespace Layout in C/C++**: Within a namespace block, place namespace-scope globals/static data definitions first, before helper function definitions.
+- **Avoid Free Functions in Namespace Scope**: Prefer class/static member functions over namespace-scope helper functions for behavior that conceptually belongs to a class. Do not introduce anonymous-namespace helpers or other namespace-scope functions when the logic naturally belongs on an existing class.
+- **Global Namespace**: Do not place project helper functions in the global namespace.
 - **Organization**: Code is organized into modules (e.g., `TghMain`, `TghUtils`, `TghNetwork`).
 
 ## 7. C++ Standards
