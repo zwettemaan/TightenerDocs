@@ -14,6 +14,7 @@ function plusOne(a) {
 }
 
 gCounter = 1;
+gBlobPushTraceByLabel = {};
 
 setDataRequestCallBack(
     G.CALL_BACK_ID_TQL_SPLIT, 
@@ -54,5 +55,79 @@ setDataRequestCallBack(
             "' count = " + 
                 gCounter
         );
+    }
+);
+
+setDataRequestCallBack(
+    G.CALL_BACK_ID_BLOB_BENCH,
+    function(senderURL, callBackID, payload, receiveMetrics) {
+        var data = resolveDataPayload(payload);
+        if (! receiveMetrics) {
+            receiveMetrics = {};
+        }
+        receiveMetrics.resolvedBytes = data.length;
+        sendData(receiveMetrics);
+    }
+);
+
+setDataRequestCallBack(
+    G.CALL_BACK_ID_BLOB_PUSH_BENCH,
+    function(senderURL, callBackID, requestSpec, receiveMetrics) {
+        var callbackEnteredAtUs = hiresClock();
+        var payloadSizeBytes = requestSpec.payloadSizeBytes;
+        var label = requestSpec.label;
+        var chunk = "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF";
+        var payload = label + "|";
+        var payloadReadyAtUs = 0;
+        var replySendStartedAtUs = 0;
+        var replySendCompletedAtUs = 0;
+
+        if (! receiveMetrics) {
+            receiveMetrics = {};
+        }
+
+        while (payload.length < payloadSizeBytes)
+        {
+            payload = payload + chunk;
+        }
+
+        if (payload.length > payloadSizeBytes)
+        {
+            payload = payload.substr(0, payloadSizeBytes);
+        }
+
+        payloadReadyAtUs = hiresClock();
+        replySendStartedAtUs = hiresClock();
+        sendData(payload);
+        replySendCompletedAtUs = hiresClock();
+
+        gBlobPushTraceByLabel[label] = {
+            label: label,
+            senderURL: senderURL,
+            callBackID: callBackID,
+            payloadSizeBytes: payloadSizeBytes,
+            callbackEnteredAtUs: callbackEnteredAtUs,
+            inferredFirstByteAtUs: callbackEnteredAtUs - receiveMetrics.receiveSpanMicroseconds,
+            payloadReadyAtUs: payloadReadyAtUs,
+            replySendStartedAtUs: replySendStartedAtUs,
+            replySendCompletedAtUs: replySendCompletedAtUs,
+            requestReceiveMetrics: receiveMetrics
+        };
+    }
+);
+
+setDataRequestCallBack(
+    G.CALL_BACK_ID_BLOB_PUSH_TRACE,
+    function(senderURL, callBackID, requestSpec) {
+        var label = requestSpec.label;
+        var trace = gBlobPushTraceByLabel[label];
+        if (! trace) {
+            trace = {
+                label: label,
+                error: "trace not found"
+            };
+        }
+
+        sendData(trace);
     }
 );
