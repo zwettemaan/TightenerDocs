@@ -14,20 +14,8 @@ appendFailure = function(message) {
     G.TESTSCRIPT.console("FAIL: " + message);
 };
 
-readTimeout = function(name, defaultValue) {
-    var value = sysInfo(name);
-    var parsedValue = parseInt(value);
-
-    if (isNaN(parsedValue))
-    {
-        return defaultValue;
-    }
-
-    return parsedValue;
-};
-
 runRemoteViaMain = function(remoteScript, timeoutMilliseconds, mainTarget, remoteTarget, localMainTimeoutMilliseconds) {
-    var mainScript =
+    mainScript =
         "eval("
         + remoteScript.enquote()
         + ", "
@@ -42,6 +30,24 @@ runRemoteViaMain = function(remoteScript, timeoutMilliseconds, mainTarget, remot
         localMainTimeoutMilliseconds);
 };
 
+getTimeoutMilliseconds = function(configName, defaultValue) {
+    timeoutValue = sysInfo(configName);
+
+    if (! timeoutValue)
+    {
+        return defaultValue;
+    }
+
+    timeoutValue = parseInt(timeoutValue);
+
+    if (isNaN(timeoutValue) || timeoutValue <= 0)
+    {
+        return defaultValue;
+    }
+
+    return timeoutValue;
+};
+
 remoteHost = sysInfo("REMOTE_GATEWAY_TEST_HOST");
 targetCoordinator = sysInfo("REMOTE_GATEWAY_TEST_TARGET_COORDINATOR");
 
@@ -50,9 +56,9 @@ if (! targetCoordinator)
     targetCoordinator = "net.tightener.coordinator.reflector";
 }
 
-timeoutMilliseconds = readTimeout("REMOTE_GATEWAY_TEST_TIMEOUT_MS", 10000);
-restartTimeoutMilliseconds = readTimeout("REMOTE_GATEWAY_TEST_RESTART_TIMEOUT_MS", 20000);
-localMainTimeoutMilliseconds = readTimeout("REMOTE_GATEWAY_TEST_LOCAL_MAIN_TIMEOUT_MS", 25000);
+timeoutMilliseconds = getTimeoutMilliseconds("REMOTE_GATEWAY_TEST_TIMEOUT_MS", 10000);
+restartTimeoutMilliseconds = getTimeoutMilliseconds("REMOTE_GATEWAY_TEST_RESTART_TIMEOUT_MS", 20000);
+localMainTimeoutMilliseconds = getTimeoutMilliseconds("REMOTE_GATEWAY_TEST_LOCAL_MAIN_TIMEOUT_MS", 25000);
 
 if (! remoteHost)
 {
@@ -62,10 +68,13 @@ if (! remoteHost)
 mainTarget = "tgh:///net.tightener.coordinator.main/default";
 remoteTarget = "tgh://" + remoteHost + "/" + targetCoordinator + "/default";
 
+G.TESTSCRIPT.console("remote host:   " + remoteHost);
+G.TESTSCRIPT.console("remote target: " + remoteTarget);
+G.TESTSCRIPT.console("timeouts:      remote=" + timeoutMilliseconds + "ms  restart=" + restartTimeoutMilliseconds + "ms  local=" + localMainTimeoutMilliseconds + "ms");
+
 if (retVal == "")
 {
-    G.TESTSCRIPT.console("route target: " + remoteTarget);
-    G.TESTSCRIPT.console("route leg: verifier -> local main -> local gateway -> remote gateway -> " + targetCoordinator);
+    G.TESTSCRIPT.console("leg 1/4: route  verifier -> main -> gateway -> remote gateway -> " + targetCoordinator);
 
     result = runRemoteViaMain(
         "sysInfo().coordinatorName",
@@ -74,17 +83,19 @@ if (retVal == "")
         remoteTarget,
         localMainTimeoutMilliseconds);
 
-    G.TESTSCRIPT.console("initial coordinator result: " + result);
-
     if (result != targetCoordinator)
     {
         appendFailure(
-            "initial route to "
+            "leg 1/4: initial route to "
             + remoteHost
             + " returned "
             + result
             + " instead of "
             + targetCoordinator);
+    }
+    else
+    {
+        G.TESTSCRIPT.console("PASS: leg 1/4: initial route -> " + result);
     }
 }
 
@@ -92,7 +103,7 @@ if (retVal == "")
 {
     replyToken = "reply-path-" + remoteHost + "-token";
 
-    G.TESTSCRIPT.console("reply leg: validating token return to verifier");
+    G.TESTSCRIPT.console("leg 2/4: reply  " + targetCoordinator + " -> remote gateway -> gateway -> main -> verifier");
 
     result = runRemoteViaMain(
         replyToken.enquote(),
@@ -101,23 +112,25 @@ if (retVal == "")
         remoteTarget,
         localMainTimeoutMilliseconds);
 
-    G.TESTSCRIPT.console("reply token result: " + result);
-
     if (result != replyToken)
     {
         appendFailure(
-            "reply path from "
+            "leg 2/4: reply path from "
             + remoteHost
             + " returned "
             + result
             + " instead of "
             + replyToken);
     }
+    else
+    {
+        G.TESTSCRIPT.console("PASS: leg 2/4: reply path -> " + result);
+    }
 }
 
 if (retVal == "")
 {
-    G.TESTSCRIPT.console("restart leg: quitting remote coordinator on " + remoteHost);
+    G.TESTSCRIPT.console("leg 3/4: restart  quitting " + targetCoordinator + " on " + remoteHost);
 
     runRemoteViaMain(
         "quit()",
@@ -126,7 +139,7 @@ if (retVal == "")
         remoteTarget,
         localMainTimeoutMilliseconds);
 
-    G.TESTSCRIPT.console("restart leg: waiting for reconnect on " + remoteHost);
+    G.TESTSCRIPT.console("leg 3/4: restart  waiting for " + targetCoordinator + " to reconnect on " + remoteHost + " (timeout: " + restartTimeoutMilliseconds + "ms)");
 
     result = runRemoteViaMain(
         "sysInfo().coordinatorName",
@@ -135,17 +148,19 @@ if (retVal == "")
         remoteTarget,
         localMainTimeoutMilliseconds);
 
-    G.TESTSCRIPT.console("restart coordinator result: " + result);
-
     if (result != targetCoordinator)
     {
         appendFailure(
-            "restart/reconnect to "
+            "leg 3/4: restart/reconnect to "
             + remoteHost
             + " returned "
             + result
             + " instead of "
             + targetCoordinator);
+    }
+    else
+    {
+        G.TESTSCRIPT.console("PASS: leg 3/4: restart/reconnect -> " + result);
     }
 }
 
@@ -153,7 +168,7 @@ if (retVal == "")
 {
     replyToken = "reply-path-" + remoteHost + "-after-restart";
 
-    G.TESTSCRIPT.console("restart reply leg: validating token return after reconnect");
+    G.TESTSCRIPT.console("leg 4/4: restart reply  " + targetCoordinator + " -> remote gateway -> gateway -> main -> verifier");
 
     result = runRemoteViaMain(
         replyToken.enquote(),
@@ -162,17 +177,19 @@ if (retVal == "")
         remoteTarget,
         localMainTimeoutMilliseconds);
 
-    G.TESTSCRIPT.console("restart reply token result: " + result);
-
     if (result != replyToken)
     {
         appendFailure(
-            "reply path after restart from "
+            "leg 4/4: reply path after restart from "
             + remoteHost
             + " returned "
             + result
             + " instead of "
             + replyToken);
+    }
+    else
+    {
+        G.TESTSCRIPT.console("PASS: leg 4/4: restart reply path -> " + result);
     }
 }
 

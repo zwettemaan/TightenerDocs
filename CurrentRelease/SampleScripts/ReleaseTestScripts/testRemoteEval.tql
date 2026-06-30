@@ -56,15 +56,17 @@ if (result != 169) {
     retVal += "remote eval failed ";
 }
 
-G.TESTSCRIPT.console("quitting reflector");
+quitReflectorLoopMicroseconds = sysInfo("quitReflectorEventLoopForTestsMicroseconds");
+
+G.TESTSCRIPT.console("quitting reflector (event loop timeslice " + quitReflectorLoopMicroseconds + "us, timeout " + timeoutMilliseconds + "ms)");
 
 eval(
-    "quit()", 
-    "tgh:///net.tightener.coordinator.reflector/default", 
+    "quit()",
+    "tgh:///net.tightener.coordinator.reflector/default",
     timeoutMilliseconds
 );
 
-G.TESTSCRIPT.console("quitting done");
+G.TESTSCRIPT.console("quitting reflector done");
 
 // ----
 
