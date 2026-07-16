@@ -9,11 +9,16 @@ G.STREAM_ID_TQL_SPLIT       = "net.tightener.streamid.commandline.tql.split";
 
 G.LOG.setLogLevel(0);
 
+// Note: the CALL_BACK_ID_TQL REPL handler registered by startupScript.tql
+// uses evalGlobal on cores that have it (version-gated), so REPL state
+// persists between commands here without a reflector-specific override.
+
 function plusOne(a) {
     return a + 1;
 }
 
 gCounter = 1;
+gBlobPushTraceByLabel = {};
 
 setDataRequestCallBack(
     G.CALL_BACK_ID_TQL_SPLIT, 
@@ -26,7 +31,11 @@ setDataRequestCallBack(
                 G.REPL_TIMEOUT_MILLISECONDS);
         var prompt = result.substr(result.length - 2);
         var result = eval(result.substr(0, result.length - 2));
-        if (! result) {
+        if (typeof result == "error") {
+            // Avoid desyncing the REPL client (see CALL_BACK_ID_TQL)
+            result = "<error>\n";
+        }
+        else if (! result) {
             result = "";
         }
         else {
@@ -53,6 +62,107 @@ setDataRequestCallBack(
                 callBackID + 
             "' count = " + 
                 gCounter
+        );
+    }
+);
+
+setDataRequestCallBack(
+    G.CALL_BACK_ID_BLOB_BENCH,
+    function(senderURL, callBackID, payload, receiveMetrics) {
+        var data = resolveDataPayload(payload);
+        if (! receiveMetrics) {
+            receiveMetrics = {};
+        }
+        receiveMetrics.resolvedBytes = data.length;
+        sendData(receiveMetrics);
+    }
+);
+
+setDataRequestCallBack(
+    G.CALL_BACK_ID_BLOB_PUSH_BENCH,
+    function(senderURL, callBackID, requestSpec, receiveMetrics) {
+        var callbackEnteredAtUs = hiresClock();
+        var payloadSizeBytes = requestSpec.payloadSizeBytes;
+        var label = requestSpec.label;
+        var chunk = "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF";
+        var payload = label + "|";
+        var payloadReadyAtUs = 0;
+        var replySendStartedAtUs = 0;
+        var replySendCompletedAtUs = 0;
+
+        if (! receiveMetrics) {
+            receiveMetrics = {};
+        }
+
+        while (payload.length < payloadSizeBytes)
+        {
+            payload = payload + chunk;
+        }
+
+        if (payload.length > payloadSizeBytes)
+        {
+            payload = payload.substr(0, payloadSizeBytes);
+        }
+
+        payloadReadyAtUs = hiresClock();
+        replySendStartedAtUs = hiresClock();
+        sendData(payload);
+        replySendCompletedAtUs = hiresClock();
+
+        gBlobPushTraceByLabel[label] = {
+            label: label,
+            senderURL: senderURL,
+            callBackID: callBackID,
+            payloadSizeBytes: payloadSizeBytes,
+            callbackEnteredAtUs: callbackEnteredAtUs,
+            inferredFirstByteAtUs: callbackEnteredAtUs - receiveMetrics.receiveSpanMicroseconds,
+            payloadReadyAtUs: payloadReadyAtUs,
+            replySendStartedAtUs: replySendStartedAtUs,
+            replySendCompletedAtUs: replySendCompletedAtUs,
+            requestReceiveMetrics: receiveMetrics
+        };
+    }
+);
+
+setDataRequestCallBack(
+    G.CALL_BACK_ID_BLOB_PUSH_TRACE,
+    function(senderURL, callBackID, requestSpec) {
+        var label = requestSpec.label;
+        var trace = gBlobPushTraceByLabel[label];
+        if (! trace) {
+            trace = {
+                label: label,
+                error: "trace not found"
+            };
+        }
+
+        sendData(trace);
+    }
+);
+
+setDataRequestCallBack(
+    G.CALL_BACK_ID_ONE_WAY_TIMING,
+    function(senderURL, callBackID, requestSpec, receiveMetrics) {
+        var callbackEnteredAtUs = hiresClock();
+        var senderFinalizedAtUs = requestSpec.senderFinalizedAtUs;
+        var label = requestSpec.label;
+
+        if (! receiveMetrics) {
+            receiveMetrics = {};
+        }
+
+        sendData(
+            {
+                label: label,
+                senderURL: senderURL,
+                callBackID: callBackID,
+                senderFinalizedAtUs: senderFinalizedAtUs,
+                reflectorRequestFirstByteAtUs: callbackEnteredAtUs - receiveMetrics.receiveSpanMicroseconds,
+                reflectorRequestCompleteAtUs: callbackEnteredAtUs,
+                reflectorCallbackEnteredAtUs: callbackEnteredAtUs,
+                oneWayDeliveryUs: callbackEnteredAtUs - senderFinalizedAtUs,
+                requestReceiveMetrics: receiveMetrics
+            }
         );
     }
 );

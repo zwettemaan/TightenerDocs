@@ -12,3 +12,7 @@ killApps
 ./uninstallJupyterKernel.sh idjsreplwrapper
 ./uninstallJupyterKernel.sh jsxreplwrapper
 ./uninstallJupyterKernel.sh tqlreplwrapper
+./uninstallJupyterKernel.sh tqlindesignreplwrapper
+
+. dirconfig.sh
+rm -f "${DIR_SITE_PACKAGES}/tightenerkernel"

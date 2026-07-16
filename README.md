@@ -4,6 +4,8 @@
 
 [Index](https://github.com/zwettemaan/TightenerDocs/blob/main/Docs/index.md)
 
+[TQL Master Document](TQL_Master.md)
+
 ## Installing Tightener
 
 * For a stable alpha version, find your download here:
@@ -119,7 +121,7 @@ python3 --version
 -> e.g. Python 3.9.6
 ```
 export PYTHON_MAIN_VERSION=3.9
-export PATH=$PATH:/Users/kris/Library/Python/${PYTHON_MAIN_VERSION}/bin
+export PATH=$PATH:$HOME/Library/Python/${PYTHON_MAIN_VERSION}/bin
 export SITE_PACKAGES=~/Library/Python/${PYTHON_MAIN_VERSION}/lib/python/site-packages
 ```
 

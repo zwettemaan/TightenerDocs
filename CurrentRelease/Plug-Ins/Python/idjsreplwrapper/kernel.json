@@ -1,4 +1,5 @@
 {
-  "argv":["python3", "-m", "idjsreplwrapper", "-f", "{connection_file}"],
-  "display_name":"TightenerIDJS"
+  "argv":["python3", "-m", "tightenerkernel", "--flavor=idjs", "-f", "{connection_file}"],
+  "display_name":"TightenerIDJS",
+  "interrupt_mode":"signal"
 }

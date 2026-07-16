@@ -21,3 +21,9 @@ or access a stable GUID identifier for the current workstation by accessing `TIG
 ```
 alert("Machine GUID = " + TIGHTENER.lib.machineGUID());
 ```
+
+## Communication note
+
+The ExtendScript DLL can host an embedded Tightener coordinator and participate in same-machine coordinator traffic such as `self`, `main`, and `reflector`.
+
+It does **not** implement gateway forwarding in the ExtendScript host loop. If a queued host message requires gateway behavior, `TightenerESDLLLoader.jsx` now reports that explicitly and discards the message rather than silently swallowing it.

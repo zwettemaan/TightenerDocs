@@ -4,7 +4,10 @@ retVal = G.TESTSCRIPT.initialize(scriptFilePath());
 
 // ----
 
-timeoutMilliseconds = 10000;
+// 20s rather than 10s: the remote test cold-launches the reflector, and a
+// first launch of a freshly built executable (e.g. on a slow Windows VM,
+// with Defender scanning the new binary) can exceed 10s
+timeoutMilliseconds = 20000;
 
 result = undefined;
 
@@ -56,15 +59,17 @@ if (result != 169) {
     retVal += "remote eval failed ";
 }
 
-G.TESTSCRIPT.console("quitting reflector");
+quitReflectorLoopMicroseconds = sysInfo("quitReflectorEventLoopForTestsMicroseconds");
+
+G.TESTSCRIPT.console("quitting reflector (event loop timeslice " + quitReflectorLoopMicroseconds + "us, timeout " + timeoutMilliseconds + "ms)");
 
 eval(
-    "quit()", 
-    "tgh:///net.tightener.coordinator.reflector/default", 
+    "quit()",
+    "tgh:///net.tightener.coordinator.reflector/default",
     timeoutMilliseconds
 );
 
-G.TESTSCRIPT.console("quitting done");
+G.TESTSCRIPT.console("quitting reflector done");
 
 // ----
 

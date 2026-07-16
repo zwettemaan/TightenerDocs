@@ -1,0 +1,6 @@
+{
+  "argv":["python3", "-m", "tightenerkernel", "--flavor=tql", "-f", "{connection_file}"],
+  "display_name":"TightenerTQL (InDesign)",
+  "interrupt_mode":"signal",
+  "env":{"RRT_JUPYTER_TARGET":"JupyterInDesign"}
+}

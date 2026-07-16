@@ -12,6 +12,10 @@ G.CALL_BACK_ID_EXTENDSCRIPT = "net.tightener.callbackid.commandline.extendscript
 G.CALL_BACK_ID_UXPSCRIPT    = "net.tightener.callbackid.commandline.uxpscript";
 G.CALL_BACK_ID_TQL          = "net.tightener.callbackid.commandline.tql";
 G.CALL_BACK_ID_TQL_SPLIT    = "net.tightener.callbackid.commandline.tql.split";
+G.CALL_BACK_ID_BLOB_BENCH   = "net.tightener.callbackid.commandline.blobbench";
+G.CALL_BACK_ID_BLOB_PUSH_BENCH = "net.tightener.callbackid.commandline.blobpushbench";
+G.CALL_BACK_ID_BLOB_PUSH_TRACE = "net.tightener.callbackid.commandline.blobpushtrace";
+G.CALL_BACK_ID_ONE_WAY_TIMING = "net.tightener.callbackid.commandline.onewaytiming";
 G.STREAM_ID_TQL             = "net.tightener.streamid.commandline.tql";
 G.STREAM_ID_EXTENDSCRIPT    = "net.tightener.streamid.commandline.extendscript";
 G.STREAM_ID_UXPSCRIPT       = "net.tightener.streamid.commandline.uxpscript";
@@ -20,15 +24,27 @@ G.REPL_TIMEOUT_MILLISECONDS = 10000;
 G.EXTENDSCRIPT_INDESIGN_ENGINE_PERSISTENT = "net.tightener.persistent";
 G.UXP_INDESIGN_ENGINE                     = "net.tightener.uxpscriptengine";
 
+// The evalGlobal builtin (evaluate at the root scope, so REPL state
+// persists between commands) exists since version 0.2.5 build 747.
+// Version-gated rather than feature-probed: on older cores both probing
+// forms (calling evalGlobal, or naming it in typeof) wedge the engine,
+// whereas a never-executed evalGlobal(...) call merely parses as an
+// identifier and is harmless.
+G.HAS_EVAL_GLOBAL = false;
+var gBuildNumber = parseInt("" + sysInfo().buildNumber);
+if (! isNaN(gBuildNumber) && gBuildNumber >= 747) {
+    G.HAS_EVAL_GLOBAL = true;
+}
+
 G.IS_INDESIGN = 
     sysInfo().coordinatorName.indexOf(".coordinator.indesign.") > 0;
 G.IS_ESDLL = 
     sysInfo().defaultEngine == "ESDLL";
 
 setDataRequestCallBack(
-    G.CALL_BACK_ID_TQL, 
+    G.CALL_BACK_ID_TQL,
     function(senderURL, callBackID, streamData) {
-        var result = 
+        var result =
             parseScript(
                 G.STREAM_ID_TQL,
                 streamData,
@@ -37,7 +53,26 @@ setDataRequestCallBack(
         var prompt = result.substr(result.length - 2);
         result = result.substr(0, result.length - 2);
         if (result) {
-            result = eval(result) + "\n";
+            // evalGlobal keeps var declarations/assignments alive between
+            // REPL commands (e.g. Jupyter notebook cells); older cores
+            // fall back to plain (function-scoped) eval
+            var evalResult;
+            if (G.HAS_EVAL_GLOBAL) {
+                evalResult = evalGlobal(result);
+            }
+            else {
+                evalResult = eval(result);
+            }
+            // An error value would destroy the prompt framing when
+            // concatenated, desyncing the REPL client, so send a
+            // readable marker instead
+            if (typeof evalResult == "error") {
+                // toString renders "error" or "error: <message>"
+                result = "<" + evalResult.toString() + ">\n";
+            }
+            else {
+                result = evalResult + "\n";
+            }
         }
         sendData(result + prompt);
     }
@@ -61,11 +96,18 @@ if (G.IS_INDESIGN && ! G.IS_ESDLL) {
             }
             else {
 
-                result = eval(app.evalUxpScript(
+                var evalResult = eval(app.evalUxpScript(
                     result
                     // Omit script engine name - seems to be unsupported by the 18.x SDK as of 20230201
                     // ,UXP_INDESIGN_ENGINE
-                )) + "\n";
+                ));
+                if (typeof evalResult == "error") {
+                    // Avoid desyncing the REPL client (see CALL_BACK_ID_TQL)
+                    result = "<error>\n";
+                }
+                else {
+                    result = evalResult + "\n";
+                }
             }
             sendData(result + prompt);
         }

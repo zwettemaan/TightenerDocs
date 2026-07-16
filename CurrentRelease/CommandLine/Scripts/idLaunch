@@ -2,29 +2,47 @@
 
 if [  "${INDESIGN_TIGHTENER_IS_SERVER}" = "1" ]; then
     PLUG_IN_FILE="${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}TightenerServer.InDesignPlugin"
+    if [ ! -e "${PLUG_IN_FILE}" ]; then
+        PLUG_IN_FILE="${INDESIGN_APP_PLUGIN_FOLDER}TightenerServer.InDesignPlugin"
+    fi
+    APID_PLUG_IN_FILE="${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}APIDToolAssistant${INDESIGN_TIGHTENER_CS_VERSION}.${INDESIGN_TIGHTENER_SDK_VERSION}.InDesignPlugin"
+    if [ ! -e "${APID_PLUG_IN_FILE}" ]; then
+        APID_PLUG_IN_FILE="${INDESIGN_APP_PLUGIN_FOLDER}APIDToolAssistant${INDESIGN_TIGHTENER_CS_VERSION}.${INDESIGN_TIGHTENER_SDK_VERSION}.InDesignPlugin"
+    fi
 else
     PLUG_IN_FILE="${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}Tightener.InDesignPlugin"
-fi    
+    if [ ! -e "${PLUG_IN_FILE}" ]; then
+        PLUG_IN_FILE="${INDESIGN_APP_PLUGIN_FOLDER}Tightener.InDesignPlugin"
+    fi
+    APID_PLUG_IN_FILE="${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}APIDToolAssistant${INDESIGN_TIGHTENER_CS_VERSION}.${INDESIGN_TIGHTENER_SDK_VERSION}.InDesignPlugin"
+    if [ ! -e "${APID_PLUG_IN_FILE}" ]; then
+        APID_PLUG_IN_FILE="${INDESIGN_APP_PLUGIN_FOLDER}APIDToolAssistant${INDESIGN_TIGHTENER_CS_VERSION}.${INDESIGN_TIGHTENER_SDK_VERSION}.InDesignPlugin"
+    fi
+fi
 
-if [  ! -e  "${PLUG_IN_FILE}" ]; then
+if [  -e  "${PLUG_IN_FILE}" ]; then
+    TIGHTENER_INDESIGN_CHANNEL=InDesignTightener
+elif [  -e  "${APID_PLUG_IN_FILE}" ]; then
+    TIGHTENER_INDESIGN_CHANNEL=APID
+else
     echo "Aborting."
-    echo "No Tightener Plug-in installed in"
+    echo "No APID ToolAssistant or Tightener plug-in installed in"
     echo "  ${INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER}."
-    echo "You can try using idPluginInstall to install it."
+    echo "You can try using idPluginInstall to install the Tightener plug-in."
     exit
 fi
 
 if [  "${INDESIGN_TIGHTENER_IS_SERVER}" = "1" ]; then
 
     "${INDESIGN_APP_ROOT}${INDESIGN_APP_FILE}" -console
-    
+
 else
 
     if ! pgrep "Adobe InDesign ${INDESIGN_TIGHTENER_VERSION}" > /dev/null; then
         open "${INDESIGN_APP_PACKAGE_PATH}"
         sleep 5
     fi
-    
+
     idPoke
 
 fi

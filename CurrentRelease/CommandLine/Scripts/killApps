@@ -1,7 +1,18 @@
-killall Tightener > /dev/null 2>&1 
-killall XojoTightener > /dev/null 2>&1 
-killall TightenerGW > /dev/null 2>&1 
-killall TightenerGW_Cpp > /dev/null 2>&1 
+killall Tightener > /dev/null 2>&1
+killall XojoTightener > /dev/null 2>&1
+killall TightenerGW > /dev/null 2>&1
+killall TightenerGW_Cpp > /dev/null 2>&1
+
+sleep 1
+
+# A wedged/deadlocked process may not terminate from a plain SIGTERM above -
+# force-kill anything still running by the same names, including any
+# forked sibling coordinators (main/reflector/etc) left orphaned by a dead
+# parent, since killall matches by process name regardless of ancestry.
+killall -9 Tightener > /dev/null 2>&1
+killall -9 XojoTightener > /dev/null 2>&1
+killall -9 TightenerGW > /dev/null 2>&1
+killall -9 TightenerGW_Cpp > /dev/null 2>&1
 
 if [ `uname` = "Darwin" ]; then
     rm -f "${HOME}/Library/Application Support/net.tightener/NamedPipes/"*

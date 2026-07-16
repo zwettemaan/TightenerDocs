@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #
 # Remotely run a locally stored TQL script.
 #

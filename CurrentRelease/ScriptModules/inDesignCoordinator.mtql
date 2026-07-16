@@ -1,0 +1,152 @@
+//
+// inDesignCoordinator.mtql
+//
+// Detect which InDesign coordinator is available and active:
+// the InDesignTightener C++ plug-in, the APID ToolAssistant plug-in,
+// or the ExtendScript DLL.
+//
+// Usage:
+//
+//    G.UTIL.include("inDesignCoordinator.mtql");
+//
+//    activeInDesign = G.INDESIGN.detect();
+//    if (activeInDesign) {
+//        // activeInDesign.channel:         "plugin", "apid" or "esdll"
+//        // activeInDesign.coordinatorName: full coordinator name
+//        // activeInDesign.engineName:      engine to target
+//        // activeInDesign.target:          ready-to-use tgh:/// URL
+//        // activeInDesign.isServer:        true when targeting InDesign Server
+//    }
+//
+// Every live coordinator owns a named pipe, named after itself, in the
+// folder reported by sysInfo("pipeFolderPath"). Scanning that folder
+// tells us which coordinators are candidates; a short blocking eval()
+// against the candidate confirms it is actually responsive (pipes can
+// be stale after a crash). Checking the pipe first means we never pay
+// the eval() timeout for a coordinator that was never started, so the
+// 'nothing is running' case returns quickly.
+//
+// The coordinator names come from the three channel placeholders in
+// config.ini: PLUGIN_INDESIGN_COORDINATOR, APID_INDESIGN_COORDINATOR
+// and ESDLL_INDESIGN_COORDINATOR.
+//
+
+if (typeof(G.INDESIGN) == "error")
+{
+
+G.INDESIGN = {};
+
+G.INDESIGN.CHANNEL_PLUGIN = "plugin";
+G.INDESIGN.CHANNEL_APID   = "apid";
+G.INDESIGN.CHANNEL_ESDLL  = "esdll";
+
+// The ExtendScript DLL coordinator is served through its default engine
+// (see [config.net.tightener.coordinator.adobeindesign.*] in config.ini)
+
+G.INDESIGN.ESDLL_ENGINE = "ESDLL";
+
+//
+// Return true if a coordinator has a named pipe (i.e. is presumably running)
+//
+
+G.INDESIGN.hasPipe = function(coordinatorName) {
+
+    var retVal = false;
+
+    var pipes = dirScan(sysInfo("pipeFolderPath"));
+
+    for (var idx = 0; idx < pipes.length; idx = idx + 1) {
+        if (pipes[idx] == coordinatorName) {
+            retVal = true;
+            break;
+        }
+    }
+
+    return retVal;
+};
+
+//
+// Return true if the coordinator's engine actually responds
+//
+
+G.INDESIGN.isAlive = function(coordinatorName, engineName, pingTimeoutMs) {
+
+    var retVal = false;
+
+    if (G.INDESIGN.hasPipe(coordinatorName)) {
+
+        var target =
+            "tgh:///" +
+            coordinatorName +
+            "/" +
+            engineName;
+
+        var result = eval("true", target, pingTimeoutMs);
+
+        retVal = result == true;
+    }
+
+    return retVal;
+};
+
+//
+// Try the three InDesign channels in turn and return a descriptor for
+// the first active one, or undefined when no InDesign coordinator is
+// active. pingTimeoutMs is optional and defaults to LOCAL_TIMEOUT_MS
+// from the [sampleScripts] section of config.ini.
+//
+
+G.INDESIGN.detect = function(pingTimeoutMs) {
+
+    var retVal = undefined;
+
+    var configIni = sysInfo("ini");
+
+    if (! pingTimeoutMs) {
+        pingTimeoutMs = parseInt("" + configIni.sampleScripts.LOCAL_TIMEOUT_MS);
+    }
+
+    var defaultEngine = configIni.sampleScripts.INDESIGN_TARGET_ENGINE;
+
+    var channels = [];
+
+    var channel = {};
+    channel.channel = G.INDESIGN.CHANNEL_PLUGIN;
+    channel.coordinatorName = configIni.placeholders.PLUGIN_INDESIGN_COORDINATOR;
+    channel.engineName = defaultEngine;
+    channels.push(channel);
+
+    channel = {};
+    channel.channel = G.INDESIGN.CHANNEL_APID;
+    channel.coordinatorName = configIni.placeholders.APID_INDESIGN_COORDINATOR;
+    channel.engineName = defaultEngine;
+    channels.push(channel);
+
+    channel = {};
+    channel.channel = G.INDESIGN.CHANNEL_ESDLL;
+    channel.coordinatorName = configIni.placeholders.ESDLL_INDESIGN_COORDINATOR;
+    channel.engineName = G.INDESIGN.ESDLL_ENGINE;
+    channels.push(channel);
+
+    for (var idx = 0; idx < channels.length; idx = idx + 1) {
+
+        channel = channels[idx];
+
+        if (G.INDESIGN.isAlive(channel.coordinatorName, channel.engineName, pingTimeoutMs)) {
+
+            retVal = channel;
+            retVal.target =
+                "tgh:///" +
+                channel.coordinatorName +
+                "/" +
+                channel.engineName;
+            retVal.isServer = channel.coordinatorName.indexOf(".server.") >= 0;
+
+            break;
+        }
+    }
+
+    return retVal;
+};
+
+}

@@ -12,3 +12,9 @@ killApps
 ./installJupyterKernel.sh idjsreplwrapper
 ./installJupyterKernel.sh jsxreplwrapper
 ./installJupyterKernel.sh tqlreplwrapper
+./installJupyterKernel.sh tqlindesignreplwrapper
+
+# Shared kernel implementation package - import-only, no kernelspec
+. dirconfig.sh
+rm -f "${DIR_SITE_PACKAGES}/tightenerkernel"
+ln -s "${TIGHTENER_PYTHON}tightenerkernel" "${DIR_SITE_PACKAGES}/tightenerkernel"

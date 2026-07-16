@@ -1,4 +1,6 @@
 import pexpect.replwrap
+import pexpect.popen_spawn
+import platform
 import os
 from pexpect.replwrap import REPLWrapper
 

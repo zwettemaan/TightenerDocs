@@ -46,6 +46,35 @@ if (fileExists(scriptPath + "somethingRandom"))
     retVal += "failed: file should not exist ";
 }
 
+scriptFileName = pathSegmentFromRight(scriptPath);
+
+sampleCopyScriptPath = sysInfo("TMP_DIR") + scriptFileName;
+
+if (fileExists(sampleCopyScriptPath))
+{
+    fileDelete(sampleCopyScriptPath);
+}
+
+if (! fileCopy(scriptPath, sampleCopyScriptPath))
+{
+    retVal += "failed: copy function ";
+}
+
+if (! fileExists(sampleCopyScriptPath))
+{
+    retVal += "failed: copied file should exist ";
+}
+
+if (! fileDelete(sampleCopyScriptPath))
+{
+    retVal += "failed: delete function ";
+}
+
+if (fileExists(sampleCopyScriptPath))
+{
+    retVal += "failed: copied file should have been deleted ";
+}
+
 // ----
 
 retVal = G.TESTSCRIPT.finalize(retVal);

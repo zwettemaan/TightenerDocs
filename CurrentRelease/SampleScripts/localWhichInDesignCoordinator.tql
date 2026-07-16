@@ -1,0 +1,44 @@
+//
+// localWhichInDesignCoordinator.tql
+//
+// Run with rt which uses the local scriptrunner:
+//
+/****
+
+rt localWhichInDesignCoordinator.tql
+
+****/
+//
+// Determine which InDesign coordinator is available and active:
+// the InDesignTightener C++ plug-in, the APID ToolAssistant plug-in,
+// or the ExtendScript DLL - without needing the whatIsRunning shell
+// command.
+//
+// The targeted InDesign is to be configured in the config.ini
+// Use the `editConfig` command to edit
+//
+// The detection logic lives in the inDesignCoordinator.mtql script
+// module (in the ScriptModules folder): every live coordinator owns a
+// named pipe, named after itself, in the folder reported by
+// sysInfo("pipeFolderPath"). Scanning that folder tells us which
+// coordinators are candidates; a short blocking eval() against the
+// candidate confirms it is actually responsive (pipes can be stale
+// after a crash).
+//
+
+G.UTIL.include("inDesignCoordinator.mtql");
+
+activeInDesign = G.INDESIGN.detect();
+
+if (activeInDesign)
+{
+    stdOut("Active InDesign channel: " + activeInDesign.channel + "\n");
+    stdOut("Coordinator: " + activeInDesign.coordinatorName + "\n");
+    stdOut("Engine: " + activeInDesign.engineName + "\n");
+    stdOut("Target: " + activeInDesign.target + "\n");
+    stdOut("Is server: " + activeInDesign.isServer + "\n");
+}
+else
+{
+    stdOut("No InDesign coordinator is active\n");
+}

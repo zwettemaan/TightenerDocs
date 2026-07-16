@@ -12,6 +12,8 @@ coordinatorName =
     "net.tightener.coordinator." + 
     remoteSettings.indesignShortCoordinatorName;
 
+feedBack("coordinatorName: "  + coordinatorName);
+
 target = 
     "tgh://" + 
     remoteSettings.remoteHost + 
@@ -20,7 +22,9 @@ target =
     "/" + 
     remoteSettings.inDesignEngineName;
 
+
 feedBack("start");
+feedBack("target: "  + target);
 
 retVal = "";
 

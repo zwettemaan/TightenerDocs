@@ -13,17 +13,17 @@ inDesignScript = << EOF1
 // --------------------------------
 // Script to run in local InDesign
 
-feedBack = function(message) { 
-    stdOut(message + "\n"); 
+feedBack = function(message) {
+    stdOut(message + "\n");
 }
 
 function makeDoc() {
 
     desktop = sysInfo("DESKTOP_DIR");
-    
+
     docNum = 1;
     outputPDFFile = desktop + "t" + docNum + ".pdf";
-    while (fileExists(outputPDFFile)) 
+    while (fileExists(outputPDFFile))
     {
         ++docNum;
         outputPDFFile = desktop + "t" + docNum + ".pdf";
@@ -33,10 +33,10 @@ function makeDoc() {
     spread = doc.spreads[0];
     textFrame = spread.textFrames.add();
     textFrame.contents = "This is some more text";
-    textFrame.geometricBounds = [5, 5, 80, 80];    
+    textFrame.geometricBounds = [5, 5, 80, 80];
 
     doc.exportFile(ExportFormat.PDF_TYPE, outputPDFFile);
-    
+
     doc.close(SaveOptions.NO);
 
     return "done";
@@ -49,7 +49,7 @@ for (testIdx = 0; testIdx < 20; ++testIdx)
     result = makeDoc();
     if (result)
     {
-        retVal = result;    
+        retVal = result;
     }
     else
     {
@@ -63,54 +63,80 @@ retVal
 // --------------------------------
 EOF1
 
-// 
+//
 // Read targeted InDesign from config.ini
 //
 
 configIni = sysInfo("ini");
 
-inDesignSDKVersion = configIni.placeholders.INDESIGN_SDK_VERSION;
-inDesignCoordinatorSuffix = configIni.placeholders.INDESIGN_COORDINATOR_SUFFIX;
-inDesignEngineName = configIni.sampleScripts.INDESIGN_TARGET_ENGINE;
-coordinatorName = "net.tightener.coordinator.indesign." + inDesignSDKVersion + inDesignCoordinatorSuffix;
-isServer = coordinatorName.indexOf(".server.") >= 0;
-timeOut = eval(configIni.sampleScripts.LOCAL_TIMEOUT_MS);
+// The 20-document loop below takes minutes, not seconds, so this script
+// uses its own timeout entry. Fall back to a generous default when
+// running against an older config.ini that does not have the entry yet
 
-if (isServer) 
+timeOutStr = configIni.sampleScripts.INDESIGN_MAKE_PDF_TIMEOUT_MS;
+if (typeof(timeOutStr) == "error" || ! timeOutStr)
 {
-    feedBack = function(message) { 
-        stdOut(message + "\n"); 
-        evalExtendScript("alert(\"" + message + "\")");
-    }    
+    timeOut = 300000;
 }
-else 
+else
 {
-    feedBack = function(message) { 
-        stdOut(message + "\n"); 
+    timeOut = eval(timeOutStr);
+}
+
+//
+// Detect which InDesign coordinator is active (C++ plug-in, APID
+// ToolAssistant or ExtendScript DLL), so the script works whichever
+// one is installed
+//
+
+G.UTIL.include("inDesignCoordinator.mtql");
+
+activeInDesign = G.INDESIGN.detect();
+
+isServer = activeInDesign && activeInDesign.isServer;
+
+if (isServer)
+{
+    feedBack = function(message) {
+        stdOut(message + "\n");
+        evalExtendScript("alert(\"" + message + "\")");
+    }
+}
+else
+{
+    feedBack = function(message) {
+        stdOut(message + "\n");
     }
 }
 
 feedBack("localMakePDF.tql");
 
-target = 
-    "tgh:///" + 
-    coordinatorName + 
-    "/" + 
-    inDesignEngineName;
-
-result = eval(
-    inDesignScript, 
-    target, 
-    timeOut);
-
-if (result)
+if (! activeInDesign)
 {
-    retVal = "inDesignScript returns '" + result + "'";    
+    feedBack("No InDesign coordinator is active");
 }
 else
 {
-    retVal = "Cannot reach " + target;
+    target = activeInDesign.target;
+
+    result = eval(
+        inDesignScript,
+        target,
+        timeOut);
+
+    if (result)
+    {
+        retVal = "inDesignScript returns '" + result + "'";
+    }
+    else
+    {
+        // The coordinator was alive when we detected it, so no result
+        // here means the script did not finish within the timeout -
+        // InDesign may well still be working on it
+        retVal =
+            "No result from " + target +
+            " within " + timeOut + " ms - InDesign may still be running the script";
+    }
+
+    feedBack(retVal);
 }
-
-feedBack(retVal);
-

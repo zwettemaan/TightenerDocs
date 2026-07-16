@@ -2,11 +2,29 @@
 
 # Alpha Releases
 
+## Version 0.2.6
+
+Alpha release, 16-July-2026, build 762
+
+https://cloud.rorohiko.com/index.php/s/EmbXKJCrw3l167Q
+
+Incremental Improvements: faster and better inter-task and inter-node comms
+
+## Version 0.2.5
+
+Alpha release, 26-May-2025, build 677
+
+Incremental Improvements
+
+## Version 0.2.4
+
+Nineteenth alpha release, 5-Dec-2024, build 632
+
+Incremental Improvements
+
 ## Version 0.2.4
 
 Nineteenth alpha release, 8-Aug-2024, build 583
-
-https://cloud.rorohiko.com/index.php/s/nYGTgNDfSLHo84a
 
 UXP support/CRDT_UXP/file-based API for daemon as fallback if no network APIs
 

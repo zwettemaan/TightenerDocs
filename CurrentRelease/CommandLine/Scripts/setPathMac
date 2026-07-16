@@ -1,14 +1,14 @@
-pushd "${TIGHTENER_RELEASE_ROOT}/.." > /dev/null
+pushd "${TIGHTENER_RELEASE_ROOT}.." > /dev/null
 
 if [ `basename \`pwd\`` = 'TightenerDocs' ]; then
 
     export TIGHTENER_DOCS_ROOT=`pwd`/
 
-    if [ -d "${TIGHTENER_DOCS_ROOT}/../Tightener" ]; then
+    if [ -d "${TIGHTENER_DOCS_ROOT}../Tightener" ]; then
 
-        pushd "${TIGHTENER_DOCS_ROOT}/../Tightener" > /dev/null
+        pushd "${TIGHTENER_DOCS_ROOT}../Tightener" > /dev/null
 
-        if [ -e '.gitignore' -a -e 'CMakeLists.txt' -a -e 'README.md' ]; then
+        if [ -e '.gitignore' -a -e 'CMakeLists.txt' ]; then
 
             export TIGHTENER_GIT_ROOT=`pwd`/
 

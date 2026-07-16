@@ -1,4 +1,5 @@
 {
-  "argv":["python3", "-m", "tqlreplwrapper", "-f", "{connection_file}"],
-  "display_name":"TightenerTQL"
+  "argv":["python3", "-m", "tightenerkernel", "--flavor=tql", "-f", "{connection_file}"],
+  "display_name":"TightenerTQL",
+  "interrupt_mode":"signal"
 }

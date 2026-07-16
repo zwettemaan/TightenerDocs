@@ -36,10 +36,30 @@ var trimmedInputData = G.UTIL.trim(inputData);
 
 while (trimmedInputData != "quit" && trimmedInputData != "quit()") {
 
+    // Batched cell: the Jupyter kernel wraps each notebook cell between
+    // marker lines. Accumulate the lines locally (answering each with the
+    // continuation prompt) and send the whole cell to the target in a
+    // single sendData round-trip instead of one round-trip per line.
+    if (trimmedInputData == "%%TIGHTENER_CELL_BEGIN%%") {
+        inputData = "";
+        var batchLine = stdIn(RRE_PROMPT_CONTINUATION);
+        while (G.UTIL.trim(batchLine) != "%%TIGHTENER_CELL_END%%") {
+            inputData = inputData + batchLine;
+            if (inputData.substr(inputData.length - 1) != "\n") {
+                inputData = inputData + "\n";
+            }
+            batchLine = stdIn(RRE_PROMPT_CONTINUATION);
+        }
+        trimmedInputData = G.UTIL.trim(inputData);
+        if (trimmedInputData == "") {
+            inputData = "\n";
+        }
+    }
+
     var returnData = "Timed out";
     sendData(
         inputData,
-        remoteExtendScriptTarget, 
+        remoteExtendScriptTarget,
         G.CALL_BACK_ID_EXTENDSCRIPT, // This constant is defined in the startupScript.tql
         function(result) {
             if (result.substr(result.length - PROMPT.length) == PROMPT) {

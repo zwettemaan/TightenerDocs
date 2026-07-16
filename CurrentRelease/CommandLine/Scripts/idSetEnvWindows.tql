@@ -1,10 +1,12 @@
-var placeholders = sysInfo().ini.placeholders;
-var coordinatorMap = sysInfo().ini.coordinatorMap;
+var si = sysInfo().ini;
+var placeholders = si.placeholders;
+var coordinatorMap = si.coordinatorMap;
 var isInDesignServer = coordinatorMap.InDesign.toLowerCase().indexOf('server') >= 0;
 
 var windowsCommands = "@ECHO off\n"
 windowsCommands += "SET INDESIGN_TIGHTENER_VERSION=" + placeholders.INDESIGN_VERSION + "\n";
 windowsCommands += "SET INDESIGN_TIGHTENER_SDK_VERSION=" + placeholders.INDESIGN_SDK_VERSION + "\n";
 windowsCommands += "SET INDESIGN_TIGHTENER_IS_SERVER=" + (isInDesignServer ? 1 : 0) + "\n";
+windowsCommands += "SET INDESIGN_TIGHTENER_CS_VERSION=" + placeholders.INDESIGN_CS_VERSION + "\n";
 
 stdOut(windowsCommands);

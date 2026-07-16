@@ -1,19 +1,22 @@
+#!/bin/bash
+
 #
 # Read the InDesign information from the active config.ini file
 #
 # To edit the config.ini, use `editConfig`
 #
-# To (re)initialize the active config.ini with a copy of the template file Release/Config/config.ini, 
+# To (re)initialize the active config.ini with a copy of the template file Release/Config/config.ini,
 # use `copyConfig`
 #
 
 # Use evalTQL once to calculate three environment variables by concatenating then splitting on ,
 
-INDESIGN_INFO=`evalTQL "sysInfo().ini.placeholders.INDESIGN_VERSION + ',' + sysInfo().ini.placeholders.INDESIGN_SDK_VERSION + ',' + (sysInfo().ini.coordinatorMap.InDesign.toLowerCase().indexOf('server') >= 0 ? 1 : 0)"`
+INDESIGN_INFO=`evalTQL "si=sysInfo().ini;sip=si.placeholders; sip.INDESIGN_VERSION + ',' + sip.INDESIGN_SDK_VERSION + ',' + (si.coordinatorMap.InDesign.toLowerCase().indexOf('server') >= 0 ? 1 : 0) + ',' + sip.INDESIGN_CS_VERSION"`
 
 export INDESIGN_TIGHTENER_VERSION=$(echo $INDESIGN_INFO | cut -f1 -d,)
 export INDESIGN_TIGHTENER_SDK_VERSION=$(echo $INDESIGN_INFO | cut -f2 -d,)
 export INDESIGN_TIGHTENER_IS_SERVER=$(echo $INDESIGN_INFO | cut -f3 -d,)
+export INDESIGN_TIGHTENER_CS_VERSION=$(echo $INDESIGN_INFO | cut -f4 -d,)
 
 export TIGHTENER_PLUGINS_RELEASE_ROOT="${TIGHTENER_RELEASE_ROOT}Plug-Ins/"
 
@@ -30,4 +33,3 @@ export INDESIGN_APP_ROOT="/Applications/Adobe ${INDESIGN_TIGHTENER_HOSTAPP}/"
 export INDESIGN_RELEASE_PLUGIN_FOLDER="${TIGHTENER_PLUGINS_RELEASE_ROOT}InDesign${INDESIGN_TIGHTENER_VERSION}.${INDESIGN_TIGHTENER_SDK_VERSION}/Mac/"
 export INDESIGN_APP_PLUGIN_FOLDER="${INDESIGN_APP_ROOT}Plug-Ins/"
 export INDESIGN_APP_ROROHIKO_PLUGIN_FOLDER="${INDESIGN_APP_PLUGIN_FOLDER}Rorohiko/"
-

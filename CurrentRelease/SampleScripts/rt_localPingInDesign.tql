@@ -6,40 +6,44 @@ localSettings = eval(readFile("localSettings.json"));
 
 isServer = localSettings.indesignShortCoordinatorName.indexOf(".server.") >= 0;
 
-if (isServer) 
+if (isServer)
 {
-    feedBack = function(s) { 
-        stdOut(s + "\n"); 
+    feedBack = function(s) {
+        stdOut(s + "\n");
         evalExtendScript("alert(\"" + s + "\")");
-    }    
+    }
 }
-else 
+else
 {
-    feedBack = function(s) { 
-        stdOut(s + "\n"); 
+    feedBack = function(s) {
+        stdOut(s + "\n");
     }
 }
 
 feedBack("rt_localPingInDesign.tql");
 
-coordinatorName = 
-    "net.tightener.coordinator." + 
+coordinatorName =
+    "net.tightener.coordinator." +
     localSettings.indesignShortCoordinatorName;
 
-target = 
-    "tgh:///" + 
-    coordinatorName + 
-    "/" + 
+feedBack("coordinatorName: " + coordinatorName);
+
+target =
+    "tgh:///" +
+    coordinatorName +
+    "/" +
     localSettings.inDesignEngineName;
+
+feedBack("target: " + target);
 
 for (idx = 0; idx < 10; idx++)
 {
     eval(
-        "13*13", 
-        target, 
-        function(x) 
+        "13*13",
+        target,
+        function(x)
         {
-             feedBack(x); 
+             feedBack(x);
         },
         localSettings.timeout);
 
@@ -47,4 +51,3 @@ for (idx = 0; idx < 10; idx++)
 }
 
 feedBack("done");
-

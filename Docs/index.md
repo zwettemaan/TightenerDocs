@@ -34,6 +34,8 @@
 
 [XojoTightener](Aspects/XojoTightener.md)
 
+[Python Support](Python_Support.md)
+
 ## Commands
 
 [Commands](Commands/index.md)

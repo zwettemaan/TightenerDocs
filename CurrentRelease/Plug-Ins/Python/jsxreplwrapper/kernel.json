@@ -1,4 +1,5 @@
 {
-  "argv":["python3", "-m", "jsxreplwrapper", "-f", "{connection_file}"],
-  "display_name":"TightenerJSX"
+  "argv":["python3", "-m", "tightenerkernel", "--flavor=jsx", "-f", "{connection_file}"],
+  "display_name":"TightenerJSX",
+  "interrupt_mode":"signal"
 }

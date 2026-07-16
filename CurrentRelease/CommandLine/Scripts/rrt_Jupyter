@@ -16,8 +16,8 @@ export RRT_JUPYTER_SESSION_ID=`uuidgen | sed "s/-//g"`
 export COORDINATOR_NAME="net.tightener.coordinator.kernelconsole.RRT.${RRT_JUPYTER_SESSION_ID}"
 export RRT_1LINE=""
 
-TIMEOUT_MS=${TIGHTENER_DEFAULT_REPL_TIMEOUT_MS}
-QUIT_DELAY_MS=${TIGHTENER_DEFAULT_REPL_QUIT_DELAY_MS}
+export TIMEOUT_MS=${TIGHTENER_DEFAULT_REPL_TIMEOUT_MS}
+export QUIT_DELAY_MS=${TIGHTENER_DEFAULT_REPL_QUIT_DELAY_MS}
 
 # -n <long>  : long coordinator name
 # -I         : read standard stdin 
