@@ -14,12 +14,22 @@ else {
     // Remote is meant to InDesign
     var remoteTarget = getEnv("RRE_REMOTE_URL");
 
-    var tqlScript = 
+    // Prefer app.evalExtendScript: bare global builtins don't resolve in the
+    // scope a remote eval runs in inside the InDesign plug-ins, but the app
+    // node does. Contexts without an app node (e.g. the ExtendScript DLL)
+    // still resolve the bare form in their engine scope.
+    var tqlScript =
 "var scriptEngine = " + enquote(scriptEngine) + ";\n" +
 "var extendScript = " + enquote(extendScript) + ";\n" +
-"evalExtendScript(extendScript, scriptEngine, function(result) {\n" +
+"var callBack = function(result) {\n" +
     "//stdOut(\"Completed on remote: \" + result + \"\\n\");\n" +
-"});\n";
+"};\n" +
+"if (app) {\n" +
+    "app.evalExtendScript(extendScript, scriptEngine, callBack);\n" +
+"}\n" +
+"else {\n" +
+    "evalExtendScript(extendScript, scriptEngine, callBack);\n" +
+"}\n";
 
     eval(
         tqlScript,
